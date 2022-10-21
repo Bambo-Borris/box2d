@@ -114,8 +114,8 @@ void b2ContactManager::Collide()
 	{
 		b2Fixture* fixtureA = c->GetFixtureA();
 		b2Fixture* fixtureB = c->GetFixtureB();
-		int32 indexA = c->GetChildIndexA();
-		int32 indexB = c->GetChildIndexB();
+		std::int32_t indexA = c->GetChildIndexA();
+		std::int32_t indexB = c->GetChildIndexB();
 		b2Body* bodyA = fixtureA->GetBody();
 		b2Body* bodyB = fixtureB->GetBody();
 		 
@@ -154,8 +154,8 @@ void b2ContactManager::Collide()
 			continue;
 		}
 
-		int32 proxyIdA = fixtureA->m_proxies[indexA].proxyId;
-		int32 proxyIdB = fixtureB->m_proxies[indexB].proxyId;
+		std::int32_t proxyIdA = fixtureA->m_proxies[indexA].proxyId;
+		std::int32_t proxyIdB = fixtureB->m_proxies[indexB].proxyId;
 		bool overlap = m_broadPhase.TestOverlap(proxyIdA, proxyIdB);
 
 		// Here we destroy contacts that cease to overlap in the broad-phase.
@@ -186,8 +186,8 @@ void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
 	b2Fixture* fixtureA = proxyA->fixture;
 	b2Fixture* fixtureB = proxyB->fixture;
 
-	int32 indexA = proxyA->childIndex;
-	int32 indexB = proxyB->childIndex;
+	std::int32_t indexA = proxyA->childIndex;
+	std::int32_t indexB = proxyB->childIndex;
 
 	b2Body* bodyA = fixtureA->GetBody();
 	b2Body* bodyB = fixtureB->GetBody();
@@ -208,8 +208,8 @@ void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
 		{
 			b2Fixture* fA = edge->contact->GetFixtureA();
 			b2Fixture* fB = edge->contact->GetFixtureB();
-			int32 iA = edge->contact->GetChildIndexA();
-			int32 iB = edge->contact->GetChildIndexB();
+			std::int32_t iA = edge->contact->GetChildIndexA();
+			std::int32_t iB = edge->contact->GetChildIndexB();
 
 			if (fA == fixtureA && fB == fixtureB && iA == indexA && iB == indexB)
 			{

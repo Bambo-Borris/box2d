@@ -70,7 +70,7 @@ public:
 	b2CircleShape m_circle;
 	b2Transform m_transform;
 	b2Draw* g_debugDraw;
-	int32 m_count;
+	std::int32_t m_count;
 };
 
 class PolygonShapes : public Test
@@ -140,7 +140,7 @@ public:
 		memset(m_bodies, 0, sizeof(m_bodies));
 	}
 
-	void Create(int32 index)
+	void Create(std::int32_t index)
 	{
 		if (m_bodies[m_bodyIndex] != NULL)
 		{
@@ -185,7 +185,7 @@ public:
 
 	void DestroyBody()
 	{
-		for (int32 i = 0; i < e_maxBodies; ++i)
+		for (std::int32_t i = 0; i < e_maxBodies; ++i)
 		{
 			if (m_bodies[i] != NULL)
 			{
@@ -209,7 +209,7 @@ public:
 			break;
 
 		case GLFW_KEY_A:
-			for (int32 i = 0; i < e_maxBodies; i += 2)
+			for (std::int32_t i = 0; i < e_maxBodies; i += 2)
 			{
 				if (m_bodies[i])
 				{
@@ -256,7 +256,7 @@ public:
 		return new PolygonShapes;
 	}
 
-	int32 m_bodyIndex;
+	std::int32_t m_bodyIndex;
 	b2Body* m_bodies[e_maxBodies];
 	b2PolygonShape m_polygons[4];
 	b2CircleShape m_circle;

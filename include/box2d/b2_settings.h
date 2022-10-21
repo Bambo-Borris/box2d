@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include "b2_types.h"
 #include "b2_api.h"
 
 /// @file
@@ -92,11 +91,11 @@ struct B2_API b2JointUserData
 // Memory Allocation
 
 /// Default allocation functions
-B2_API void* b2Alloc_Default(int32 size);
+B2_API void* b2Alloc_Default(std::int32_t size);
 B2_API void b2Free_Default(void* mem);
 
 /// Implement this function to use your own memory allocator.
-inline void* b2Alloc(int32 size)
+inline void* b2Alloc(std::int32_t size)
 {
 	return b2Alloc_Default(size);
 }

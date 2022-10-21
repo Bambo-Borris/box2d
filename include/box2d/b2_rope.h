@@ -92,7 +92,7 @@ struct B2_API b2RopeDef
 
 	b2Vec2 position;
 	b2Vec2* vertices;
-	int32 count;
+	std::int32_t count;
 	float* masses;
 	b2Vec2 gravity;
 	b2RopeTuning tuning;
@@ -112,7 +112,7 @@ public:
 	void SetTuning(const b2RopeTuning& tuning);
 
 	///
-	void Step(float timeStep, int32 iterations, const b2Vec2& position);
+	void Step(float timeStep, std::int32_t iterations, const b2Vec2& position);
 
 	///
 	void Reset(const b2Vec2& position);
@@ -133,9 +133,9 @@ private:
 
 	b2Vec2 m_position;
 
-	int32 m_count;
-	int32 m_stretchCount;
-	int32 m_bendCount;
+	std::int32_t m_count;
+	std::int32_t m_stretchCount;
+	std::int32_t m_bendCount;
 
 	b2RopeStretch* m_stretchConstraints;
 	b2RopeBend* m_bendConstraints;

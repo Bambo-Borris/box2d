@@ -180,8 +180,8 @@ protected:
 	bool m_enableMotor;
 
 	// Solver temp
-	int32 m_indexA;
-	int32 m_indexB;
+	std::int32_t m_indexA;
+	std::int32_t m_indexB;
 	b2Vec2 m_localCenterA;
 	b2Vec2 m_localCenterB;
 	float m_invMassA;

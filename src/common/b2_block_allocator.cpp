@@ -25,12 +25,12 @@
 #include <string.h>
 #include <stddef.h>
 
-static const int32 b2_chunkSize = 16 * 1024;
-static const int32 b2_maxBlockSize = 640;
-static const int32 b2_chunkArrayIncrement = 128;
+static const std::int32_t b2_chunkSize = 16 * 1024;
+static const std::int32_t b2_maxBlockSize = 640;
+static const std::int32_t b2_chunkArrayIncrement = 128;
 
 // These are the supported object sizes. Actual allocations are rounded up the next size.
-static const int32 b2_blockSizes[b2_blockSizeCount] =
+static const std::int32_t b2_blockSizes[b2_blockSizeCount] =
 {
 	16,		// 0
 	32,		// 1
@@ -53,31 +53,31 @@ struct b2SizeMap
 {
 	b2SizeMap()
 	{
-		int32 j = 0;
+		std::int32_t j = 0;
 		values[0] = 0;
-		for (int32 i = 1; i <= b2_maxBlockSize; ++i)
+		for (std::int32_t i = 1; i <= b2_maxBlockSize; ++i)
 		{
 			b2Assert(j < b2_blockSizeCount);
 			if (i <= b2_blockSizes[j])
 			{
-				values[i] = (uint8)j;
+				values[i] = (std::uint8_t)j;
 			}
 			else
 			{
 				++j;
-				values[i] = (uint8)j;
+				values[i] = (std::uint8_t)j;
 			}
 		}
 	}
 
-	uint8 values[b2_maxBlockSize + 1];
+	std::uint8_t values[b2_maxBlockSize + 1];
 };
 
 static const b2SizeMap b2_sizeMap;
 
 struct b2Chunk
 {
-	int32 blockSize;
+	std::int32_t blockSize;
 	b2Block* blocks;
 };
 
@@ -100,7 +100,7 @@ b2BlockAllocator::b2BlockAllocator()
 
 b2BlockAllocator::~b2BlockAllocator()
 {
-	for (int32 i = 0; i < m_chunkCount; ++i)
+	for (std::int32_t i = 0; i < m_chunkCount; ++i)
 	{
 		b2Free(m_chunks[i].blocks);
 	}
@@ -108,7 +108,7 @@ b2BlockAllocator::~b2BlockAllocator()
 	b2Free(m_chunks);
 }
 
-void* b2BlockAllocator::Allocate(int32 size)
+void* b2BlockAllocator::Allocate(std::int32_t size)
 {
 	if (size == 0)
 	{
@@ -122,7 +122,7 @@ void* b2BlockAllocator::Allocate(int32 size)
 		return b2Alloc(size);
 	}
 
-	int32 index = b2_sizeMap.values[size];
+	std::int32_t index = b2_sizeMap.values[size];
 	b2Assert(0 <= index && index < b2_blockSizeCount);
 
 	if (m_freeLists[index])
@@ -148,17 +148,17 @@ void* b2BlockAllocator::Allocate(int32 size)
 #if defined(_DEBUG)
 		memset(chunk->blocks, 0xcd, b2_chunkSize);
 #endif
-		int32 blockSize = b2_blockSizes[index];
+		std::int32_t blockSize = b2_blockSizes[index];
 		chunk->blockSize = blockSize;
-		int32 blockCount = b2_chunkSize / blockSize;
+		std::int32_t blockCount = b2_chunkSize / blockSize;
 		b2Assert(blockCount * blockSize <= b2_chunkSize);
-		for (int32 i = 0; i < blockCount - 1; ++i)
+		for (std::int32_t i = 0; i < blockCount - 1; ++i)
 		{
-			b2Block* block = (b2Block*)((int8*)chunk->blocks + blockSize * i);
-			b2Block* next = (b2Block*)((int8*)chunk->blocks + blockSize * (i + 1));
+			b2Block* block = (b2Block*)((std::int8_t*)chunk->blocks + blockSize * i);
+			b2Block* next = (b2Block*)((std::int8_t*)chunk->blocks + blockSize * (i + 1));
 			block->next = next;
 		}
-		b2Block* last = (b2Block*)((int8*)chunk->blocks + blockSize * (blockCount - 1));
+		b2Block* last = (b2Block*)((std::int8_t*)chunk->blocks + blockSize * (blockCount - 1));
 		last->next = nullptr;
 
 		m_freeLists[index] = chunk->blocks->next;
@@ -168,7 +168,7 @@ void* b2BlockAllocator::Allocate(int32 size)
 	}
 }
 
-void b2BlockAllocator::Free(void* p, int32 size)
+void b2BlockAllocator::Free(void* p, std::int32_t size)
 {
 	if (size == 0)
 	{
@@ -183,24 +183,24 @@ void b2BlockAllocator::Free(void* p, int32 size)
 		return;
 	}
 
-	int32 index = b2_sizeMap.values[size];
+	std::int32_t index = b2_sizeMap.values[size];
 	b2Assert(0 <= index && index < b2_blockSizeCount);
 
 #if defined(_DEBUG)
 	// Verify the memory address and size is valid.
-	int32 blockSize = b2_blockSizes[index];
+	std::int32_t blockSize = b2_blockSizes[index];
 	bool found = false;
-	for (int32 i = 0; i < m_chunkCount; ++i)
+	for (std::int32_t i = 0; i < m_chunkCount; ++i)
 	{
 		b2Chunk* chunk = m_chunks + i;
 		if (chunk->blockSize != blockSize)
 		{
-			b2Assert(	(int8*)p + blockSize <= (int8*)chunk->blocks ||
-						(int8*)chunk->blocks + b2_chunkSize <= (int8*)p);
+			b2Assert(	(std::int8_t*)p + blockSize <= (std::int8_t*)chunk->blocks ||
+						(std::int8_t*)chunk->blocks + b2_chunkSize <= (std::int8_t*)p);
 		}
 		else
 		{
-			if ((int8*)chunk->blocks <= (int8*)p && (int8*)p + blockSize <= (int8*)chunk->blocks + b2_chunkSize)
+			if ((std::int8_t*)chunk->blocks <= (std::int8_t*)p && (std::int8_t*)p + blockSize <= (std::int8_t*)chunk->blocks + b2_chunkSize)
 			{
 				found = true;
 			}
@@ -219,7 +219,7 @@ void b2BlockAllocator::Free(void* p, int32 size)
 
 void b2BlockAllocator::Clear()
 {
-	for (int32 i = 0; i < m_chunkCount; ++i)
+	for (std::int32_t i = 0; i < m_chunkCount; ++i)
 	{
 		b2Free(m_chunks[i].blocks);
 	}

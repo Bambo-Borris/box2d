@@ -55,13 +55,13 @@ struct B2_API b2Vec2
 	b2Vec2 operator -() const { b2Vec2 v; v.Set(-x, -y); return v; }
 
 	/// Read from and indexed element.
-	float operator () (int32 i) const
+	float operator () (std::int32_t i) const
 	{
 		return (&x)[i];
 	}
 
 	/// Write to an indexed element.
-	float& operator () (int32 i)
+	float& operator () (std::int32_t i)
 	{
 		return (&x)[i];
 	}
@@ -668,7 +668,7 @@ template<typename T> inline void b2Swap(T& a, T& b)
 /// that recursively "folds" the upper bits into the lower bits. This process yields a bit vector with
 /// the same most significant 1 as x, but all 1's below it. Adding 1 to that value yields the next
 /// largest power of 2. For a 32-bit value:"
-inline uint32 b2NextPowerOfTwo(uint32 x)
+inline std::uint32_t b2NextPowerOfTwo(std::uint32_t x)
 {
 	x |= (x >> 1);
 	x |= (x >> 2);
@@ -678,7 +678,7 @@ inline uint32 b2NextPowerOfTwo(uint32 x)
 	return x + 1;
 }
 
-inline bool b2IsPowerOfTwo(uint32 x)
+inline bool b2IsPowerOfTwo(std::uint32_t x)
 {
 	bool result = x > 0 && (x & (x - 1)) == 0;
 	return result;

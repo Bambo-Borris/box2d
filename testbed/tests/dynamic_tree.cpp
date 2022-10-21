@@ -38,7 +38,7 @@ public:
 
 		srand(888);
 
-		for (int32 i = 0; i < e_actorCount; ++i)
+		for (std::int32_t i = 0; i < e_actorCount; ++i)
 		{
 			Actor* actor = m_actors + i;
 			GetRandomAABB(&actor->aabb);
@@ -70,7 +70,7 @@ public:
 		B2_NOT_USED(settings);
 
 		m_rayActor = NULL;
-		for (int32 i = 0; i < e_actorCount; ++i)
+		for (std::int32_t i = 0; i < e_actorCount; ++i)
 		{
 			m_actors[i].fraction = 1.0f;
 			m_actors[i].overlap = false;
@@ -78,9 +78,9 @@ public:
 
 		if (m_automated == true)
 		{
-			int32 actionCount = b2Max(1, e_actorCount >> 2);
+			std::int32_t actionCount = b2Max(1, e_actorCount >> 2);
 
-			for (int32 i = 0; i < actionCount; ++i)
+			for (std::int32_t i = 0; i < actionCount; ++i)
 			{
 				Action();
 			}
@@ -89,7 +89,7 @@ public:
 		Query();
 		RayCast();
 
-		for (int32 i = 0; i < e_actorCount; ++i)
+		for (std::int32_t i = 0; i < e_actorCount; ++i)
 		{
 			Actor* actor = m_actors + i;
 			if (actor->proxyId == b2_nullNode)
@@ -130,7 +130,7 @@ public:
 		}
 
 		{
-			int32 height = m_tree.GetHeight();
+			std::int32_t height = m_tree.GetHeight();
 			g_debugDraw.DrawString(5, m_textLine, "dynamic tree height = %d", height);
 			m_textLine += m_textIncrement;
 		}
@@ -160,14 +160,14 @@ public:
 		}
 	}
 
-	bool QueryCallback(int32 proxyId)
+	bool QueryCallback(std::int32_t proxyId)
 	{
 		Actor* actor = (Actor*)m_tree.GetUserData(proxyId);
 		actor->overlap = b2TestOverlap(m_queryAABB, actor->aabb);
 		return true;
 	}
 
-	float RayCastCallback(const b2RayCastInput& input, int32 proxyId)
+	float RayCastCallback(const b2RayCastInput& input, std::int32_t proxyId)
 	{
 		Actor* actor = (Actor*)m_tree.GetUserData(proxyId);
 
@@ -192,7 +192,7 @@ private:
 		b2AABB aabb;
 		float fraction;
 		bool overlap;
-		int32 proxyId;
+		std::int32_t proxyId;
 	};
 
 	void GetRandomAABB(b2AABB* aabb)
@@ -226,9 +226,9 @@ private:
 
 	void CreateProxy()
 	{
-		for (int32 i = 0; i < e_actorCount; ++i)
+		for (std::int32_t i = 0; i < e_actorCount; ++i)
 		{
-			int32 j = rand() % e_actorCount;
+			std::int32_t j = rand() % e_actorCount;
 			Actor* actor = m_actors + j;
 			if (actor->proxyId == b2_nullNode)
 			{
@@ -241,9 +241,9 @@ private:
 
 	void DestroyProxy()
 	{
-		for (int32 i = 0; i < e_actorCount; ++i)
+		for (std::int32_t i = 0; i < e_actorCount; ++i)
 		{
-			int32 j = rand() % e_actorCount;
+			std::int32_t j = rand() % e_actorCount;
 			Actor* actor = m_actors + j;
 			if (actor->proxyId != b2_nullNode)
 			{
@@ -256,9 +256,9 @@ private:
 
 	void MoveProxy()
 	{
-		for (int32 i = 0; i < e_actorCount; ++i)
+		for (std::int32_t i = 0; i < e_actorCount; ++i)
 		{
-			int32 j = rand() % e_actorCount;
+			std::int32_t j = rand() % e_actorCount;
 			Actor* actor = m_actors + j;
 			if (actor->proxyId == b2_nullNode)
 			{
@@ -275,7 +275,7 @@ private:
 
 	void Action()
 	{
-		int32 choice = rand() % 20;
+		std::int32_t choice = rand() % 20;
 
 		switch (choice)
 		{
@@ -296,7 +296,7 @@ private:
 	{
 		m_tree.Query(this, m_queryAABB);
 
-		for (int32 i = 0; i < e_actorCount; ++i)
+		for (std::int32_t i = 0; i < e_actorCount; ++i)
 		{
 			if (m_actors[i].proxyId == b2_nullNode)
 			{
@@ -321,7 +321,7 @@ private:
 		// Brute force ray cast.
 		Actor* bruteActor = NULL;
 		b2RayCastOutput bruteOutput;
-		for (int32 i = 0; i < e_actorCount; ++i)
+		for (std::int32_t i = 0; i < e_actorCount; ++i)
 		{
 			if (m_actors[i].proxyId == b2_nullNode)
 			{
@@ -353,7 +353,7 @@ private:
 	b2RayCastOutput m_rayCastOutput;
 	Actor* m_rayActor;
 	Actor m_actors[e_actorCount];
-	int32 m_stepCount;
+	std::int32_t m_stepCount;
 	bool m_automated;
 };
 

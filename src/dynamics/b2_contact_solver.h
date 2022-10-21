@@ -48,23 +48,23 @@ struct b2ContactVelocityConstraint
 	b2Vec2 normal;
 	b2Mat22 normalMass;
 	b2Mat22 K;
-	int32 indexA;
-	int32 indexB;
+	std::int32_t indexA;
+	std::int32_t indexB;
 	float invMassA, invMassB;
 	float invIA, invIB;
 	float friction;
 	float restitution;
 	float threshold;
 	float tangentSpeed;
-	int32 pointCount;
-	int32 contactIndex;
+	std::int32_t pointCount;
+	std::int32_t contactIndex;
 };
 
 struct b2ContactSolverDef
 {
 	b2TimeStep step;
 	b2Contact** contacts;
-	int32 count;
+	std::int32_t count;
 	b2Position* positions;
 	b2Velocity* velocities;
 	b2StackAllocator* allocator;
@@ -83,7 +83,7 @@ public:
 	void StoreImpulses();
 
 	bool SolvePositionConstraints();
-	bool SolveTOIPositionConstraints(int32 toiIndexA, int32 toiIndexB);
+	bool SolveTOIPositionConstraints(std::int32_t toiIndexA, std::int32_t toiIndexB);
 
 	b2TimeStep m_step;
 	b2Position* m_positions;

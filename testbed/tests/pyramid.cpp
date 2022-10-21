@@ -51,11 +51,11 @@ public:
 			b2Vec2 deltaX(0.5625f, 1.25f);
 			b2Vec2 deltaY(1.125f, 0.0f);
 
-			for (int32 i = 0; i < e_count; ++i)
+			for (std::int32_t i = 0; i < e_count; ++i)
 			{
 				y = x;
 
-				for (int32 j = i; j < e_count; ++j)
+				for (std::int32_t j = i; j < e_count; ++j)
 				{
 					b2BodyDef bd;
 					bd.type = b2_dynamicBody;

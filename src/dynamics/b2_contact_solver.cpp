@@ -38,14 +38,14 @@ struct b2ContactPositionConstraint
 	b2Vec2 localPoints[b2_maxManifoldPoints];
 	b2Vec2 localNormal;
 	b2Vec2 localPoint;
-	int32 indexA;
-	int32 indexB;
+	std::int32_t indexA;
+	std::int32_t indexB;
 	float invMassA, invMassB;
 	b2Vec2 localCenterA, localCenterB;
 	float invIA, invIB;
 	b2Manifold::Type type;
 	float radiusA, radiusB;
-	int32 pointCount;
+	std::int32_t pointCount;
 };
 
 b2ContactSolver::b2ContactSolver(b2ContactSolverDef* def)
@@ -60,7 +60,7 @@ b2ContactSolver::b2ContactSolver(b2ContactSolverDef* def)
 	m_contacts = def->contacts;
 
 	// Initialize position independent portions of the constraints.
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		b2Contact* contact = m_contacts[i];
 
@@ -74,7 +74,7 @@ b2ContactSolver::b2ContactSolver(b2ContactSolverDef* def)
 		b2Body* bodyB = fixtureB->GetBody();
 		b2Manifold* manifold = contact->GetManifold();
 
-		int32 pointCount = manifold->pointCount;
+		std::int32_t pointCount = manifold->pointCount;
 		b2Assert(pointCount > 0);
 
 		b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
@@ -109,7 +109,7 @@ b2ContactSolver::b2ContactSolver(b2ContactSolverDef* def)
 		pc->radiusB = radiusB;
 		pc->type = manifold->type;
 
-		for (int32 j = 0; j < pointCount; ++j)
+		for (std::int32_t j = 0; j < pointCount; ++j)
 		{
 			b2ManifoldPoint* cp = manifold->points + j;
 			b2VelocityConstraintPoint* vcp = vc->points + j;
@@ -145,7 +145,7 @@ b2ContactSolver::~b2ContactSolver()
 // Initialize position dependent portions of the velocity constraints.
 void b2ContactSolver::InitializeVelocityConstraints()
 {
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
 		b2ContactPositionConstraint* pc = m_positionConstraints + i;
@@ -154,8 +154,8 @@ void b2ContactSolver::InitializeVelocityConstraints()
 		float radiusB = pc->radiusB;
 		b2Manifold* manifold = m_contacts[vc->contactIndex]->GetManifold();
 
-		int32 indexA = vc->indexA;
-		int32 indexB = vc->indexB;
+		std::int32_t indexA = vc->indexA;
+		std::int32_t indexB = vc->indexB;
 
 		float mA = vc->invMassA;
 		float mB = vc->invMassB;
@@ -187,8 +187,8 @@ void b2ContactSolver::InitializeVelocityConstraints()
 
 		vc->normal = worldManifold.normal;
 
-		int32 pointCount = vc->pointCount;
-		for (int32 j = 0; j < pointCount; ++j)
+		std::int32_t pointCount = vc->pointCount;
+		for (std::int32_t j = 0; j < pointCount; ++j)
 		{
 			b2VelocityConstraintPoint* vcp = vc->points + j;
 
@@ -257,17 +257,17 @@ void b2ContactSolver::InitializeVelocityConstraints()
 void b2ContactSolver::WarmStart()
 {
 	// Warm start.
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
 
-		int32 indexA = vc->indexA;
-		int32 indexB = vc->indexB;
+		std::int32_t indexA = vc->indexA;
+		std::int32_t indexB = vc->indexB;
 		float mA = vc->invMassA;
 		float iA = vc->invIA;
 		float mB = vc->invMassB;
 		float iB = vc->invIB;
-		int32 pointCount = vc->pointCount;
+		std::int32_t pointCount = vc->pointCount;
 
 		b2Vec2 vA = m_velocities[indexA].v;
 		float wA = m_velocities[indexA].w;
@@ -277,7 +277,7 @@ void b2ContactSolver::WarmStart()
 		b2Vec2 normal = vc->normal;
 		b2Vec2 tangent = b2Cross(normal, 1.0f);
 
-		for (int32 j = 0; j < pointCount; ++j)
+		for (std::int32_t j = 0; j < pointCount; ++j)
 		{
 			b2VelocityConstraintPoint* vcp = vc->points + j;
 			b2Vec2 P = vcp->normalImpulse * normal + vcp->tangentImpulse * tangent;
@@ -296,17 +296,17 @@ void b2ContactSolver::WarmStart()
 
 void b2ContactSolver::SolveVelocityConstraints()
 {
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
 
-		int32 indexA = vc->indexA;
-		int32 indexB = vc->indexB;
+		std::int32_t indexA = vc->indexA;
+		std::int32_t indexB = vc->indexB;
 		float mA = vc->invMassA;
 		float iA = vc->invIA;
 		float mB = vc->invMassB;
 		float iB = vc->invIB;
-		int32 pointCount = vc->pointCount;
+		std::int32_t pointCount = vc->pointCount;
 
 		b2Vec2 vA = m_velocities[indexA].v;
 		float wA = m_velocities[indexA].w;
@@ -321,7 +321,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 
 		// Solve tangent constraints first because non-penetration is more important
 		// than friction.
-		for (int32 j = 0; j < pointCount; ++j)
+		for (std::int32_t j = 0; j < pointCount; ++j)
 		{
 			b2VelocityConstraintPoint* vcp = vc->points + j;
 
@@ -351,7 +351,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 		// Solve normal constraints
 		if (pointCount == 1 || g_blockSolve == false)
 		{
-			for (int32 j = 0; j < pointCount; ++j)
+			for (std::int32_t j = 0; j < pointCount; ++j)
 			{
 				b2VelocityConstraintPoint* vcp = vc->points + j;
 
@@ -608,12 +608,12 @@ void b2ContactSolver::SolveVelocityConstraints()
 
 void b2ContactSolver::StoreImpulses()
 {
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
 		b2Manifold* manifold = m_contacts[vc->contactIndex]->GetManifold();
 
-		for (int32 j = 0; j < vc->pointCount; ++j)
+		for (std::int32_t j = 0; j < vc->pointCount; ++j)
 		{
 			manifold->points[j].normalImpulse = vc->points[j].normalImpulse;
 			manifold->points[j].tangentImpulse = vc->points[j].tangentImpulse;
@@ -623,7 +623,7 @@ void b2ContactSolver::StoreImpulses()
 
 struct b2PositionSolverManifold
 {
-	void Initialize(b2ContactPositionConstraint* pc, const b2Transform& xfA, const b2Transform& xfB, int32 index)
+	void Initialize(b2ContactPositionConstraint* pc, const b2Transform& xfA, const b2Transform& xfB, std::int32_t index)
 	{
 		b2Assert(pc->pointCount > 0);
 
@@ -677,19 +677,19 @@ bool b2ContactSolver::SolvePositionConstraints()
 {
 	float minSeparation = 0.0f;
 
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		b2ContactPositionConstraint* pc = m_positionConstraints + i;
 
-		int32 indexA = pc->indexA;
-		int32 indexB = pc->indexB;
+		std::int32_t indexA = pc->indexA;
+		std::int32_t indexB = pc->indexB;
 		b2Vec2 localCenterA = pc->localCenterA;
 		float mA = pc->invMassA;
 		float iA = pc->invIA;
 		b2Vec2 localCenterB = pc->localCenterB;
 		float mB = pc->invMassB;
 		float iB = pc->invIB;
-		int32 pointCount = pc->pointCount;
+		std::int32_t pointCount = pc->pointCount;
 
 		b2Vec2 cA = m_positions[indexA].c;
 		float aA = m_positions[indexA].a;
@@ -698,7 +698,7 @@ bool b2ContactSolver::SolvePositionConstraints()
 		float aB = m_positions[indexB].a;
 
 		// Solve normal constraints
-		for (int32 j = 0; j < pointCount; ++j)
+		for (std::int32_t j = 0; j < pointCount; ++j)
 		{
 			b2Transform xfA, xfB;
 			xfA.q.Set(aA);
@@ -752,19 +752,19 @@ bool b2ContactSolver::SolvePositionConstraints()
 }
 
 // Sequential position solver for position constraints.
-bool b2ContactSolver::SolveTOIPositionConstraints(int32 toiIndexA, int32 toiIndexB)
+bool b2ContactSolver::SolveTOIPositionConstraints(std::int32_t toiIndexA, std::int32_t toiIndexB)
 {
 	float minSeparation = 0.0f;
 
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		b2ContactPositionConstraint* pc = m_positionConstraints + i;
 
-		int32 indexA = pc->indexA;
-		int32 indexB = pc->indexB;
+		std::int32_t indexA = pc->indexA;
+		std::int32_t indexB = pc->indexB;
 		b2Vec2 localCenterA = pc->localCenterA;
 		b2Vec2 localCenterB = pc->localCenterB;
-		int32 pointCount = pc->pointCount;
+		std::int32_t pointCount = pc->pointCount;
 
 		float mA = 0.0f;
 		float iA = 0.0f;
@@ -789,7 +789,7 @@ bool b2ContactSolver::SolveTOIPositionConstraints(int32 toiIndexA, int32 toiInde
 		float aB = m_positions[indexB].a;
 
 		// Solve normal constraints
-		for (int32 j = 0; j < pointCount; ++j)
+		for (std::int32_t j = 0; j < pointCount; ++j)
 		{
 			b2Transform xfA, xfB;
 			xfA.q.Set(aA);

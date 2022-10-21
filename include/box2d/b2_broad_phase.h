@@ -29,8 +29,8 @@
 
 struct B2_API b2Pair
 {
-	int32 proxyIdA;
-	int32 proxyIdB;
+	std::int32_t proxyIdA;
+	std::int32_t proxyIdB;
 };
 
 /// The broad-phase is used for computing pairs and performing volume queries and ray casts.
@@ -50,29 +50,29 @@ public:
 
 	/// Create a proxy with an initial AABB. Pairs are not reported until
 	/// UpdatePairs is called.
-	int32 CreateProxy(const b2AABB& aabb, void* userData);
+	std::int32_t CreateProxy(const b2AABB& aabb, void* userData);
 
 	/// Destroy a proxy. It is up to the client to remove any pairs.
-	void DestroyProxy(int32 proxyId);
+	void DestroyProxy(std::int32_t proxyId);
 
 	/// Call MoveProxy as many times as you like, then when you are done
 	/// call UpdatePairs to finalized the proxy pairs (for your time step).
-	void MoveProxy(int32 proxyId, const b2AABB& aabb, const b2Vec2& displacement);
+	void MoveProxy(std::int32_t proxyId, const b2AABB& aabb, const b2Vec2& displacement);
 
 	/// Call to trigger a re-processing of it's pairs on the next call to UpdatePairs.
-	void TouchProxy(int32 proxyId);
+	void TouchProxy(std::int32_t proxyId);
 
 	/// Get the fat AABB for a proxy.
-	const b2AABB& GetFatAABB(int32 proxyId) const;
+	const b2AABB& GetFatAABB(std::int32_t proxyId) const;
 
 	/// Get user data from a proxy. Returns nullptr if the id is invalid.
-	void* GetUserData(int32 proxyId) const;
+	void* GetUserData(std::int32_t proxyId) const;
 
 	/// Test overlap of fat AABBs.
-	bool TestOverlap(int32 proxyIdA, int32 proxyIdB) const;
+	bool TestOverlap(std::int32_t proxyIdA, std::int32_t proxyIdB) const;
 
 	/// Get the number of proxies.
-	int32 GetProxyCount() const;
+	std::int32_t GetProxyCount() const;
 
 	/// Update the pairs. This results in pair callbacks. This can only add pairs.
 	template <typename T>
@@ -94,10 +94,10 @@ public:
 	void RayCast(T* callback, const b2RayCastInput& input) const;
 
 	/// Get the height of the embedded tree.
-	int32 GetTreeHeight() const;
+	std::int32_t GetTreeHeight() const;
 
 	/// Get the balance of the embedded tree.
-	int32 GetTreeBalance() const;
+	std::int32_t GetTreeBalance() const;
 
 	/// Get the quality metric of the embedded tree.
 	float GetTreeQuality() const;
@@ -111,54 +111,54 @@ private:
 
 	friend class b2DynamicTree;
 
-	void BufferMove(int32 proxyId);
-	void UnBufferMove(int32 proxyId);
+	void BufferMove(std::int32_t proxyId);
+	void UnBufferMove(std::int32_t proxyId);
 
-	bool QueryCallback(int32 proxyId);
+	bool QueryCallback(std::int32_t proxyId);
 
 	b2DynamicTree m_tree;
 
-	int32 m_proxyCount;
+	std::int32_t m_proxyCount;
 
-	int32* m_moveBuffer;
-	int32 m_moveCapacity;
-	int32 m_moveCount;
+	std::int32_t* m_moveBuffer;
+	std::int32_t m_moveCapacity;
+	std::int32_t m_moveCount;
 
 	b2Pair* m_pairBuffer;
-	int32 m_pairCapacity;
-	int32 m_pairCount;
+	std::int32_t m_pairCapacity;
+	std::int32_t m_pairCount;
 
-	int32 m_queryProxyId;
+	std::int32_t m_queryProxyId;
 };
 
-inline void* b2BroadPhase::GetUserData(int32 proxyId) const
+inline void* b2BroadPhase::GetUserData(std::int32_t proxyId) const
 {
 	return m_tree.GetUserData(proxyId);
 }
 
-inline bool b2BroadPhase::TestOverlap(int32 proxyIdA, int32 proxyIdB) const
+inline bool b2BroadPhase::TestOverlap(std::int32_t proxyIdA, std::int32_t proxyIdB) const
 {
 	const b2AABB& aabbA = m_tree.GetFatAABB(proxyIdA);
 	const b2AABB& aabbB = m_tree.GetFatAABB(proxyIdB);
 	return b2TestOverlap(aabbA, aabbB);
 }
 
-inline const b2AABB& b2BroadPhase::GetFatAABB(int32 proxyId) const
+inline const b2AABB& b2BroadPhase::GetFatAABB(std::int32_t proxyId) const
 {
 	return m_tree.GetFatAABB(proxyId);
 }
 
-inline int32 b2BroadPhase::GetProxyCount() const
+inline std::int32_t b2BroadPhase::GetProxyCount() const
 {
 	return m_proxyCount;
 }
 
-inline int32 b2BroadPhase::GetTreeHeight() const
+inline std::int32_t b2BroadPhase::GetTreeHeight() const
 {
 	return m_tree.GetHeight();
 }
 
-inline int32 b2BroadPhase::GetTreeBalance() const
+inline std::int32_t b2BroadPhase::GetTreeBalance() const
 {
 	return m_tree.GetMaxBalance();
 }
@@ -175,7 +175,7 @@ void b2BroadPhase::UpdatePairs(T* callback)
 	m_pairCount = 0;
 
 	// Perform tree queries for all moving proxies.
-	for (int32 i = 0; i < m_moveCount; ++i)
+	for (std::int32_t i = 0; i < m_moveCount; ++i)
 	{
 		m_queryProxyId = m_moveBuffer[i];
 		if (m_queryProxyId == e_nullProxy)
@@ -192,7 +192,7 @@ void b2BroadPhase::UpdatePairs(T* callback)
 	}
 
 	// Send pairs to caller
-	for (int32 i = 0; i < m_pairCount; ++i)
+	for (std::int32_t i = 0; i < m_pairCount; ++i)
 	{
 		b2Pair* primaryPair = m_pairBuffer + i;
 		void* userDataA = m_tree.GetUserData(primaryPair->proxyIdA);
@@ -202,9 +202,9 @@ void b2BroadPhase::UpdatePairs(T* callback)
 	}
 
 	// Clear move flags
-	for (int32 i = 0; i < m_moveCount; ++i)
+	for (std::int32_t i = 0; i < m_moveCount; ++i)
 	{
-		int32 proxyId = m_moveBuffer[i];
+		std::int32_t proxyId = m_moveBuffer[i];
 		if (proxyId == e_nullProxy)
 		{
 			continue;

@@ -151,9 +151,9 @@ However, we can compute sin+cos of the same angle fast.
 */
 
 b2Island::b2Island(
-	int32 bodyCapacity,
-	int32 contactCapacity,
-	int32 jointCapacity,
+	std::int32_t bodyCapacity,
+	std::int32_t contactCapacity,
+	std::int32_t jointCapacity,
 	b2StackAllocator* allocator,
 	b2ContactListener* listener)
 {
@@ -192,7 +192,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	float h = step.dt;
 
 	// Integrate velocities and apply damping. Initialize the body state.
-	for (int32 i = 0; i < m_bodyCount; ++i)
+	for (std::int32_t i = 0; i < m_bodyCount; ++i)
 	{
 		b2Body* b = m_bodies[i];
 
@@ -253,7 +253,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 		contactSolver.WarmStart();
 	}
 	
-	for (int32 i = 0; i < m_jointCount; ++i)
+	for (std::int32_t i = 0; i < m_jointCount; ++i)
 	{
 		m_joints[i]->InitVelocityConstraints(solverData);
 	}
@@ -262,9 +262,9 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 
 	// Solve velocity constraints
 	timer.Reset();
-	for (int32 i = 0; i < step.velocityIterations; ++i)
+	for (std::int32_t i = 0; i < step.velocityIterations; ++i)
 	{
-		for (int32 j = 0; j < m_jointCount; ++j)
+		for (std::int32_t j = 0; j < m_jointCount; ++j)
 		{
 			m_joints[j]->SolveVelocityConstraints(solverData);
 		}
@@ -277,7 +277,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	profile->solveVelocity = timer.GetMilliseconds();
 
 	// Integrate positions
-	for (int32 i = 0; i < m_bodyCount; ++i)
+	for (std::int32_t i = 0; i < m_bodyCount; ++i)
 	{
 		b2Vec2 c = m_positions[i].c;
 		float a = m_positions[i].a;
@@ -312,12 +312,12 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	// Solve position constraints
 	timer.Reset();
 	bool positionSolved = false;
-	for (int32 i = 0; i < step.positionIterations; ++i)
+	for (std::int32_t i = 0; i < step.positionIterations; ++i)
 	{
 		bool contactsOkay = contactSolver.SolvePositionConstraints();
 
 		bool jointsOkay = true;
-		for (int32 j = 0; j < m_jointCount; ++j)
+		for (std::int32_t j = 0; j < m_jointCount; ++j)
 		{
 			bool jointOkay = m_joints[j]->SolvePositionConstraints(solverData);
 			jointsOkay = jointsOkay && jointOkay;
@@ -332,7 +332,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	}
 
 	// Copy state buffers back to the bodies
-	for (int32 i = 0; i < m_bodyCount; ++i)
+	for (std::int32_t i = 0; i < m_bodyCount; ++i)
 	{
 		b2Body* body = m_bodies[i];
 		body->m_sweep.c = m_positions[i].c;
@@ -353,7 +353,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 		const float linTolSqr = b2_linearSleepTolerance * b2_linearSleepTolerance;
 		const float angTolSqr = b2_angularSleepTolerance * b2_angularSleepTolerance;
 
-		for (int32 i = 0; i < m_bodyCount; ++i)
+		for (std::int32_t i = 0; i < m_bodyCount; ++i)
 		{
 			b2Body* b = m_bodies[i];
 			if (b->GetType() == b2_staticBody)
@@ -377,7 +377,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 
 		if (minSleepTime >= b2_timeToSleep && positionSolved)
 		{
-			for (int32 i = 0; i < m_bodyCount; ++i)
+			for (std::int32_t i = 0; i < m_bodyCount; ++i)
 			{
 				b2Body* b = m_bodies[i];
 				b->SetAwake(false);
@@ -386,13 +386,13 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	}
 }
 
-void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiIndexB)
+void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::int32_t toiIndexB)
 {
 	b2Assert(toiIndexA < m_bodyCount);
 	b2Assert(toiIndexB < m_bodyCount);
 
 	// Initialize the body state.
-	for (int32 i = 0; i < m_bodyCount; ++i)
+	for (std::int32_t i = 0; i < m_bodyCount; ++i)
 	{
 		b2Body* b = m_bodies[i];
 		m_positions[i].c = b->m_sweep.c;
@@ -411,7 +411,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 	b2ContactSolver contactSolver(&contactSolverDef);
 
 	// Solve position constraints.
-	for (int32 i = 0; i < subStep.positionIterations; ++i)
+	for (std::int32_t i = 0; i < subStep.positionIterations; ++i)
 	{
 		bool contactsOkay = contactSolver.SolveTOIPositionConstraints(toiIndexA, toiIndexB);
 		if (contactsOkay)
@@ -422,7 +422,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 
 #if 0
 	// Is the new position really safe?
-	for (int32 i = 0; i < m_contactCount; ++i)
+	for (std::int32_t i = 0; i < m_contactCount; ++i)
 	{
 		b2Contact* c = m_contacts[i];
 		b2Fixture* fA = c->GetFixtureA();
@@ -431,8 +431,8 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 		b2Body* bA = fA->GetBody();
 		b2Body* bB = fB->GetBody();
 
-		int32 indexA = c->GetChildIndexA();
-		int32 indexB = c->GetChildIndexB();
+		std::int32_t indexA = c->GetChildIndexA();
+		std::int32_t indexB = c->GetChildIndexB();
 
 		b2DistanceInput input;
 		input.proxyA.Set(fA->GetShape(), indexA);
@@ -464,7 +464,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 	contactSolver.InitializeVelocityConstraints();
 
 	// Solve velocity constraints.
-	for (int32 i = 0; i < subStep.velocityIterations; ++i)
+	for (std::int32_t i = 0; i < subStep.velocityIterations; ++i)
 	{
 		contactSolver.SolveVelocityConstraints();
 	}
@@ -475,7 +475,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 	float h = subStep.dt;
 
 	// Integrate positions
-	for (int32 i = 0; i < m_bodyCount; ++i)
+	for (std::int32_t i = 0; i < m_bodyCount; ++i)
 	{
 		b2Vec2 c = m_positions[i].c;
 		float a = m_positions[i].a;
@@ -525,7 +525,7 @@ void b2Island::Report(const b2ContactVelocityConstraint* constraints)
 		return;
 	}
 
-	for (int32 i = 0; i < m_contactCount; ++i)
+	for (std::int32_t i = 0; i < m_contactCount; ++i)
 	{
 		b2Contact* c = m_contacts[i];
 
@@ -533,7 +533,7 @@ void b2Island::Report(const b2ContactVelocityConstraint* constraints)
 		
 		b2ContactImpulse impulse;
 		impulse.count = vc->pointCount;
-		for (int32 j = 0; j < vc->pointCount; ++j)
+		for (std::int32_t j = 0; j < vc->pointCount; ++j)
 		{
 			impulse.normalImpulses[j] = vc->points[j].normalImpulse;
 			impulse.tangentImpulses[j] = vc->points[j].tangentImpulse;

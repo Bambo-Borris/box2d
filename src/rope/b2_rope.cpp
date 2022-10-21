@@ -27,7 +27,7 @@
 
 struct b2RopeStretch
 {
-	int32 i1, i2;
+	std::int32_t i1, i2;
 	float invMass1, invMass2;
 	float L;
 	float lambda;
@@ -37,7 +37,7 @@ struct b2RopeStretch
 
 struct b2RopeBend
 {
-	int32 i1, i2, i3;
+	std::int32_t i1, i2, i3;
 	float invMass1, invMass2, invMass3;
 	float invEffectiveMass;
 	float lambda;
@@ -85,7 +85,7 @@ void b2Rope::Create(const b2RopeDef& def)
 	m_vs = (b2Vec2*)b2Alloc(m_count * sizeof(b2Vec2));
 	m_invMasses = (float*)b2Alloc(m_count * sizeof(float));
 
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		m_bindPositions[i] = def.vertices[i];
 		m_ps[i] = def.vertices[i] + m_position;
@@ -109,7 +109,7 @@ void b2Rope::Create(const b2RopeDef& def)
 	m_stretchConstraints = (b2RopeStretch*)b2Alloc(m_stretchCount * sizeof(b2RopeStretch));
 	m_bendConstraints = (b2RopeBend*)b2Alloc(m_bendCount * sizeof(b2RopeBend));
 
-	for (int32 i = 0; i < m_stretchCount; ++i)
+	for (std::int32_t i = 0; i < m_stretchCount; ++i)
 	{
 		b2RopeStretch& c = m_stretchConstraints[i];
 
@@ -126,7 +126,7 @@ void b2Rope::Create(const b2RopeDef& def)
 		c.spring = 0.0f;
 	}
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		b2RopeBend& c = m_bendConstraints[i];
 
@@ -192,7 +192,7 @@ void b2Rope::SetTuning(const b2RopeTuning& tuning)
 
 	const float bendOmega = 2.0f * b2_pi * m_tuning.bendHertz;
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		b2RopeBend& c = m_bendConstraints[i];
 
@@ -224,7 +224,7 @@ void b2Rope::SetTuning(const b2RopeTuning& tuning)
 	
 	const float stretchOmega = 2.0f * b2_pi * m_tuning.stretchHertz;
 
-	for (int32 i = 0; i < m_stretchCount; ++i)
+	for (std::int32_t i = 0; i < m_stretchCount; ++i)
 	{
 		b2RopeStretch& c = m_stretchConstraints[i];
 
@@ -241,7 +241,7 @@ void b2Rope::SetTuning(const b2RopeTuning& tuning)
 	}
 }
 
-void b2Rope::Step(float dt, int32 iterations, const b2Vec2& position)
+void b2Rope::Step(float dt, std::int32_t iterations, const b2Vec2& position)
 {
 	if (dt == 0.0)
 	{
@@ -252,7 +252,7 @@ void b2Rope::Step(float dt, int32 iterations, const b2Vec2& position)
 	float d = expf(- dt * m_tuning.damping);
 
 	// Apply gravity and damping
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		if (m_invMasses[i] > 0.0f)
 		{
@@ -271,24 +271,24 @@ void b2Rope::Step(float dt, int32 iterations, const b2Vec2& position)
 		ApplyBendForces(dt);
 	}
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		m_bendConstraints[i].lambda = 0.0f;
 	}
 
-	for (int32 i = 0; i < m_stretchCount; ++i)
+	for (std::int32_t i = 0; i < m_stretchCount; ++i)
 	{
 		m_stretchConstraints[i].lambda = 0.0f;
 	}
 
 	// Update position
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		m_ps[i] += dt * m_vs[i];
 	}
 
 	// Solve constraints
-	for (int32 i = 0; i < iterations; ++i)
+	for (std::int32_t i = 0; i < iterations; ++i)
 	{
 		if (m_tuning.bendingModel == b2_pbdAngleBendingModel)
 		{
@@ -322,7 +322,7 @@ void b2Rope::Step(float dt, int32 iterations, const b2Vec2& position)
 	}
 
 	// Constrain velocity
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		m_vs[i] = inv_dt * (m_ps[i] - m_p0s[i]);
 		m_p0s[i] = m_ps[i];
@@ -333,19 +333,19 @@ void b2Rope::Reset(const b2Vec2& position)
 {
 	m_position = position;
 
-	for (int32 i = 0; i < m_count; ++i)
+	for (std::int32_t i = 0; i < m_count; ++i)
 	{
 		m_ps[i] = m_bindPositions[i] + m_position;
 		m_p0s[i] = m_bindPositions[i] + m_position;
 		m_vs[i].SetZero();
 	}
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		m_bendConstraints[i].lambda = 0.0f;
 	}
 
-	for (int32 i = 0; i < m_stretchCount; ++i)
+	for (std::int32_t i = 0; i < m_stretchCount; ++i)
 	{
 		m_stretchConstraints[i].lambda = 0.0f;
 	}
@@ -355,7 +355,7 @@ void b2Rope::SolveStretch_PBD()
 {
 	const float stiffness = m_tuning.stretchStiffness;
 
-	for (int32 i = 0; i < m_stretchCount; ++i)
+	for (std::int32_t i = 0; i < m_stretchCount; ++i)
 	{
 		const b2RopeStretch& c = m_stretchConstraints[i];
 
@@ -386,7 +386,7 @@ void b2Rope::SolveStretch_XPBD(float dt)
 {
 	b2Assert(dt > 0.0f);
 
-	for (int32 i = 0; i < m_stretchCount; ++i)
+	for (std::int32_t i = 0; i < m_stretchCount; ++i)
 	{
 		b2RopeStretch& c = m_stretchConstraints[i];
 
@@ -434,7 +434,7 @@ void b2Rope::SolveBend_PBD_Angle()
 {
 	const float stiffness = m_tuning.bendStiffness;
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		const b2RopeBend& c = m_bendConstraints[i];
 
@@ -505,7 +505,7 @@ void b2Rope::SolveBend_XPBD_Angle(float dt)
 {
 	b2Assert(dt > 0.0f);
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		b2RopeBend& c = m_bendConstraints[i];
 
@@ -594,7 +594,7 @@ void b2Rope::ApplyBendForces(float dt)
 	// omega = 2 * pi * hz
 	const float omega = 2.0f * b2_pi * m_tuning.bendHertz;
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		const b2RopeBend& c = m_bendConstraints[i];
 
@@ -674,12 +674,12 @@ void b2Rope::SolveBend_PBD_Distance()
 {
 	const float stiffness = m_tuning.bendStiffness;
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		const b2RopeBend& c = m_bendConstraints[i];
 
-		int32 i1 = c.i1;
-		int32 i2 = c.i3;
+		std::int32_t i1 = c.i1;
+		std::int32_t i2 = c.i3;
 
 		b2Vec2 p1 = m_ps[i1];
 		b2Vec2 p2 = m_ps[i2];
@@ -710,7 +710,7 @@ void b2Rope::SolveBend_PBD_Height()
 {
 	const float stiffness = m_tuning.bendStiffness;
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		const b2RopeBend& c = m_bendConstraints[i];
 
@@ -759,7 +759,7 @@ void b2Rope::SolveBend_PBD_Triangle()
 {
 	const float stiffness = m_tuning.bendStiffness;
 
-	for (int32 i = 0; i < m_bendCount; ++i)
+	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{
 		const b2RopeBend& c = m_bendConstraints[i];
 
@@ -796,7 +796,7 @@ void b2Rope::Draw(b2Draw* draw) const
 	b2Color pg(0.1f, 0.8f, 0.1f);
 	b2Color pd(0.7f, 0.2f, 0.4f);
 
-	for (int32 i = 0; i < m_count - 1; ++i)
+	for (std::int32_t i = 0; i < m_count - 1; ++i)
 	{
 		draw->DrawSegment(m_ps[i], m_ps[i+1], c);
 

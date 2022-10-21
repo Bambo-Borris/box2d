@@ -70,7 +70,7 @@ struct B2_API b2ContactImpulse
 {
 	float normalImpulses[b2_maxManifoldPoints];
 	float tangentImpulses[b2_maxManifoldPoints];
-	int32 count;
+	std::int32_t count;
 };
 
 /// Implement this class to get contact information. You can use these results for

@@ -29,7 +29,7 @@
 /// This is a growable LIFO stack with an initial capacity of N.
 /// If the stack size exceeds the initial capacity, the heap is used
 /// to increase the size of the stack.
-template <typename T, int32 N>
+template <typename T, std::int32_t N>
 class b2GrowableStack
 {
 public:
@@ -74,7 +74,7 @@ public:
 		return m_stack[m_count];
 	}
 
-	int32 GetCount()
+	std::int32_t GetCount()
 	{
 		return m_count;
 	}
@@ -82,6 +82,6 @@ public:
 private:
 	T* m_stack;
 	T m_array[N];
-	int32 m_count;
-	int32 m_capacity;
+	std::int32_t m_count;
+	std::int32_t m_capacity;
 };

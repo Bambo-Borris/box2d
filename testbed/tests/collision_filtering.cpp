@@ -28,16 +28,16 @@
 // The 3 small ones always collide.
 // The 3 large ones never collide.
 // The boxes don't collide with triangles (except if both are small).
-const int16	k_smallGroup = 1;
-const int16 k_largeGroup = -1;
+const std::int16_t	k_smallGroup = 1;
+const std::int16_t k_largeGroup = -1;
 
-const uint16 k_triangleCategory = 0x0002;
-const uint16 k_boxCategory = 0x0004;
-const uint16 k_circleCategory = 0x0008;
+const std::uint16_t k_triangleCategory = 0x0002;
+const std::uint16_t k_boxCategory = 0x0004;
+const std::uint16_t k_circleCategory = 0x0008;
 
-const uint16 k_triangleMask = 0xFFFF;
-const uint16 k_boxMask = 0xFFFF ^ k_triangleCategory;
-const uint16 k_circleMask = 0xFFFF;
+const std::uint16_t k_triangleMask = 0xFFFF;
+const std::uint16_t k_boxMask = 0xFFFF ^ k_triangleCategory;
+const std::uint16_t k_circleMask = 0xFFFF;
 
 class CollisionFiltering : public Test
 {

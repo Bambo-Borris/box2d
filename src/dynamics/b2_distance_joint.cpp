@@ -367,8 +367,8 @@ float b2DistanceJoint::GetCurrentLength() const
 
 void b2DistanceJoint::Dump()
 {
-	int32 indexA = m_bodyA->m_islandIndex;
-	int32 indexB = m_bodyB->m_islandIndex;
+	std::int32_t indexA = m_bodyA->m_islandIndex;
+	std::int32_t indexB = m_bodyB->m_islandIndex;
 
 	b2Dump("  b2DistanceJointDef jd;\n");
 	b2Dump("  jd.bodyA = bodies[%d];\n", indexA);
