@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_TIME_OF_IMPACT_H
-#define B2_TIME_OF_IMPACT_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_math.h"
@@ -59,5 +58,3 @@ struct B2_API b2TOIOutput
 /// again.
 /// Note: use b2Distance to compute the contact point and normal at the time of impact.
 B2_API void b2TimeOfImpact(b2TOIOutput* output, const b2TOIInput* input);
-
-#endif

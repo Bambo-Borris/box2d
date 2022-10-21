@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_FIXTURE_H
-#define B2_FIXTURE_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_body.h"
@@ -367,5 +366,3 @@ inline const b2AABB& b2Fixture::GetAABB(int32 childIndex) const
 	b2Assert(0 <= childIndex && childIndex < m_proxyCount);
 	return m_proxies[childIndex].aabb;
 }
-
-#endif

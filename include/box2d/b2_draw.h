@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_DRAW_H
-#define B2_DRAW_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_math.h"
@@ -98,5 +97,3 @@ public:
 protected:
 	uint32 m_drawFlags;
 };
-
-#endif

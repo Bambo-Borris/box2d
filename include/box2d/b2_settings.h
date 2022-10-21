@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_SETTINGS_H
-#define B2_SETTINGS_H
+#pragma once
 
 #include "b2_types.h"
 #include "b2_api.h"
@@ -123,5 +122,3 @@ inline void b2Log(const char* string, ...)
 #endif // B2_USER_SETTINGS
 
 #include "b2_common.h"
-
-#endif

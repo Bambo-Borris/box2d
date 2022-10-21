@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_ROPE_H
-#define B2_ROPE_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_math.h"
@@ -151,5 +150,3 @@ private:
 
 	b2RopeTuning m_tuning;
 };
-
-#endif

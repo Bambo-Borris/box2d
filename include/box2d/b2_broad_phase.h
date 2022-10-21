@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_BROAD_PHASE_H
-#define B2_BROAD_PHASE_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_settings.h"
@@ -234,5 +233,3 @@ inline void b2BroadPhase::ShiftOrigin(const b2Vec2& newOrigin)
 {
 	m_tree.ShiftOrigin(newOrigin);
 }
-
-#endif

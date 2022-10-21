@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef DRAW_H
-#define DRAW_H
+#pragma once
 
 #define GLFW_INCLUDE_NONE
 #include "glad/gl.h"
@@ -93,5 +92,3 @@ public:
 extern DebugDraw g_debugDraw;
 extern Camera g_camera;
 extern GLFWwindow* g_mainWindow;
-
-#endif

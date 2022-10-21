@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_EDGE_SHAPE_H
-#define B2_EDGE_SHAPE_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_shape.h"
@@ -82,5 +81,3 @@ inline b2EdgeShape::b2EdgeShape()
 	m_vertex3.y = 0.0f;
 	m_oneSided = false;
 }
-
-#endif

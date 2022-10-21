@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_MATH_H
-#define B2_MATH_H
+#pragma once
 
 #include <math.h>
 
@@ -713,5 +712,3 @@ inline void b2Sweep::Normalize()
 	a0 -= d;
 	a -= d;
 }
-
-#endif

@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_CONTACT_SOLVER_H
-#define B2_CONTACT_SOLVER_H
+#pragma once
 
 #include "box2d/b2_collision.h"
 #include "box2d/b2_math.h"
@@ -95,6 +94,3 @@ public:
 	b2Contact** m_contacts;
 	int m_count;
 };
-
-#endif
-
