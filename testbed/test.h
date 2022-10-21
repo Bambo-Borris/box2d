@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef TEST_H
-#define TEST_H
+#pragma once
 
 #include "box2d/box2d.h"
 #include "draw.h"
@@ -152,5 +151,3 @@ struct TestEntry
 #define MAX_TESTS 256
 extern TestEntry g_testEntries[MAX_TESTS];
 extern int g_testCount;
-
-#endif

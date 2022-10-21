@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_WHEEL_JOINT_H
-#define B2_WHEEL_JOINT_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_joint.h"
@@ -236,5 +235,3 @@ inline float b2WheelJoint::GetMaxMotorTorque() const
 {
 	return m_maxMotorTorque;
 }
-
-#endif

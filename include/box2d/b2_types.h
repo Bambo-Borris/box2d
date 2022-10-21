@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_TYPES_H
-#define B2_TYPES_H
+#pragma once
 
 typedef signed char	int8;
 typedef signed short int16;
@@ -29,5 +28,3 @@ typedef signed int int32;
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
-
-#endif

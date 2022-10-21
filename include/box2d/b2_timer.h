@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_TIMER_H
-#define B2_TIMER_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_settings.h"
@@ -51,5 +50,3 @@ private:
 	unsigned long long m_start_usec;
 #endif
 };
-
-#endif

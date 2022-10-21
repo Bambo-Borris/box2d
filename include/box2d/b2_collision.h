@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_COLLISION_H
-#define B2_COLLISION_H
+#pragma once
 
 #include <limits.h>
 
@@ -279,5 +278,3 @@ inline bool b2TestOverlap(const b2AABB& a, const b2AABB& b)
 
 	return true;
 }
-
-#endif

@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_WORLD_CALLBACKS_H
-#define B2_WORLD_CALLBACKS_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_settings.h"
@@ -157,5 +156,3 @@ public:
 	virtual float ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
 									const b2Vec2& normal, float fraction) = 0;
 };
-
-#endif

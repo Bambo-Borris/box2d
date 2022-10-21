@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef BOX2D_H
-#define BOX2D_H
+#pragma once
 
 // These include files constitute the main Box2D API
 
@@ -54,5 +53,3 @@
 #include "b2_revolute_joint.h"
 #include "b2_weld_joint.h"
 #include "b2_wheel_joint.h"
-
-#endif

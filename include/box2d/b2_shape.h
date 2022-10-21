@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_SHAPE_H
-#define B2_SHAPE_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_math.h"
@@ -106,5 +105,3 @@ inline b2Shape::Type b2Shape::GetType() const
 {
 	return m_type;
 }
-
-#endif

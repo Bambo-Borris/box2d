@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_WELD_JOINT_H
-#define B2_WELD_JOINT_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_joint.h"
@@ -129,5 +128,3 @@ protected:
 	float m_invIB;
 	b2Mat33 m_mass;
 };
-
-#endif

@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_BLOCK_ALLOCATOR_H
-#define B2_BLOCK_ALLOCATOR_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_settings.h"
@@ -56,5 +55,3 @@ private:
 
 	b2Block* m_freeLists[b2_blockSizeCount];
 };
-
-#endif

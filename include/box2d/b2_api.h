@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_API_H
-#define B2_API_H
+#pragma once
 
 #ifdef B2_SHARED
   #if defined _WIN32 || defined __CYGWIN__
@@ -47,6 +46,4 @@
   #endif
 #else
   #define B2_API
-#endif
-
 #endif

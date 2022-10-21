@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_CONTACT_H
-#define B2_CONTACT_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_collision.h"
@@ -382,5 +381,3 @@ inline float b2Contact::GetTangentSpeed() const
 {
 	return m_tangentSpeed;
 }
-
-#endif

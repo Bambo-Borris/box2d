@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_CONTACT_MANAGER_H
-#define B2_CONTACT_MANAGER_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_broad_phase.h"
@@ -53,5 +52,3 @@ public:
 	b2ContactListener* m_contactListener;
 	b2BlockAllocator* m_allocator;
 };
-
-#endif

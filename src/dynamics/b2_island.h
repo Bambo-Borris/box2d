@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_ISLAND_H
-#define B2_ISLAND_H
+#pragma once
 
 #include "box2d/b2_body.h"
 #include "box2d/b2_math.h"
@@ -93,5 +92,3 @@ public:
 	int32 m_contactCapacity;
 	int32 m_jointCapacity;
 };
-
-#endif

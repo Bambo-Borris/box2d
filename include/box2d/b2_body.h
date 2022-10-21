@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_BODY_H
-#define B2_BODY_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_math.h"
@@ -881,5 +880,3 @@ inline const b2World* b2Body::GetWorld() const
 {
 	return m_world;
 }
-
-#endif

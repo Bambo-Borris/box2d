@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_REVOLUTE_JOINT_H
-#define B2_REVOLUTE_JOINT_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_joint.h"
@@ -207,5 +206,3 @@ inline float b2RevoluteJoint::GetMotorSpeed() const
 {
 	return m_motorSpeed;
 }
-
-#endif

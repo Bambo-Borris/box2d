@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_COMMON_H
-#define B2_COMMON_H
+#pragma once
 
 #include "b2_settings.h"
 
@@ -134,5 +133,3 @@ struct b2Version
 
 /// Current version.
 extern B2_API b2Version b2_version;
-
-#endif

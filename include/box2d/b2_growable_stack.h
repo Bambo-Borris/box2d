@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_GROWABLE_STACK_H
-#define B2_GROWABLE_STACK_H
+#pragma once
 
 #include <string.h>
 
@@ -86,6 +85,3 @@ private:
 	int32 m_count;
 	int32 m_capacity;
 };
-
-
-#endif

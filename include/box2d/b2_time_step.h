@@ -19,8 +19,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-#ifndef B2_TIME_STEP_H
-#define B2_TIME_STEP_H
+
+#pragma once
 
 #include "b2_api.h"
 #include "b2_math.h"
@@ -70,5 +70,3 @@ struct B2_API b2SolverData
 	b2Position* positions;
 	b2Velocity* velocities;
 };
-
-#endif

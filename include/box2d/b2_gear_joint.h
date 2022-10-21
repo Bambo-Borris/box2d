@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_GEAR_JOINT_H
-#define B2_GEAR_JOINT_H
+#pragma once
 
 #include "b2_joint.h"
 
@@ -127,5 +126,3 @@ protected:
 	float m_JwA, m_JwB, m_JwC, m_JwD;
 	float m_mass;
 };
-
-#endif

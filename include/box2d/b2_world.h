@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_WORLD_H
-#define B2_WORLD_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_block_allocator.h"
@@ -341,5 +340,3 @@ inline const b2Profile& b2World::GetProfile() const
 {
 	return m_profile;
 }
-
-#endif

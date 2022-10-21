@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef B2_FRICTION_JOINT_H
-#define B2_FRICTION_JOINT_H
+#pragma once
 
 #include "b2_api.h"
 #include "b2_joint.h"
@@ -120,5 +119,3 @@ protected:
 	b2Mat22 m_linearMass;
 	float m_angularMass;
 };
-
-#endif
