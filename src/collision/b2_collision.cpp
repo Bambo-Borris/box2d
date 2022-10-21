@@ -57,7 +57,7 @@ void b2WorldManifold::Initialize(const b2Manifold* manifold,
 			normal = b2Mul(xfA.q, manifold->localNormal);
 			b2Vec2 planePoint = b2Mul(xfA, manifold->localPoint);
 			
-			for (int32 i = 0; i < manifold->pointCount; ++i)
+			for (std::int32_t i = 0; i < manifold->pointCount; ++i)
 			{
 				b2Vec2 clipPoint = b2Mul(xfB, manifold->points[i].localPoint);
 				b2Vec2 cA = clipPoint + (radiusA - b2Dot(clipPoint - planePoint, normal)) * normal;
@@ -73,7 +73,7 @@ void b2WorldManifold::Initialize(const b2Manifold* manifold,
 			normal = b2Mul(xfB.q, manifold->localNormal);
 			b2Vec2 planePoint = b2Mul(xfB, manifold->localPoint);
 
-			for (int32 i = 0; i < manifold->pointCount; ++i)
+			for (std::int32_t i = 0; i < manifold->pointCount; ++i)
 			{
 				b2Vec2 clipPoint = b2Mul(xfA, manifold->points[i].localPoint);
 				b2Vec2 cB = clipPoint + (radiusB - b2Dot(clipPoint - planePoint, normal)) * normal;
@@ -92,20 +92,20 @@ void b2WorldManifold::Initialize(const b2Manifold* manifold,
 void b2GetPointStates(b2PointState state1[b2_maxManifoldPoints], b2PointState state2[b2_maxManifoldPoints],
 					  const b2Manifold* manifold1, const b2Manifold* manifold2)
 {
-	for (int32 i = 0; i < b2_maxManifoldPoints; ++i)
+	for (std::int32_t i = 0; i < b2_maxManifoldPoints; ++i)
 	{
 		state1[i] = b2_nullState;
 		state2[i] = b2_nullState;
 	}
 
 	// Detect persists and removes.
-	for (int32 i = 0; i < manifold1->pointCount; ++i)
+	for (std::int32_t i = 0; i < manifold1->pointCount; ++i)
 	{
 		b2ContactID id = manifold1->points[i].id;
 
 		state1[i] = b2_removeState;
 
-		for (int32 j = 0; j < manifold2->pointCount; ++j)
+		for (std::int32_t j = 0; j < manifold2->pointCount; ++j)
 		{
 			if (manifold2->points[j].id.key == id.key)
 			{
@@ -116,13 +116,13 @@ void b2GetPointStates(b2PointState state1[b2_maxManifoldPoints], b2PointState st
 	}
 
 	// Detect persists and adds.
-	for (int32 i = 0; i < manifold2->pointCount; ++i)
+	for (std::int32_t i = 0; i < manifold2->pointCount; ++i)
 	{
 		b2ContactID id = manifold2->points[i].id;
 
 		state2[i] = b2_addState;
 
-		for (int32 j = 0; j < manifold1->pointCount; ++j)
+		for (std::int32_t j = 0; j < manifold1->pointCount; ++j)
 		{
 			if (manifold1->points[j].id.key == id.key)
 			{
@@ -145,7 +145,7 @@ bool b2AABB::RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const
 
 	b2Vec2 normal;
 
-	for (int32 i = 0; i < 2; ++i)
+	for (std::int32_t i = 0; i < 2; ++i)
 	{
 		if (absD(i) < b2_epsilon)
 		{
@@ -202,11 +202,11 @@ bool b2AABB::RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const
 }
 
 // Sutherland-Hodgman clipping.
-int32 b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
-						const b2Vec2& normal, float offset, int32 vertexIndexA)
+std::int32_t b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
+						const b2Vec2& normal, float offset, std::int32_t vertexIndexA)
 {
 	// Start with no output points
-	int32 count = 0;
+	std::int32_t count = 0;
 
 	// Calculate the distance of end points to the line
 	float distance0 = b2Dot(normal, vIn[0].v) - offset;
@@ -224,7 +224,7 @@ int32 b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
 		vOut[count].v = vIn[0].v + interp * (vIn[1].v - vIn[0].v);
 
 		// VertexA is hitting edgeB.
-		vOut[count].id.cf.indexA = static_cast<uint8>(vertexIndexA);
+		vOut[count].id.cf.indexA = static_cast<std::uint8_t>(vertexIndexA);
 		vOut[count].id.cf.indexB = vIn[0].id.cf.indexB;
 		vOut[count].id.cf.typeA = b2ContactFeature::e_vertex;
 		vOut[count].id.cf.typeB = b2ContactFeature::e_face;
@@ -236,8 +236,8 @@ int32 b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
 	return count;
 }
 
-bool b2TestOverlap(	const b2Shape* shapeA, int32 indexA,
-					const b2Shape* shapeB, int32 indexB,
+bool b2TestOverlap(	const b2Shape* shapeA, std::int32_t indexA,
+					const b2Shape* shapeB, std::int32_t indexB,
 					const b2Transform& xfA, const b2Transform& xfB)
 {
 	b2DistanceInput input;

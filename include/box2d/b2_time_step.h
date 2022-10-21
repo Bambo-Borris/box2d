@@ -44,8 +44,8 @@ struct B2_API b2TimeStep
 	float dt;			// time step
 	float inv_dt;		// inverse time step (0 if dt == 0).
 	float dtRatio;	// dt * inv_dt0
-	int32 velocityIterations;
-	int32 positionIterations;
+	std::int32_t velocityIterations;
+	std::int32_t positionIterations;
 	bool warmStarting;
 };
 

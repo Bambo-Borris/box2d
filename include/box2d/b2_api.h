@@ -22,6 +22,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 #ifdef B2_SHARED
   #if defined _WIN32 || defined __CYGWIN__
     #ifdef box2d_EXPORTS

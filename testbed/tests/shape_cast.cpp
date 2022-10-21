@@ -126,7 +126,7 @@ public:
 
 		b2Vec2 vertices[b2_maxPolygonVertices];
 
-		for (int32 i = 0; i < m_countA; ++i)
+		for (std::int32_t i = 0; i < m_countA; ++i)
 		{
 			vertices[i] = b2Mul(m_transformA, m_vAs[i]);
 		}
@@ -140,7 +140,7 @@ public:
 			g_debugDraw.DrawPolygon(vertices, m_countA, b2Color(0.9f, 0.9f, 0.9f));
 		}
 
-		for (int32 i = 0; i < m_countB; ++i)
+		for (std::int32_t i = 0; i < m_countB; ++i)
 		{
 			vertices[i] = b2Mul(m_transformB, m_vBs[i]);
 		}
@@ -154,7 +154,7 @@ public:
 			g_debugDraw.DrawPolygon(vertices, m_countB, b2Color(0.5f, 0.9f, 0.5f));
 		}
 
-		for (int32 i = 0; i < m_countB; ++i)
+		for (std::int32_t i = 0; i < m_countB; ++i)
 		{
 			vertices[i] = b2Mul(transformB2, m_vBs[i]);
 		}
@@ -178,11 +178,11 @@ public:
 	}
 
 	b2Vec2 m_vAs[b2_maxPolygonVertices];
-	int32 m_countA;
+	std::int32_t m_countA;
 	float m_radiusA;
 
 	b2Vec2 m_vBs[b2_maxPolygonVertices];
-	int32 m_countB;
+	std::int32_t m_countB;
 	float m_radiusB;
 
 	b2Transform m_transformA;

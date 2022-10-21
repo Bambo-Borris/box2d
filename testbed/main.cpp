@@ -40,7 +40,7 @@
 #endif
 
 GLFWwindow* g_mainWindow = nullptr;
-static int32 s_testSelection = 0;
+static std::int32_t s_testSelection = 0;
 static Test* s_test = nullptr;
 static Settings s_settings;
 static bool s_rightMouseDown = false;
@@ -268,7 +268,7 @@ static void CharCallback(GLFWwindow* window, unsigned int c)
 	ImGui_ImplGlfw_CharCallback(window, c);
 }
 
-static void MouseButtonCallback(GLFWwindow* window, int32 button, int32 action, int32 mods)
+static void MouseButtonCallback(GLFWwindow* window, std::int32_t button, std::int32_t action, std::int32_t mods)
 {
 	ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
 

@@ -30,8 +30,8 @@
 #include <stdio.h>
 
 B2_API float b2_toiTime, b2_toiMaxTime;
-B2_API int32 b2_toiCalls, b2_toiIters, b2_toiMaxIters;
-B2_API int32 b2_toiRootIters, b2_toiMaxRootIters;
+B2_API std::int32_t b2_toiCalls, b2_toiIters, b2_toiMaxIters;
+B2_API std::int32_t b2_toiRootIters, b2_toiMaxRootIters;
 
 //
 struct b2SeparationFunction
@@ -52,7 +52,7 @@ struct b2SeparationFunction
 	{
 		m_proxyA = proxyA;
 		m_proxyB = proxyB;
-		int32 count = cache->count;
+		std::int32_t count = cache->count;
 		b2Assert(0 < count && count < 3);
 
 		m_sweepA = sweepA;
@@ -126,7 +126,7 @@ struct b2SeparationFunction
 	}
 
 	//
-	float FindMinSeparation(int32* indexA, int32* indexB, float t) const
+	float FindMinSeparation(std::int32_t* indexA, std::int32_t* indexB, float t) const
 	{
 		b2Transform xfA, xfB;
 		m_sweepA.GetTransform(&xfA, t);
@@ -195,7 +195,7 @@ struct b2SeparationFunction
 	}
 
 	//
-	float Evaluate(int32 indexA, int32 indexB, float t) const
+	float Evaluate(std::int32_t indexA, std::int32_t indexB, float t) const
 	{
 		b2Transform xfA, xfB;
 		m_sweepA.GetTransform(&xfA, t);
@@ -283,8 +283,8 @@ void b2TimeOfImpact(b2TOIOutput* output, const b2TOIInput* input)
 	b2Assert(target > tolerance);
 
 	float t1 = 0.0f;
-	const int32 k_maxIterations = 20;	// TODO_ERIN b2Settings
-	int32 iter = 0;
+	const std::int32_t k_maxIterations = 20;	// TODO_ERIN b2Settings
+	std::int32_t iter = 0;
 
 	// Prepare input for distance query.
 	b2SimplexCache cache;
@@ -332,14 +332,14 @@ void b2TimeOfImpact(b2TOIOutput* output, const b2TOIInput* input)
 #if 0
 		// Dump the curve seen by the root finder
 		{
-			const int32 N = 100;
+			const std::int32_t N = 100;
 			float dx = 1.0f / N;
 			float xs[N+1];
 			float fs[N+1];
 
 			float x = 0.0f;
 
-			for (int32 i = 0; i <= N; ++i)
+			for (std::int32_t i = 0; i <= N; ++i)
 			{
 				sweepA.GetTransform(&xfA, x);
 				sweepB.GetTransform(&xfB, x);
@@ -359,11 +359,11 @@ void b2TimeOfImpact(b2TOIOutput* output, const b2TOIInput* input)
 		// resolving the deepest point. This loop is bounded by the number of vertices.
 		bool done = false;
 		float t2 = tMax;
-		int32 pushBackIter = 0;
+		std::int32_t pushBackIter = 0;
 		for (;;)
 		{
 			// Find the deepest point at t2. Store the witness point indices.
-			int32 indexA, indexB;
+			std::int32_t indexA, indexB;
 			float s2 = fcn.FindMinSeparation(&indexA, &indexB, t2);
 
 			// Is the final configuration separated?
@@ -408,7 +408,7 @@ void b2TimeOfImpact(b2TOIOutput* output, const b2TOIInput* input)
 			}
 
 			// Compute 1D root of: f(x) - target = 0
-			int32 rootIterCount = 0;
+			std::int32_t rootIterCount = 0;
 			float a1 = t1, a2 = t2;
 			for (;;)
 			{

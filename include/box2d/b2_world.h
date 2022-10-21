@@ -96,8 +96,8 @@ public:
 	/// @param velocityIterations for the velocity constraint solver.
 	/// @param positionIterations for the position constraint solver.
 	void Step(	float timeStep,
-				int32 velocityIterations,
-				int32 positionIterations);
+				std::int32_t velocityIterations,
+				std::int32_t positionIterations);
 
 	/// Manually clear the force buffer on all bodies. By default, forces are cleared automatically
 	/// after each call to Step. The default behavior is modified by calling SetAutoClearForces.
@@ -162,22 +162,22 @@ public:
 	bool GetSubStepping() const { return m_subStepping; }
 
 	/// Get the number of broad-phase proxies.
-	int32 GetProxyCount() const;
+	std::int32_t GetProxyCount() const;
 
 	/// Get the number of bodies.
-	int32 GetBodyCount() const;
+	std::int32_t GetBodyCount() const;
 
 	/// Get the number of joints.
-	int32 GetJointCount() const;
+	std::int32_t GetJointCount() const;
 
 	/// Get the number of contacts (each may have 0 or more contact points).
-	int32 GetContactCount() const;
+	std::int32_t GetContactCount() const;
 
 	/// Get the height of the dynamic tree.
-	int32 GetTreeHeight() const;
+	std::int32_t GetTreeHeight() const;
 
 	/// Get the balance of the dynamic tree.
-	int32 GetTreeBalance() const;
+	std::int32_t GetTreeBalance() const;
 
 	/// Get the quality metric of the dynamic tree. The smaller the better.
 	/// The minimum is 1.
@@ -233,8 +233,8 @@ private:
 	b2Body* m_bodyList;
 	b2Joint* m_jointList;
 
-	int32 m_bodyCount;
-	int32 m_jointCount;
+	std::int32_t m_bodyCount;
+	std::int32_t m_jointCount;
 
 	b2Vec2 m_gravity;
 	bool m_allowSleep;
@@ -290,17 +290,17 @@ inline const b2Contact* b2World::GetContactList() const
 	return m_contactManager.m_contactList;
 }
 
-inline int32 b2World::GetBodyCount() const
+inline std::int32_t b2World::GetBodyCount() const
 {
 	return m_bodyCount;
 }
 
-inline int32 b2World::GetJointCount() const
+inline std::int32_t b2World::GetJointCount() const
 {
 	return m_jointCount;
 }
 
-inline int32 b2World::GetContactCount() const
+inline std::int32_t b2World::GetContactCount() const
 {
 	return m_contactManager.m_contactCount;
 }

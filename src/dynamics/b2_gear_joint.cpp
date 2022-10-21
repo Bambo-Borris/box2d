@@ -420,11 +420,11 @@ float b2GearJoint::GetRatio() const
 
 void b2GearJoint::Dump()
 {
-	int32 indexA = m_bodyA->m_islandIndex;
-	int32 indexB = m_bodyB->m_islandIndex;
+	std::int32_t indexA = m_bodyA->m_islandIndex;
+	std::int32_t indexB = m_bodyB->m_islandIndex;
 
-	int32 index1 = m_joint1->m_index;
-	int32 index2 = m_joint2->m_index;
+	std::int32_t index1 = m_joint1->m_index;
+	std::int32_t index2 = m_joint2->m_index;
 
 	b2Dump("  b2GearJointDef jd;\n");
 	b2Dump("  jd.bodyA = bodies[%d];\n", indexA);

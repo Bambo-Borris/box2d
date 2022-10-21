@@ -328,8 +328,8 @@ float b2PulleyJoint::GetCurrentLengthB() const
 
 void b2PulleyJoint::Dump()
 {
-	int32 indexA = m_bodyA->m_islandIndex;
-	int32 indexB = m_bodyB->m_islandIndex;
+	std::int32_t indexA = m_bodyA->m_islandIndex;
+	std::int32_t indexB = m_bodyB->m_islandIndex;
 
 	b2Dump("  b2PulleyJointDef jd;\n");
 	b2Dump("  jd.bodyA = bodies[%d];\n", indexA);

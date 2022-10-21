@@ -48,7 +48,7 @@ b2Shape* b2EdgeShape::Clone(b2BlockAllocator* allocator) const
 	return clone;
 }
 
-int32 b2EdgeShape::GetChildCount() const
+std::int32_t b2EdgeShape::GetChildCount() const
 {
 	return 1;
 }
@@ -65,7 +65,7 @@ bool b2EdgeShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 // p1 + t * d = v1 + s * e
 // s * e - t * d = p1 - v1
 bool b2EdgeShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
-							const b2Transform& xf, int32 childIndex) const
+							const b2Transform& xf, std::int32_t childIndex) const
 {
 	B2_NOT_USED(childIndex);
 
@@ -133,7 +133,7 @@ bool b2EdgeShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 	return true;
 }
 
-void b2EdgeShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, int32 childIndex) const
+void b2EdgeShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, std::int32_t childIndex) const
 {
 	B2_NOT_USED(childIndex);
 

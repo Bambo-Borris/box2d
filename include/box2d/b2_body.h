@@ -430,9 +430,9 @@ private:
 
 	b2BodyType m_type;
 
-	uint16 m_flags;
+	std::uint16_t m_flags;
 
-	int32 m_islandIndex;
+	std::int32_t m_islandIndex;
 
 	b2Transform m_xf;		// the body origin transform
 	b2Sweep m_sweep;		// the swept motion for CCD
@@ -448,7 +448,7 @@ private:
 	b2Body* m_next;
 
 	b2Fixture* m_fixtureList;
-	int32 m_fixtureCount;
+	std::int32_t m_fixtureCount;
 
 	b2JointEdge* m_jointList;
 	b2ContactEdge* m_contactList;

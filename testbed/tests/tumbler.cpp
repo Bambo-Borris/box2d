@@ -96,7 +96,7 @@ public:
 	}
 
 	b2RevoluteJoint* m_joint;
-	int32 m_count;
+	std::int32_t m_count;
 };
 
 static int testIndex = RegisterTest("Benchmark", "Tumbler", Tumbler::Create);

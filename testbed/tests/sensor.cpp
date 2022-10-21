@@ -70,7 +70,7 @@ public:
 			b2CircleShape shape;
 			shape.m_radius = 1.0f;
 
-			for (int32 i = 0; i < e_count; ++i)
+			for (std::int32_t i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -154,7 +154,7 @@ public:
 
 		// Traverse the contact results. Apply a force on shapes
 		// that overlap the sensor.
-		for (int32 i = 0; i < e_count; ++i)
+		for (std::int32_t i = 0; i < e_count; ++i)
 		{
 			if (m_touching[i] == false)
 			{

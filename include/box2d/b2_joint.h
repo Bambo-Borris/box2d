@@ -181,7 +181,7 @@ protected:
 	b2Body* m_bodyA;
 	b2Body* m_bodyB;
 
-	int32 m_index;
+	std::int32_t m_index;
 
 	bool m_islandFlag;
 	bool m_collideConnected;

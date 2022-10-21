@@ -74,8 +74,8 @@ DOCTEST_TEST_CASE("joint reactions")
 
 	const float timeStep = 1.f / 60.f;
 	const float invTimeStep = 60.0f;
-	const int32 velocityIterations = 6;
-	const int32 positionIterations = 2;
+	const std::int32_t velocityIterations = 6;
+	const std::int32_t positionIterations = 2;
 
 	world.Step(timeStep, velocityIterations, positionIterations);
 

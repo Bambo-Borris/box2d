@@ -83,14 +83,14 @@ DOCTEST_TEST_CASE("hello world")
 	// second (60Hz) and 10 iterations. This provides a high quality simulation
 	// in most game scenarios.
 	float timeStep = 1.0f / 60.0f;
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
+	std::int32_t velocityIterations = 6;
+	std::int32_t positionIterations = 2;
 
 	b2Vec2 position = body->GetPosition();
 	float angle = body->GetAngle();
 
 	// This is our little game loop.
-	for (int32 i = 0; i < 60; ++i)
+	for (std::int32_t i = 0; i < 60; ++i)
 	{
 		// Instruct the world to perform a single step of simulation.
 		// It is generally best to keep the time step and iterations fixed.
