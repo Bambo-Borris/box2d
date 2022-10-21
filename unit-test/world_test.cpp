@@ -56,8 +56,8 @@ DOCTEST_TEST_CASE("begin contact")
 	bodyB->SetTransform(b2Vec2(100.f, 0.f), 0.f);
 
 	const float timeStep = 1.f / 60.f;
-	const int32 velocityIterations = 6;
-	const int32 positionIterations = 2;
+	const std::int32_t velocityIterations = 6;
+	const std::int32_t positionIterations = 2;
 
 	world.Step(timeStep, velocityIterations, positionIterations);
 

@@ -43,16 +43,16 @@ struct B2_API b2Filter
 	}
 
 	/// The collision category bits. Normally you would just set one bit.
-	uint16 categoryBits;
+	std::uint16_t categoryBits;
 
 	/// The collision mask bits. This states the categories that this
 	/// shape would accept for collision.
-	uint16 maskBits;
+	std::uint16_t maskBits;
 
 	/// Collision groups allow a certain group of objects to never collide (negative)
 	/// or always collide (positive). Zero means no collision group. Non-zero group
 	/// filtering always wins against the mask bits.
-	int16 groupIndex;
+	std::int16_t groupIndex;
 };
 
 /// A fixture definition is used to create a fixture. This class defines an
@@ -103,8 +103,8 @@ struct B2_API b2FixtureProxy
 {
 	b2AABB aabb;
 	b2Fixture* fixture;
-	int32 childIndex;
-	int32 proxyId;
+	std::int32_t childIndex;
+	std::int32_t proxyId;
 };
 
 /// A fixture is used to attach a shape to a body for collision detection. A fixture
@@ -166,7 +166,7 @@ public:
 	/// @param output the ray-cast results.
 	/// @param input the ray-cast input parameters.
 	/// @param childIndex the child shape index (e.g. edge index)
-	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input, int32 childIndex) const;
+	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input, std::int32_t childIndex) const;
 
 	/// Get the mass data for this fixture. The mass data is based on the density and
 	/// the shape. The rotational inertia is about the shape's origin. This operation
@@ -204,10 +204,10 @@ public:
 	/// Get the fixture's AABB. This AABB may be enlarge and/or stale.
 	/// If you need a more accurate AABB, compute it using the shape and
 	/// the body transform.
-	const b2AABB& GetAABB(int32 childIndex) const;
+	const b2AABB& GetAABB(std::int32_t childIndex) const;
 
 	/// Dump this fixture to the log file.
-	void Dump(int32 bodyIndex);
+	void Dump(std::int32_t bodyIndex);
 
 protected:
 
@@ -241,7 +241,7 @@ protected:
 	float m_restitutionThreshold;
 
 	b2FixtureProxy* m_proxies;
-	int32 m_proxyCount;
+	std::int32_t m_proxyCount;
 
 	b2Filter m_filter;
 
@@ -351,7 +351,7 @@ inline bool b2Fixture::TestPoint(const b2Vec2& p) const
 	return m_shape->TestPoint(m_body->GetTransform(), p);
 }
 
-inline bool b2Fixture::RayCast(b2RayCastOutput* output, const b2RayCastInput& input, int32 childIndex) const
+inline bool b2Fixture::RayCast(b2RayCastOutput* output, const b2RayCastInput& input, std::int32_t childIndex) const
 {
 	return m_shape->RayCast(output, input, m_body->GetTransform(), childIndex);
 }
@@ -361,7 +361,7 @@ inline void b2Fixture::GetMassData(b2MassData* massData) const
 	m_shape->ComputeMass(massData, m_density);
 }
 
-inline const b2AABB& b2Fixture::GetAABB(int32 childIndex) const
+inline const b2AABB& b2Fixture::GetAABB(std::int32_t childIndex) const
 {
 	b2Assert(0 <= childIndex && childIndex < m_proxyCount);
 	return m_proxies[childIndex].aabb;

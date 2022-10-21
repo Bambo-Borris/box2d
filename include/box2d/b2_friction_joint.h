@@ -106,8 +106,8 @@ protected:
 	float m_maxTorque;
 
 	// Solver temp
-	int32 m_indexA;
-	int32 m_indexB;
+	std::int32_t m_indexA;
+	std::int32_t m_indexB;
 	b2Vec2 m_rA;
 	b2Vec2 m_rB;
 	b2Vec2 m_localCenterA;

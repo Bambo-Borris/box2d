@@ -31,12 +31,12 @@ class Rope : public Test
 public:
 	Rope()
 	{
-		const int32 N = 20;
+		const std::int32_t N = 20;
 		const float L = 0.5f;
 		b2Vec2 vertices[N];
 		float masses[N];
 
-		for (int32 i = 0; i < N; ++i)
+		for (std::int32_t i = 0; i < N; ++i)
 		{
 			vertices[i].Set(0.0f, L * (N - i));
 			masses[i] = 1.0f;
@@ -276,8 +276,8 @@ public:
 	b2Rope m_rope2;
 	b2RopeTuning m_tuning1;
 	b2RopeTuning m_tuning2;
-	int32 m_iterations1;
-	int32 m_iterations2;
+	std::int32_t m_iterations1;
+	std::int32_t m_iterations2;
 	b2Vec2 m_position1;
 	b2Vec2 m_position2;
 	float m_speed;

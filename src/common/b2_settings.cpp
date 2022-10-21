@@ -30,7 +30,7 @@
 b2Version b2_version = {2, 4, 1};
 
 // Memory allocators. Modify these to use your own allocator.
-void* b2Alloc_Default(int32 size)
+void* b2Alloc_Default(std::int32_t size)
 {
 	return malloc(size);
 }

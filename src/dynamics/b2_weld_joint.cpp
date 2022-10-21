@@ -328,8 +328,8 @@ float b2WeldJoint::GetReactionTorque(float inv_dt) const
 
 void b2WeldJoint::Dump()
 {
-	int32 indexA = m_bodyA->m_islandIndex;
-	int32 indexB = m_bodyB->m_islandIndex;
+	std::int32_t indexA = m_bodyA->m_islandIndex;
+	std::int32_t indexB = m_bodyB->m_islandIndex;
 
 	b2Dump("  b2WeldJointDef jd;\n");
 	b2Dump("  jd.bodyA = bodies[%d];\n", indexA);

@@ -154,8 +154,8 @@ void b2Body::SetType(b2BodyType type)
 	b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
 	for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
 	{
-		int32 proxyCount = f->m_proxyCount;
-		for (int32 i = 0; i < proxyCount; ++i)
+		std::int32_t proxyCount = f->m_proxyCount;
+		for (std::int32_t i = 0; i < proxyCount; ++i)
 		{
 			broadPhase->TouchProxy(f->m_proxies[i].proxyId);
 		}
@@ -538,7 +538,7 @@ void b2Body::SetFixedRotation(bool flag)
 
 void b2Body::Dump()
 {
-	int32 bodyIndex = m_islandIndex;
+	std::int32_t bodyIndex = m_islandIndex;
 
 	// %.9g is sufficient to save and load the same value using text
 	// FLT_DECIMAL_DIG == 9

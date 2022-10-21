@@ -62,7 +62,7 @@ public:
 	Test* test;
 };
 
-const int32 k_maxContactPoints = 2048;
+const std::int32_t k_maxContactPoints = 2048;
 
 struct ContactPoint
 {
@@ -121,17 +121,17 @@ protected:
 	b2Body* m_groundBody;
 	b2AABB m_worldAABB;
 	ContactPoint m_points[k_maxContactPoints];
-	int32 m_pointCount;
+	std::int32_t m_pointCount;
 	DestructionListener m_destructionListener;
-	int32 m_textLine;
+	std::int32_t m_textLine;
 	b2World* m_world;
 	b2Body* m_bomb;
 	b2MouseJoint* m_mouseJoint;
 	b2Vec2 m_bombSpawnPoint;
 	bool m_bombSpawning;
 	b2Vec2 m_mouseWorld;
-	int32 m_stepCount;
-	int32 m_textIncrement;
+	std::int32_t m_stepCount;
+	std::int32_t m_textIncrement;
 	b2Profile m_maxProfile;
 	b2Profile m_totalProfile;
 };

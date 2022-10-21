@@ -33,7 +33,7 @@ b2Shape* b2CircleShape::Clone(b2BlockAllocator* allocator) const
 	return clone;
 }
 
-int32 b2CircleShape::GetChildCount() const
+std::int32_t b2CircleShape::GetChildCount() const
 {
 	return 1;
 }
@@ -50,7 +50,7 @@ bool b2CircleShape::TestPoint(const b2Transform& transform, const b2Vec2& p) con
 // x = s + a * r
 // norm(x) = radius
 bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
-							const b2Transform& transform, int32 childIndex) const
+							const b2Transform& transform, std::int32_t childIndex) const
 {
 	B2_NOT_USED(childIndex);
 
@@ -86,7 +86,7 @@ bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input
 	return false;
 }
 
-void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2Transform& transform, int32 childIndex) const
+void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2Transform& transform, std::int32_t childIndex) const
 {
 	B2_NOT_USED(childIndex);
 

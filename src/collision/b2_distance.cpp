@@ -27,9 +27,9 @@
 #include "box2d/b2_polygon_shape.h"
 
 // GJK using Voronoi regions (Christer Ericson) and Barycentric coordinates.
-B2_API int32 b2_gjkCalls, b2_gjkIters, b2_gjkMaxIters;
+B2_API std::int32_t b2_gjkCalls, b2_gjkIters, b2_gjkMaxIters;
 
-void b2DistanceProxy::Set(const b2Shape* shape, int32 index)
+void b2DistanceProxy::Set(const b2Shape* shape, std::int32_t index)
 {
 	switch (shape->GetType())
 	{
@@ -86,7 +86,7 @@ void b2DistanceProxy::Set(const b2Shape* shape, int32 index)
 	}
 }
 
-void b2DistanceProxy::Set(const b2Vec2* vertices, int32 count, float radius)
+void b2DistanceProxy::Set(const b2Vec2* vertices, std::int32_t count, float radius)
 {
     m_vertices = vertices;
     m_count = count;
@@ -99,8 +99,8 @@ struct b2SimplexVertex
 	b2Vec2 wB;		// support point in proxyB
 	b2Vec2 w;		// wB - wA
 	float a;		// barycentric coordinate for closest point
-	int32 indexA;	// wA index
-	int32 indexB;	// wB index
+	std::int32_t indexA;	// wA index
+	std::int32_t indexB;	// wB index
 };
 
 struct b2Simplex
@@ -114,7 +114,7 @@ struct b2Simplex
 		// Copy data from cache.
 		m_count = cache->count;
 		b2SimplexVertex* vertices = &m_v1;
-		for (int32 i = 0; i < m_count; ++i)
+		for (std::int32_t i = 0; i < m_count; ++i)
 		{
 			b2SimplexVertex* v = vertices + i;
 			v->indexA = cache->indexA[i];
@@ -159,12 +159,12 @@ struct b2Simplex
 	void WriteCache(b2SimplexCache* cache) const
 	{
 		cache->metric = GetMetric();
-		cache->count = uint16(m_count);
+		cache->count = std::uint16_t(m_count);
 		const b2SimplexVertex* vertices = &m_v1;
-		for (int32 i = 0; i < m_count; ++i)
+		for (std::int32_t i = 0; i < m_count; ++i)
 		{
-			cache->indexA[i] = uint8(vertices[i].indexA);
-			cache->indexB[i] = uint8(vertices[i].indexB);
+			cache->indexA[i] = std::uint8_t(vertices[i].indexA);
+			cache->indexB[i] = std::uint8_t(vertices[i].indexB);
 		}
 	}
 
@@ -276,7 +276,7 @@ struct b2Simplex
 	void Solve3();
 
 	b2SimplexVertex m_v1, m_v2, m_v3;
-	int32 m_count;
+	std::int32_t m_count;
 };
 
 
@@ -469,20 +469,20 @@ void b2Distance(b2DistanceOutput* output,
 
 	// Get simplex vertices as an array.
 	b2SimplexVertex* vertices = &simplex.m_v1;
-	const int32 k_maxIters = 20;
+	const std::int32_t k_maxIters = 20;
 
 	// These store the vertices of the last simplex so that we
 	// can check for duplicates and prevent cycling.
-	int32 saveA[3], saveB[3];
-	int32 saveCount = 0;
+	std::int32_t saveA[3], saveB[3];
+	std::int32_t saveCount = 0;
 
 	// Main iteration loop.
-	int32 iter = 0;
+	std::int32_t iter = 0;
 	while (iter < k_maxIters)
 	{
 		// Copy simplex so we can identify duplicates.
 		saveCount = simplex.m_count;
-		for (int32 i = 0; i < saveCount; ++i)
+		for (std::int32_t i = 0; i < saveCount; ++i)
 		{
 			saveA[i] = vertices[i].indexA;
 			saveB[i] = vertices[i].indexB;
@@ -540,7 +540,7 @@ void b2Distance(b2DistanceOutput* output,
 
 		// Check for duplicate support points. This is the main termination criteria.
 		bool duplicate = false;
-		for (int32 i = 0; i < saveCount; ++i)
+		for (std::int32_t i = 0; i < saveCount; ++i)
 		{
 			if (vertex->indexA == saveA[i] && vertex->indexB == saveB[i])
 			{
@@ -627,9 +627,9 @@ bool b2ShapeCast(b2ShapeCastOutput * output, const b2ShapeCastInput * input)
 	b2SimplexVertex* vertices = &simplex.m_v1;
 
 	// Get support point in -r direction
-	int32 indexA = proxyA->GetSupport(b2MulT(xfA.q, -r));
+	std::int32_t indexA = proxyA->GetSupport(b2MulT(xfA.q, -r));
 	b2Vec2 wA = b2Mul(xfA, proxyA->GetVertex(indexA));
-	int32 indexB = proxyB->GetSupport(b2MulT(xfB.q, r));
+	std::int32_t indexB = proxyB->GetSupport(b2MulT(xfB.q, r));
 	b2Vec2 wB = b2Mul(xfB, proxyB->GetVertex(indexB));
     b2Vec2 v = wA - wB;
 
@@ -638,8 +638,8 @@ bool b2ShapeCast(b2ShapeCastOutput * output, const b2ShapeCastInput * input)
 	const float tolerance = 0.5f * b2_linearSlop;
 
 	// Main iteration loop.
-	const int32 k_maxIters = 20;
-	int32 iter = 0;
+	const std::int32_t k_maxIters = 20;
+	std::int32_t iter = 0;
 	while (iter < k_maxIters && v.Length() - sigma > tolerance)
 	{
 		b2Assert(simplex.m_count < 3);

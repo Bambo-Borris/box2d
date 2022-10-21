@@ -126,9 +126,9 @@ void b2CloseDump();
 /// See http://en.wikipedia.org/wiki/Software_versioning
 struct b2Version
 {
-	int32 major;		///< significant changes
-	int32 minor;		///< incremental changes
-	int32 revision;		///< bug fixes
+	std::int32_t major;		///< significant changes
+	std::int32_t minor;		///< incremental changes
+	std::int32_t revision;		///< bug fixes
 };
 
 /// Current version.

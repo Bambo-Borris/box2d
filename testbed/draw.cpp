@@ -336,7 +336,7 @@ struct GLRenderPoints
 	b2Color m_colors[e_maxVertices];
 	float m_sizes[e_maxVertices];
 
-	int32 m_count;
+	std::int32_t m_count;
 
 	GLuint m_vaoId;
 	GLuint m_vboIds[3];
@@ -465,7 +465,7 @@ struct GLRenderLines
 	b2Vec2 m_vertices[e_maxVertices];
 	b2Color m_colors[e_maxVertices];
 
-	int32 m_count;
+	std::int32_t m_count;
 
 	GLuint m_vaoId;
 	GLuint m_vboIds[2];
@@ -596,7 +596,7 @@ struct GLRenderTriangles
 	b2Vec2 m_vertices[e_maxVertices];
 	b2Color m_colors[e_maxVertices];
 
-	int32 m_count;
+	std::int32_t m_count;
 
 	GLuint m_vaoId;
 	GLuint m_vboIds[2];
@@ -651,10 +651,10 @@ void DebugDraw::Destroy()
 }
 
 //
-void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+void DebugDraw::DrawPolygon(const b2Vec2* vertices, std::int32_t vertexCount, const b2Color& color)
 {
 	b2Vec2 p1 = vertices[vertexCount - 1];
-	for (int32 i = 0; i < vertexCount; ++i)
+	for (std::int32_t i = 0; i < vertexCount; ++i)
 	{
 		b2Vec2 p2 = vertices[i];
 		m_lines->Vertex(p1, color);
@@ -664,11 +664,11 @@ void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2C
 }
 
 //
-void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, std::int32_t vertexCount, const b2Color& color)
 {
 	b2Color fillColor(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f);
 
-	for (int32 i = 1; i < vertexCount - 1; ++i)
+	for (std::int32_t i = 1; i < vertexCount - 1; ++i)
 	{
 		m_triangles->Vertex(vertices[0], fillColor);
 		m_triangles->Vertex(vertices[i], fillColor);
@@ -676,7 +676,7 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 	}
 
 	b2Vec2 p1 = vertices[vertexCount - 1];
-	for (int32 i = 0; i < vertexCount; ++i)
+	for (std::int32_t i = 0; i < vertexCount; ++i)
 	{
 		b2Vec2 p2 = vertices[i];
 		m_lines->Vertex(p1, color);
@@ -694,7 +694,7 @@ void DebugDraw::DrawCircle(const b2Vec2& center, float radius, const b2Color& co
 	float cosInc = cosf(k_increment);
 	b2Vec2 r1(1.0f, 0.0f);
 	b2Vec2 v1 = center + radius * r1;
-	for (int32 i = 0; i < k_segments; ++i)
+	for (std::int32_t i = 0; i < k_segments; ++i)
 	{
 		// Perform rotation to avoid additional trigonometry.
 		b2Vec2 r2;
@@ -719,7 +719,7 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 	b2Vec2 r1(cosInc, sinInc);
 	b2Vec2 v1 = center + radius * r1;
 	b2Color fillColor(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f);
-	for (int32 i = 0; i < k_segments; ++i)
+	for (std::int32_t i = 0; i < k_segments; ++i)
 	{
 		// Perform rotation to avoid additional trigonometry.
 		b2Vec2 r2;
@@ -735,7 +735,7 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 
 	r1.Set(1.0f, 0.0f);
 	v1 = center + radius * r1;
-	for (int32 i = 0; i < k_segments; ++i)
+	for (std::int32_t i = 0; i < k_segments; ++i)
 	{
 		b2Vec2 r2;
 		r2.x = cosInc * r1.x - sinInc * r1.y;

@@ -39,7 +39,7 @@ public:
 			float minY = 4.0f;
 			float maxY = 6.0f;
 			
-			for (int32 i = 0; i < 400; ++i)
+			for (std::int32_t i = 0; i < 400; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;

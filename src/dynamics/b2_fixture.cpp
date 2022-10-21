@@ -58,9 +58,9 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
 	m_shape = def->shape->Clone(allocator);
 
 	// Reserve proxy space
-	int32 childCount = m_shape->GetChildCount();
+	std::int32_t childCount = m_shape->GetChildCount();
 	m_proxies = (b2FixtureProxy*)allocator->Allocate(childCount * sizeof(b2FixtureProxy));
-	for (int32 i = 0; i < childCount; ++i)
+	for (std::int32_t i = 0; i < childCount; ++i)
 	{
 		m_proxies[i].fixture = nullptr;
 		m_proxies[i].proxyId = b2BroadPhase::e_nullProxy;
@@ -76,7 +76,7 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator)
 	b2Assert(m_proxyCount == 0);
 
 	// Free the proxy array.
-	int32 childCount = m_shape->GetChildCount();
+	std::int32_t childCount = m_shape->GetChildCount();
 	allocator->Free(m_proxies, childCount * sizeof(b2FixtureProxy));
 	m_proxies = nullptr;
 
@@ -130,7 +130,7 @@ void b2Fixture::CreateProxies(b2BroadPhase* broadPhase, const b2Transform& xf)
 	// Create proxies in the broad-phase.
 	m_proxyCount = m_shape->GetChildCount();
 
-	for (int32 i = 0; i < m_proxyCount; ++i)
+	for (std::int32_t i = 0; i < m_proxyCount; ++i)
 	{
 		b2FixtureProxy* proxy = m_proxies + i;
 		m_shape->ComputeAABB(&proxy->aabb, xf, i);
@@ -143,7 +143,7 @@ void b2Fixture::CreateProxies(b2BroadPhase* broadPhase, const b2Transform& xf)
 void b2Fixture::DestroyProxies(b2BroadPhase* broadPhase)
 {
 	// Destroy proxies in the broad-phase.
-	for (int32 i = 0; i < m_proxyCount; ++i)
+	for (std::int32_t i = 0; i < m_proxyCount; ++i)
 	{
 		b2FixtureProxy* proxy = m_proxies + i;
 		broadPhase->DestroyProxy(proxy->proxyId);
@@ -160,7 +160,7 @@ void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transfo
 		return;
 	}
 
-	for (int32 i = 0; i < m_proxyCount; ++i)
+	for (std::int32_t i = 0; i < m_proxyCount; ++i)
 	{
 		b2FixtureProxy* proxy = m_proxies + i;
 
@@ -215,7 +215,7 @@ void b2Fixture::Refilter()
 
 	// Touch each proxy so that new pairs may be created
 	b2BroadPhase* broadPhase = &world->m_contactManager.m_broadPhase;
-	for (int32 i = 0; i < m_proxyCount; ++i)
+	for (std::int32_t i = 0; i < m_proxyCount; ++i)
 	{
 		broadPhase->TouchProxy(m_proxies[i].proxyId);
 	}
@@ -230,7 +230,7 @@ void b2Fixture::SetSensor(bool sensor)
 	}
 }
 
-void b2Fixture::Dump(int32 bodyIndex)
+void b2Fixture::Dump(std::int32_t bodyIndex)
 {
 	b2Dump("    b2FixtureDef fd;\n");
 	b2Dump("    fd.friction = %.9g;\n", m_friction);
@@ -238,9 +238,9 @@ void b2Fixture::Dump(int32 bodyIndex)
 	b2Dump("    fd.restitutionThreshold = %.9g;\n", m_restitutionThreshold);
 	b2Dump("    fd.density = %.9g;\n", m_density);
 	b2Dump("    fd.isSensor = bool(%d);\n", m_isSensor);
-	b2Dump("    fd.filter.categoryBits = uint16(%d);\n", m_filter.categoryBits);
-	b2Dump("    fd.filter.maskBits = uint16(%d);\n", m_filter.maskBits);
-	b2Dump("    fd.filter.groupIndex = int16(%d);\n", m_filter.groupIndex);
+	b2Dump("    fd.filter.categoryBits = std::uint16_t(%d);\n", m_filter.categoryBits);
+	b2Dump("    fd.filter.maskBits = std::uint16_t(%d);\n", m_filter.maskBits);
+	b2Dump("    fd.filter.groupIndex = std::int16_t(%d);\n", m_filter.groupIndex);
 
 	switch (m_shape->m_type)
 	{
@@ -271,7 +271,7 @@ void b2Fixture::Dump(int32 bodyIndex)
 			b2PolygonShape* s = (b2PolygonShape*)m_shape;
 			b2Dump("    b2PolygonShape shape;\n");
 			b2Dump("    b2Vec2 vs[%d];\n", b2_maxPolygonVertices);
-			for (int32 i = 0; i < s->m_count; ++i)
+			for (std::int32_t i = 0; i < s->m_count; ++i)
 			{
 				b2Dump("    vs[%d].Set(%.9g, %.9g);\n", i, s->m_vertices[i].x, s->m_vertices[i].y);
 			}
@@ -284,7 +284,7 @@ void b2Fixture::Dump(int32 bodyIndex)
 			b2ChainShape* s = (b2ChainShape*)m_shape;
 			b2Dump("    b2ChainShape shape;\n");
 			b2Dump("    b2Vec2 vs[%d];\n", s->m_count);
-			for (int32 i = 0; i < s->m_count; ++i)
+			for (std::int32_t i = 0; i < s->m_count; ++i)
 			{
 				b2Dump("    vs[%d].Set(%.9g, %.9g);\n", i, s->m_vertices[i].x, s->m_vertices[i].y);
 			}

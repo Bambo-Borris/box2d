@@ -35,27 +35,27 @@ struct B2_API b2DistanceProxy
 
 	/// Initialize the proxy using the given shape. The shape
 	/// must remain in scope while the proxy is in use.
-	void Set(const b2Shape* shape, int32 index);
+	void Set(const b2Shape* shape, std::int32_t index);
 
     /// Initialize the proxy using a vertex cloud and radius. The vertices
     /// must remain in scope while the proxy is in use.
-    void Set(const b2Vec2* vertices, int32 count, float radius);
+    void Set(const b2Vec2* vertices, std::int32_t count, float radius);
 
 	/// Get the supporting vertex index in the given direction.
-	int32 GetSupport(const b2Vec2& d) const;
+	std::int32_t GetSupport(const b2Vec2& d) const;
 
 	/// Get the supporting vertex in the given direction.
 	const b2Vec2& GetSupportVertex(const b2Vec2& d) const;
 
 	/// Get the vertex count.
-	int32 GetVertexCount() const;
+	std::int32_t GetVertexCount() const;
 
 	/// Get a vertex by index. Used by b2Distance.
-	const b2Vec2& GetVertex(int32 index) const;
+	const b2Vec2& GetVertex(std::int32_t index) const;
 
 	b2Vec2 m_buffer[2];
 	const b2Vec2* m_vertices;
-	int32 m_count;
+	std::int32_t m_count;
 	float m_radius;
 };
 
@@ -64,9 +64,9 @@ struct B2_API b2DistanceProxy
 struct B2_API b2SimplexCache
 {
 	float metric;		///< length or area
-	uint16 count;
-	uint8 indexA[3];	///< vertices on shape A
-	uint8 indexB[3];	///< vertices on shape B
+	std::uint16_t count;
+	std::uint8_t indexA[3];	///< vertices on shape A
+	std::uint8_t indexB[3];	///< vertices on shape B
 };
 
 /// Input for b2Distance.
@@ -87,7 +87,7 @@ struct B2_API b2DistanceOutput
 	b2Vec2 pointA;		///< closest point on shapeA
 	b2Vec2 pointB;		///< closest point on shapeB
 	float distance;
-	int32 iterations;	///< number of GJK iterations used
+	std::int32_t iterations;	///< number of GJK iterations used
 };
 
 /// Compute the closest points between two shapes. Supports any combination of:
@@ -113,7 +113,7 @@ struct B2_API b2ShapeCastOutput
 	b2Vec2 point;
 	b2Vec2 normal;
 	float lambda;
-	int32 iterations;
+	std::int32_t iterations;
 };
 
 /// Perform a linear shape cast of shape B moving and shape A fixed. Determines the hit point, normal, and translation fraction.
@@ -122,22 +122,22 @@ B2_API bool b2ShapeCast(b2ShapeCastOutput* output, const b2ShapeCastInput* input
 
 //////////////////////////////////////////////////////////////////////////
 
-inline int32 b2DistanceProxy::GetVertexCount() const
+inline std::int32_t b2DistanceProxy::GetVertexCount() const
 {
 	return m_count;
 }
 
-inline const b2Vec2& b2DistanceProxy::GetVertex(int32 index) const
+inline const b2Vec2& b2DistanceProxy::GetVertex(std::int32_t index) const
 {
 	b2Assert(0 <= index && index < m_count);
 	return m_vertices[index];
 }
 
-inline int32 b2DistanceProxy::GetSupport(const b2Vec2& d) const
+inline std::int32_t b2DistanceProxy::GetSupport(const b2Vec2& d) const
 {
-	int32 bestIndex = 0;
+	std::int32_t bestIndex = 0;
 	float bestValue = b2Dot(m_vertices[0], d);
-	for (int32 i = 1; i < m_count; ++i)
+	for (std::int32_t i = 1; i < m_count; ++i)
 	{
 		float value = b2Dot(m_vertices[i], d);
 		if (value > bestValue)
@@ -152,9 +152,9 @@ inline int32 b2DistanceProxy::GetSupport(const b2Vec2& d) const
 
 inline const b2Vec2& b2DistanceProxy::GetSupportVertex(const b2Vec2& d) const
 {
-	int32 bestIndex = 0;
+	std::int32_t bestIndex = 0;
 	float bestValue = b2Dot(m_vertices[0], d);
-	for (int32 i = 1; i < m_count; ++i)
+	for (std::int32_t i = 1; i < m_count; ++i)
 	{
 		float value = b2Dot(m_vertices[i], d);
 		if (value > bestValue)

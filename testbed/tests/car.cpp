@@ -49,7 +49,7 @@ public:
 
 			float x = 20.0f, y1 = 0.0f, dx = 5.0f;
 
-			for (int32 i = 0; i < 10; ++i)
+			for (std::int32_t i = 0; i < 10; ++i)
 			{
 				float y2 = hs[i];
 				shape.SetTwoSided(b2Vec2(x, y1), b2Vec2(x + dx, y2));
@@ -58,7 +58,7 @@ public:
 				x += dx;
 			}
 
-			for (int32 i = 0; i < 10; ++i)
+			for (std::int32_t i = 0; i < 10; ++i)
 			{
 				float y2 = hs[i];
 				shape.SetTwoSided(b2Vec2(x, y1), b2Vec2(x + dx, y2));
@@ -110,7 +110,7 @@ public:
 
 		// Bridge
 		{
-			int32 N = 20;
+			std::int32_t N = 20;
 			b2PolygonShape shape;
 			shape.SetAsBox(1.0f, 0.125f);
 
@@ -122,7 +122,7 @@ public:
 			b2RevoluteJointDef jd;
 
 			b2Body* prevBody = ground;
-			for (int32 i = 0; i < N; ++i)
+			for (std::int32_t i = 0; i < N; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;

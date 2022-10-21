@@ -176,7 +176,7 @@ struct b2EPAxis
 	
 	b2Vec2 normal;
 	Type type;
-	int32 index;
+	std::int32_t index;
 	float separation;
 };
 
@@ -185,13 +185,13 @@ struct b2TempPolygon
 {
 	b2Vec2 vertices[b2_maxPolygonVertices];
 	b2Vec2 normals[b2_maxPolygonVertices];
-	int32 count;
+	std::int32_t count;
 };
 
 // Reference face used for clipping
 struct b2ReferenceFace
 {
-	int32 i1, i2;
+	std::int32_t i1, i2;
 	b2Vec2 v1, v2;
 	b2Vec2 normal;
 	
@@ -213,12 +213,12 @@ static b2EPAxis b2ComputeEdgeSeparation(const b2TempPolygon& polygonB, const b2V
 	b2Vec2 axes[2] = { normal1, -normal1 };
 
 	// Find axis with least overlap (min-max problem)
-	for (int32 j = 0; j < 2; ++j)
+	for (std::int32_t j = 0; j < 2; ++j)
 	{
 		float sj = FLT_MAX;
 
 		// Find deepest polygon vertex along axis j
-		for (int32 i = 0; i < polygonB.count; ++i)
+		for (std::int32_t i = 0; i < polygonB.count; ++i)
 		{
 			float si = b2Dot(axes[j], polygonB.vertices[i] - v1);
 			if (si < sj)
@@ -246,7 +246,7 @@ static b2EPAxis b2ComputePolygonSeparation(const b2TempPolygon& polygonB, const 
 	axis.separation = -FLT_MAX;
 	axis.normal.SetZero();
 
-	for (int32 i = 0; i < polygonB.count; ++i)
+	for (std::int32_t i = 0; i < polygonB.count; ++i)
 	{
 		b2Vec2 n = -polygonB.normals[i];
 
@@ -295,7 +295,7 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 	// Get polygonB in frameA
 	b2TempPolygon tempPolygonB;
 	tempPolygonB.count = polygonB->m_count;
-	for (int32 i = 0; i < polygonB->m_count; ++i)
+	for (std::int32_t i = 0; i < polygonB->m_count; ++i)
 	{
 		tempPolygonB.vertices[i] = b2Mul(xf, polygonB->m_vertices[i]);
 		tempPolygonB.normals[i] = b2Mul(xf.q, polygonB->m_normals[i]);
@@ -393,9 +393,9 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 		manifold->type = b2Manifold::e_faceA;
 
 		// Search for the polygon normal that is most anti-parallel to the edge normal.
-		int32 bestIndex = 0;
+		std::int32_t bestIndex = 0;
 		float bestValue = b2Dot(primaryAxis.normal, tempPolygonB.normals[0]);
-		for (int32 i = 1; i < tempPolygonB.count; ++i)
+		for (std::int32_t i = 1; i < tempPolygonB.count; ++i)
 		{
 			float value = b2Dot(primaryAxis.normal, tempPolygonB.normals[i]);
 			if (value < bestValue)
@@ -405,18 +405,18 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 			}
 		}
 
-		int32 i1 = bestIndex;
-		int32 i2 = i1 + 1 < tempPolygonB.count ? i1 + 1 : 0;
+		std::int32_t i1 = bestIndex;
+		std::int32_t i2 = i1 + 1 < tempPolygonB.count ? i1 + 1 : 0;
 
 		clipPoints[0].v = tempPolygonB.vertices[i1];
 		clipPoints[0].id.cf.indexA = 0;
-		clipPoints[0].id.cf.indexB = static_cast<uint8>(i1);
+		clipPoints[0].id.cf.indexB = static_cast<std::uint8_t>(i1);
 		clipPoints[0].id.cf.typeA = b2ContactFeature::e_face;
 		clipPoints[0].id.cf.typeB = b2ContactFeature::e_vertex;
 
 		clipPoints[1].v = tempPolygonB.vertices[i2];
 		clipPoints[1].id.cf.indexA = 0;
-		clipPoints[1].id.cf.indexB = static_cast<uint8>(i2);
+		clipPoints[1].id.cf.indexB = static_cast<std::uint8_t>(i2);
 		clipPoints[1].id.cf.typeA = b2ContactFeature::e_face;
 		clipPoints[1].id.cf.typeB = b2ContactFeature::e_vertex;
 
@@ -434,13 +434,13 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 
 		clipPoints[0].v = v2;
 		clipPoints[0].id.cf.indexA = 1;
-		clipPoints[0].id.cf.indexB = static_cast<uint8>(primaryAxis.index);
+		clipPoints[0].id.cf.indexB = static_cast<std::uint8_t>(primaryAxis.index);
 		clipPoints[0].id.cf.typeA = b2ContactFeature::e_vertex;
 		clipPoints[0].id.cf.typeB = b2ContactFeature::e_face;
 
 		clipPoints[1].v = v1;
 		clipPoints[1].id.cf.indexA = 0;
-		clipPoints[1].id.cf.indexB = static_cast<uint8>(primaryAxis.index);		
+		clipPoints[1].id.cf.indexB = static_cast<std::uint8_t>(primaryAxis.index);		
 		clipPoints[1].id.cf.typeA = b2ContactFeature::e_vertex;
 		clipPoints[1].id.cf.typeB = b2ContactFeature::e_face;
 
@@ -461,7 +461,7 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 	// Clip incident edge against reference face side planes
 	b2ClipVertex clipPoints1[2];
 	b2ClipVertex clipPoints2[2];
-	int32 np;
+	std::int32_t np;
 
 	// Clip to side 1
 	np = b2ClipSegmentToLine(clipPoints1, clipPoints, ref.sideNormal1, ref.sideOffset1, ref.i1);
@@ -491,8 +491,8 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 		manifold->localPoint = polygonB->m_vertices[ref.i1];
 	}
 
-	int32 pointCount = 0;
-	for (int32 i = 0; i < b2_maxManifoldPoints; ++i)
+	std::int32_t pointCount = 0;
+	for (std::int32_t i = 0; i < b2_maxManifoldPoints; ++i)
 	{
 		float separation;
 

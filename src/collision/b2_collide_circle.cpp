@@ -64,14 +64,14 @@ void b2CollidePolygonAndCircle(
 	b2Vec2 cLocal = b2MulT(xfA, c);
 
 	// Find the min separating edge.
-	int32 normalIndex = 0;
+	std::int32_t normalIndex = 0;
 	float separation = -b2_maxFloat;
 	float radius = polygonA->m_radius + circleB->m_radius;
-	int32 vertexCount = polygonA->m_count;
+	std::int32_t vertexCount = polygonA->m_count;
 	const b2Vec2* vertices = polygonA->m_vertices;
 	const b2Vec2* normals = polygonA->m_normals;
 
-	for (int32 i = 0; i < vertexCount; ++i)
+	for (std::int32_t i = 0; i < vertexCount; ++i)
 	{
 		float s = b2Dot(normals[i], cLocal - vertices[i]);
 
@@ -89,8 +89,8 @@ void b2CollidePolygonAndCircle(
 	}
 
 	// Vertices that subtend the incident face.
-	int32 vertIndex1 = normalIndex;
-	int32 vertIndex2 = vertIndex1 + 1 < vertexCount ? vertIndex1 + 1 : 0;
+	std::int32_t vertIndex1 = normalIndex;
+	std::int32_t vertIndex2 = vertIndex1 + 1 < vertexCount ? vertIndex1 + 1 : 0;
 	b2Vec2 v1 = vertices[vertIndex1];
 	b2Vec2 v2 = vertices[vertIndex2];
 

@@ -89,7 +89,6 @@ set(BOX2D_HEADER_FILES
 	../include/box2d/b2_time_of_impact.h
 	../include/box2d/b2_timer.h
 	../include/box2d/b2_time_step.h
-	../include/box2d/b2_types.h
 	../include/box2d/b2_weld_joint.h
 	../include/box2d/b2_wheel_joint.h
 	../include/box2d/b2_world.h

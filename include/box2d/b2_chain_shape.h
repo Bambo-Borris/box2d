@@ -46,24 +46,24 @@ public:
 	/// Create a loop. This automatically adjusts connectivity.
 	/// @param vertices an array of vertices, these are copied
 	/// @param count the vertex count
-	void CreateLoop(const b2Vec2* vertices, int32 count);
+	void CreateLoop(const b2Vec2* vertices, std::int32_t count);
 
 	/// Create a chain with ghost vertices to connect multiple chains together.
 	/// @param vertices an array of vertices, these are copied
 	/// @param count the vertex count
 	/// @param prevVertex previous vertex from chain that connects to the start
 	/// @param nextVertex next vertex from chain that connects to the end
-	void CreateChain(const b2Vec2* vertices, int32 count,
+	void CreateChain(const b2Vec2* vertices, std::int32_t count,
 		const b2Vec2& prevVertex, const b2Vec2& nextVertex);
 
 	/// Implement b2Shape. Vertices are cloned using b2Alloc.
 	b2Shape* Clone(b2BlockAllocator* allocator) const override;
 
 	/// @see b2Shape::GetChildCount
-	int32 GetChildCount() const override;
+	std::int32_t GetChildCount() const override;
 
 	/// Get a child edge.
-	void GetChildEdge(b2EdgeShape* edge, int32 index) const;
+	void GetChildEdge(b2EdgeShape* edge, std::int32_t index) const;
 
 	/// This always return false.
 	/// @see b2Shape::TestPoint
@@ -71,10 +71,10 @@ public:
 
 	/// Implement b2Shape.
 	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
-					const b2Transform& transform, int32 childIndex) const override;
+					const b2Transform& transform, std::int32_t childIndex) const override;
 
 	/// @see b2Shape::ComputeAABB
-	void ComputeAABB(b2AABB* aabb, const b2Transform& transform, int32 childIndex) const override;
+	void ComputeAABB(b2AABB* aabb, const b2Transform& transform, std::int32_t childIndex) const override;
 
 	/// Chains have zero mass.
 	/// @see b2Shape::ComputeMass
@@ -84,7 +84,7 @@ public:
 	b2Vec2* m_vertices;
 
 	/// The vertex count.
-	int32 m_count;
+	std::int32_t m_count;
 
 	b2Vec2 m_prevVertex, m_nextVertex;
 };

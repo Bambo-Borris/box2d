@@ -61,22 +61,22 @@ public:
 	};
 
 	/// Set the drawing flags.
-	void SetFlags(uint32 flags);
+	void SetFlags(std::uint32_t flags);
 
 	/// Get the drawing flags.
-	uint32 GetFlags() const;
+	std::uint32_t GetFlags() const;
 
 	/// Append flags to the current flags.
-	void AppendFlags(uint32 flags);
+	void AppendFlags(std::uint32_t flags);
 
 	/// Clear flags from the current flags.
-	void ClearFlags(uint32 flags);
+	void ClearFlags(std::uint32_t flags);
 
 	/// Draw a closed polygon provided in CCW order.
-	virtual void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) = 0;
+	virtual void DrawPolygon(const b2Vec2* vertices, std::int32_t vertexCount, const b2Color& color) = 0;
 
 	/// Draw a solid closed polygon provided in CCW order.
-	virtual void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) = 0;
+	virtual void DrawSolidPolygon(const b2Vec2* vertices, std::int32_t vertexCount, const b2Color& color) = 0;
 
 	/// Draw a circle.
 	virtual void DrawCircle(const b2Vec2& center, float radius, const b2Color& color) = 0;
@@ -95,5 +95,5 @@ public:
 	virtual void DrawPoint(const b2Vec2& p, float size, const b2Color& color) = 0;
 
 protected:
-	uint32 m_drawFlags;
+	std::uint32_t m_drawFlags;
 };
