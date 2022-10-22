@@ -43,8 +43,8 @@ void b2ChainAndCircleContact::Destroy(b2Contact* contact, b2BlockAllocator* allo
 b2ChainAndCircleContact::b2ChainAndCircleContact(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture* fixtureB, std::int32_t indexB)
 : b2Contact(fixtureA, indexA, fixtureB, indexB)
 {
-	b2Assert(m_fixtureA->GetType() == b2Shape::e_chain);
-	b2Assert(m_fixtureB->GetType() == b2Shape::e_circle);
+	assert(m_fixtureA->GetType() == b2Shape::e_chain);
+	assert(m_fixtureB->GetType() == b2Shape::e_circle);
 }
 
 void b2ChainAndCircleContact::Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB)

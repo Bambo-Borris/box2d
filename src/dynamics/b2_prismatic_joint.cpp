@@ -99,7 +99,7 @@ b2PrismaticJoint::b2PrismaticJoint(const b2PrismaticJointDef* def)
 	m_lowerTranslation = def->lowerTranslation;
 	m_upperTranslation = def->upperTranslation;
 
-	b2Assert(m_lowerTranslation <= m_upperTranslation);
+	assert(m_lowerTranslation <= m_upperTranslation);
 
 	m_maxMotorForce = def->maxMotorForce;
 	m_motorSpeed = def->motorSpeed;
@@ -531,7 +531,7 @@ float b2PrismaticJoint::GetUpperLimit() const
 
 void b2PrismaticJoint::SetLimits(float lower, float upper)
 {
-	b2Assert(lower <= upper);
+	assert(lower <= upper);
 	if (lower != m_lowerTranslation || upper != m_upperTranslation)
 	{
 		m_bodyA->SetAwake(true);

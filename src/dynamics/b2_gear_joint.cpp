@@ -54,8 +54,8 @@ b2GearJoint::b2GearJoint(const b2GearJointDef* def)
 	m_typeA = m_joint1->GetType();
 	m_typeB = m_joint2->GetType();
 
-	b2Assert(m_typeA == e_revoluteJoint || m_typeA == e_prismaticJoint);
-	b2Assert(m_typeB == e_revoluteJoint || m_typeB == e_prismaticJoint);
+	assert(m_typeA == e_revoluteJoint || m_typeA == e_prismaticJoint);
+	assert(m_typeB == e_revoluteJoint || m_typeB == e_prismaticJoint);
 
 	float coordinateA, coordinateB;
 
@@ -65,7 +65,7 @@ b2GearJoint::b2GearJoint(const b2GearJointDef* def)
 	m_bodyA = m_joint1->GetBodyB();
 
 	// Body B on joint1 must be dynamic
-	b2Assert(m_bodyA->m_type == b2_dynamicBody);
+	assert(m_bodyA->m_type == b2_dynamicBody);
 
 	// Get geometry of joint1
 	b2Transform xfA = m_bodyA->m_xf;
@@ -106,7 +106,7 @@ b2GearJoint::b2GearJoint(const b2GearJointDef* def)
 	m_bodyB = m_joint2->GetBodyB();
 
 	// Body B on joint2 must be dynamic
-	b2Assert(m_bodyB->m_type == b2_dynamicBody);
+	assert(m_bodyB->m_type == b2_dynamicBody);
 
 	// Get geometry of joint2
 	b2Transform xfB = m_bodyB->m_xf;
@@ -409,7 +409,7 @@ float b2GearJoint::GetReactionTorque(float inv_dt) const
 
 void b2GearJoint::SetRatio(float ratio)
 {
-	b2Assert(b2IsValid(ratio));
+	assert(b2IsValid(ratio));
 	m_ratio = ratio;
 }
 

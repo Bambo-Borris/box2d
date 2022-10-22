@@ -75,7 +75,7 @@ static void b2FindIncidentEdge(std::array<b2ClipVertex, 2>& c,
 	const b2Vec2* vertices2 = poly2->m_vertices.data();
 	const b2Vec2* normals2 = poly2->m_normals.data();
 
-	b2Assert(0 <= edge1 && edge1 < poly1->m_count);
+	assert(0 <= edge1 && edge1 < poly1->m_count);
 
 	// Get the normal of the reference edge in poly2's frame.
 	b2Vec2 normal1 = b2MulT(xf2.q, b2Mul(xf1.q, normals1[edge1]));

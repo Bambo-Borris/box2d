@@ -114,7 +114,7 @@ void b2World::SetDebugDraw(b2Draw* debugDraw)
 
 b2Body* b2World::CreateBody(const b2BodyDef* def)
 {
-	b2Assert(IsLocked() == false);
+	assert(IsLocked() == false);
 	if (IsLocked())
 	{
 		return nullptr;
@@ -138,8 +138,8 @@ b2Body* b2World::CreateBody(const b2BodyDef* def)
 
 void b2World::DestroyBody(b2Body* b)
 {
-	b2Assert(m_bodyCount > 0);
-	b2Assert(IsLocked() == false);
+	assert(m_bodyCount > 0);
+	assert(IsLocked() == false);
 	if (IsLocked())
 	{
 		return;
@@ -219,7 +219,7 @@ void b2World::DestroyBody(b2Body* b)
 
 b2Joint* b2World::CreateJoint(const b2JointDef* def)
 {
-	b2Assert(IsLocked() == false);
+	assert(IsLocked() == false);
 	if (IsLocked())
 	{
 		return nullptr;
@@ -279,7 +279,7 @@ b2Joint* b2World::CreateJoint(const b2JointDef* def)
 
 void b2World::DestroyJoint(b2Joint* j)
 {
-	b2Assert(IsLocked() == false);
+	assert(IsLocked() == false);
 	if (IsLocked())
 	{
 		return;
@@ -351,7 +351,7 @@ void b2World::DestroyJoint(b2Joint* j)
 
 	b2Joint::Destroy(j, &m_blockAllocator);
 
-	b2Assert(m_jointCount > 0);
+	assert(m_jointCount > 0);
 	--m_jointCount;
 
 	// If the joint prevents collisions, then flag any contacts for filtering.
@@ -450,7 +450,7 @@ void b2World::Solve(const b2TimeStep& step)
 		{
 			// Grab the next body off the stack and add it to the island.
 			b2Body* b = stack[--stackCount];
-			b2Assert(b->IsEnabled() == true);
+			assert(b->IsEnabled() == true);
 			island.Add(b);
 
 			// To keep islands as small as possible, we don't
@@ -500,7 +500,7 @@ void b2World::Solve(const b2TimeStep& step)
 					continue;
 				}
 
-				b2Assert(stackCount < stackSize);
+				assert(stackCount < stackSize);
 				stack[stackCount++] = other;
 				other->m_flags |= b2Body::e_islandFlag;
 			}
@@ -529,7 +529,7 @@ void b2World::Solve(const b2TimeStep& step)
 					continue;
 				}
 
-				b2Assert(stackCount < stackSize);
+				assert(stackCount < stackSize);
 				stack[stackCount++] = other;
 				other->m_flags |= b2Body::e_islandFlag;
 			}
@@ -646,7 +646,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 
 				b2BodyType typeA = bA->m_type;
 				b2BodyType typeB = bB->m_type;
-				b2Assert(typeA == b2_dynamicBody || typeB == b2_dynamicBody);
+				assert(typeA == b2_dynamicBody || typeB == b2_dynamicBody);
 
 				bool activeA = bA->IsAwake() && typeA != b2_staticBody;
 				bool activeB = bB->IsAwake() && typeB != b2_staticBody;
@@ -681,7 +681,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 					bB->m_sweep.Advance(alpha0);
 				}
 
-				b2Assert(alpha0 < 1.0f);
+				assert(alpha0 < 1.0f);
 
 				std::int32_t indexA = c->GetChildIndexA();
 				std::int32_t indexB = c->GetChildIndexB();
@@ -1087,7 +1087,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 		{
 			b2PolygonShape* poly = (b2PolygonShape*)fixture->GetShape();
 			std::int32_t vertexCount = poly->m_count;
-			b2Assert(vertexCount <= b2_maxPolygonVertices);
+			assert(vertexCount <= b2_maxPolygonVertices);
 			b2Vec2 vertices[b2_maxPolygonVertices];
 
 			for (std::int32_t i = 0; i < vertexCount; ++i)
@@ -1236,7 +1236,7 @@ float b2World::GetTreeQuality() const
 
 void b2World::ShiftOrigin(const b2Vec2& newOrigin)
 {
-	b2Assert(m_locked == false);
+	assert(m_locked == false);
 	if (m_locked)
 	{
 		return;

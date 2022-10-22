@@ -697,7 +697,7 @@ inline void b2Sweep::GetTransform(b2Transform* xf, float beta) const
 
 inline void b2Sweep::Advance(float alpha)
 {
-	b2Assert(alpha0 < 1.0f);
+	assert(alpha0 < 1.0f);
 	float beta = (alpha - alpha0) / (1.0f - alpha0);
 	c0 += beta * (c - c0);
 	a0 += beta * (a - a0);

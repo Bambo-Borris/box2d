@@ -42,8 +42,8 @@ void b2ChainShape::Clear()
 
 void b2ChainShape::CreateLoop(const b2Vec2* vertices, std::int32_t count)
 {
-	b2Assert(m_vertices == nullptr && m_count == 0);
-	b2Assert(count >= 3);
+	assert(m_vertices == nullptr && m_count == 0);
+	assert(count >= 3);
 	if (count < 3)
 	{
 		return;
@@ -54,7 +54,7 @@ void b2ChainShape::CreateLoop(const b2Vec2* vertices, std::int32_t count)
 		b2Vec2 v1 = vertices[i-1];
 		b2Vec2 v2 = vertices[i];
 		// If the code crashes here, it means your vertices are too close together.
-		b2Assert(b2DistanceSquared(v1, v2) > b2_linearSlop * b2_linearSlop);
+		assert(b2DistanceSquared(v1, v2) > b2_linearSlop * b2_linearSlop);
 	}
 
 	m_count = count + 1;
@@ -67,12 +67,12 @@ void b2ChainShape::CreateLoop(const b2Vec2* vertices, std::int32_t count)
 
 void b2ChainShape::CreateChain(const b2Vec2* vertices, std::int32_t count,	const b2Vec2& prevVertex, const b2Vec2& nextVertex)
 {
-	b2Assert(m_vertices == nullptr && m_count == 0);
-	b2Assert(count >= 2);
+	assert(m_vertices == nullptr && m_count == 0);
+	assert(count >= 2);
 	for (std::int32_t i = 1; i < count; ++i)
 	{
 		// If the code crashes here, it means your vertices are too close together.
-		b2Assert(b2DistanceSquared(vertices[i-1], vertices[i]) > b2_linearSlop * b2_linearSlop);
+		assert(b2DistanceSquared(vertices[i-1], vertices[i]) > b2_linearSlop * b2_linearSlop);
 	}
 
 	m_count = count;
@@ -99,7 +99,7 @@ std::int32_t b2ChainShape::GetChildCount() const
 
 void b2ChainShape::GetChildEdge(b2EdgeShape* edge, std::int32_t index) const
 {
-	b2Assert(0 <= index && index < m_count - 1);
+	assert(0 <= index && index < m_count - 1);
 	edge->m_type = b2Shape::e_edge;
 	edge->m_radius = m_radius;
 
@@ -136,7 +136,7 @@ bool b2ChainShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 bool b2ChainShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 							const b2Transform& xf, std::int32_t childIndex) const
 {
-	b2Assert(childIndex < m_count);
+	assert(childIndex < m_count);
 
 	b2EdgeShape edgeShape;
 
@@ -155,7 +155,7 @@ bool b2ChainShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 
 void b2ChainShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, std::int32_t childIndex) const
 {
-	b2Assert(childIndex < m_count);
+	assert(childIndex < m_count);
 
 	std::int32_t i1 = childIndex;
 	std::int32_t i2 = childIndex + 1;

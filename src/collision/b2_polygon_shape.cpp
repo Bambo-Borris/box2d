@@ -79,7 +79,7 @@ std::int32_t b2PolygonShape::GetChildCount() const
 
 static b2Vec2 ComputeCentroid(const b2Vec2* vs, std::int32_t count)
 {
-	b2Assert(count >= 3);
+	assert(count >= 3);
 
 	b2Vec2 c(0.0f, 0.0f);
 	float area = 0.0f;
@@ -110,14 +110,14 @@ static b2Vec2 ComputeCentroid(const b2Vec2* vs, std::int32_t count)
 	}
 
 	// Centroid
-	b2Assert(area > b2_epsilon);
+	assert(area > b2_epsilon);
 	c = (1.0f / area) * c + s;
 	return c;
 }
 
 void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
 {
-	b2Assert(3 <= count && count <= b2_maxPolygonVertices);
+	assert(3 <= count && count <= b2_maxPolygonVertices);
 	if (count < 3)
 	{
 		SetAsBox(1.0f, 1.0f);
@@ -153,7 +153,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
 	if (n < 3)
 	{
 		// Polygon is degenerate.
-		b2Assert(false);
+		assert(false);
 		SetAsBox(1.0f, 1.0f);
 		return;
 	}
@@ -180,7 +180,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
 
 	for (;;)
 	{
-		b2Assert(m < b2_maxPolygonVertices);
+		assert(m < b2_maxPolygonVertices);
 		hull[m] = ih;
 
 		std::int32_t ie = 0;
@@ -219,7 +219,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
 	if (m < 3)
 	{
 		// Polygon is degenerate.
-		b2Assert(false);
+		assert(false);
 		SetAsBox(1.0f, 1.0f);
 		return;
 	}
@@ -238,7 +238,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
 		std::int32_t i1 = i;
 		std::int32_t i2 = i + 1 < m ? i + 1 : 0;
 		b2Vec2 edge = m_vertices[i2] - m_vertices[i1];
-		b2Assert(edge.LengthSquared() > b2_epsilon * b2_epsilon);
+		assert(edge.LengthSquared() > b2_epsilon * b2_epsilon);
 		m_normals[i] = b2Cross(edge, 1.0f);
 		m_normals[i].Normalize();
 	}
@@ -323,7 +323,7 @@ bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& inpu
 		}
 	}
 
-	b2Assert(0.0f <= lower && lower <= input.maxFraction);
+	assert(0.0f <= lower && lower <= input.maxFraction);
 
 	if (index >= 0)
 	{
@@ -380,7 +380,7 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float density) const
 	//
 	// The rest of the derivation is handled by computer algebra.
 
-	b2Assert(m_count >= 3);
+	assert(m_count >= 3);
 
 	b2Vec2 center(0.0f, 0.0f);
 	float area = 0.0f;
@@ -419,7 +419,7 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float density) const
 	massData->mass = density * area;
 
 	// Center of mass
-	b2Assert(area > b2_epsilon);
+	assert(area > b2_epsilon);
 	center *= 1.0f / area;
 	massData->center = center + s;
 

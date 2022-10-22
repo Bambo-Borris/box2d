@@ -230,7 +230,7 @@ std::int32_t b2ClipSegmentToLine(std::array<b2ClipVertex, 2>& vOut, const std::a
 		vOut[count].id.cf.typeB = b2ContactFeature::e_face;
 		++count;
 
-		b2Assert(count == 2);
+		assert(count == 2);
 	}
 
 	return count;
