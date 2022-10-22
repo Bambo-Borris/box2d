@@ -23,6 +23,7 @@
 #include "test.h"
 #include "settings.h"
 #include <stdio.h>
+#include <array>
 
 void DestructionListener::SayGoodbye(b2Joint* joint)
 {
@@ -82,7 +83,9 @@ void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	b2Fixture* fixtureA = contact->GetFixtureA();
 	b2Fixture* fixtureB = contact->GetFixtureB();
 
-	b2PointState state1[b2_maxManifoldPoints], state2[b2_maxManifoldPoints];
+	std::array<b2PointState, b2_maxManifoldPoints> state1;
+	std::array<b2PointState, b2_maxManifoldPoints> state2;
+
 	b2GetPointStates(state1, state2, oldManifold, manifold);
 
 	b2WorldManifold worldManifold;

@@ -30,9 +30,9 @@ static float b2FindMaxSeparation(std::int32_t* edgeIndex,
 {
 	std::int32_t count1 = poly1->m_count;
 	std::int32_t count2 = poly2->m_count;
-	const b2Vec2* n1s = poly1->m_normals;
-	const b2Vec2* v1s = poly1->m_vertices;
-	const b2Vec2* v2s = poly2->m_vertices;
+	const b2Vec2* n1s = poly1->m_normals.data();
+	const b2Vec2* v1s = poly1->m_vertices.data();
+	const b2Vec2* v2s = poly2->m_vertices.data();
 	b2Transform xf = b2MulT(xf2, xf1);
 
 	std::int32_t bestIndex = 0;
@@ -65,15 +65,15 @@ static float b2FindMaxSeparation(std::int32_t* edgeIndex,
 	return maxSeparation;
 }
 
-static void b2FindIncidentEdge(b2ClipVertex c[2],
+static void b2FindIncidentEdge(std::array<b2ClipVertex, 2>& c,
 							 const b2PolygonShape* poly1, const b2Transform& xf1, std::int32_t edge1,
 							 const b2PolygonShape* poly2, const b2Transform& xf2)
 {
-	const b2Vec2* normals1 = poly1->m_normals;
+	const b2Vec2* normals1 = poly1->m_normals.data();
 
 	std::int32_t count2 = poly2->m_count;
-	const b2Vec2* vertices2 = poly2->m_vertices;
-	const b2Vec2* normals2 = poly2->m_normals;
+	const b2Vec2* vertices2 = poly2->m_vertices.data();
+	const b2Vec2* normals2 = poly2->m_normals.data();
 
 	b2Assert(0 <= edge1 && edge1 < poly1->m_count);
 
@@ -162,11 +162,11 @@ void b2CollidePolygons(b2Manifold* manifold,
 		flip = 0;
 	}
 
-	b2ClipVertex incidentEdge[2];
+	std::array<b2ClipVertex, 2> incidentEdge;
 	b2FindIncidentEdge(incidentEdge, poly1, xf1, edge1, poly2, xf2);
 
 	std::int32_t count1 = poly1->m_count;
-	const b2Vec2* vertices1 = poly1->m_vertices;
+	const b2Vec2* vertices1 = poly1->m_vertices.data();
 
 	std::int32_t iv1 = edge1;
 	std::int32_t iv2 = edge1 + 1 < count1 ? edge1 + 1 : 0;
@@ -194,8 +194,8 @@ void b2CollidePolygons(b2Manifold* manifold,
 	float sideOffset2 = b2Dot(tangent, v12) + totalRadius;
 
 	// Clip incident edge against extruded edge1 side edges.
-	b2ClipVertex clipPoints1[2];
-	b2ClipVertex clipPoints2[2];
+	std::array<b2ClipVertex, 2>  clipPoints1;
+	std::array<b2ClipVertex, 2>  clipPoints2;
 	int np;
 
 	// Clip to box side 1

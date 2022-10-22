@@ -23,6 +23,7 @@
 #pragma once
 
 #include <string.h>
+#include <array>
 
 #include "b2_settings.h"
 
@@ -35,14 +36,14 @@ class b2GrowableStack
 public:
 	b2GrowableStack()
 	{
-		m_stack = m_array;
+		m_stack = m_array.data();
 		m_count = 0;
 		m_capacity = N;
 	}
 
 	~b2GrowableStack()
 	{
-		if (m_stack != m_array)
+		if (m_stack != m_array.data())
 		{
 			b2Free(m_stack);
 			m_stack = nullptr;
@@ -57,7 +58,7 @@ public:
 			m_capacity *= 2;
 			m_stack = (T*)b2Alloc(m_capacity * sizeof(T));
 			memcpy(m_stack, old, m_count * sizeof(T));
-			if (old != m_array)
+			if (old != m_array.data())
 			{
 				b2Free(old);
 			}
@@ -81,7 +82,7 @@ public:
 
 private:
 	T* m_stack;
-	T m_array[N];
+	std::array<T,N> m_array;
 	std::int32_t m_count;
 	std::int32_t m_capacity;
 };

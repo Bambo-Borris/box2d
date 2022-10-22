@@ -27,11 +27,11 @@
 
 static const std::int32_t b2_chunkSize = 16 * 1024;
 static const std::int32_t b2_maxBlockSize = 640;
-static const std::int32_t b2_chunkArrayIncrement = 128;
+static const std::size_t b2_chunkArrayIncrement = 128;
 
 // These are the supported object sizes. Actual allocations are rounded up the next size.
 static const std::int32_t b2_blockSizes[b2_blockSizeCount] =
-{
+	{
 	16,		// 0
 	32,		// 1
 	64,		// 2
@@ -92,11 +92,11 @@ b2BlockAllocator::b2BlockAllocator()
 
 	m_chunkSpace = b2_chunkArrayIncrement;
 	m_chunkCount = 0;
-	m_chunks = (b2Chunk*)b2Alloc(m_chunkSpace * sizeof(b2Chunk));
+	m_chunks = (b2Chunk*)b2Alloc(static_cast<std::int32_t> (m_chunkSpace * sizeof(b2Chunk)));
 	
 	memset(m_chunks, 0, m_chunkSpace * sizeof(b2Chunk));
-	memset(m_freeLists, 0, sizeof(m_freeLists));
-}
+	memset(m_freeLists.data(), 0, m_freeLists.size() * sizeof(b2Block *));
+} 
 
 b2BlockAllocator::~b2BlockAllocator()
 {
@@ -137,7 +137,7 @@ void* b2BlockAllocator::Allocate(std::int32_t size)
 		{
 			b2Chunk* oldChunks = m_chunks;
 			m_chunkSpace += b2_chunkArrayIncrement;
-			m_chunks = (b2Chunk*)b2Alloc(m_chunkSpace * sizeof(b2Chunk));
+			m_chunks = (b2Chunk*)b2Alloc(static_cast<std::int32_t>(m_chunkSpace * sizeof(b2Chunk)));
 			memcpy(m_chunks, oldChunks, m_chunkCount * sizeof(b2Chunk));
 			memset(m_chunks + m_chunkCount, 0, b2_chunkArrayIncrement * sizeof(b2Chunk));
 			b2Free(oldChunks);
@@ -168,7 +168,7 @@ void* b2BlockAllocator::Allocate(std::int32_t size)
 	}
 }
 
-void b2BlockAllocator::Free(void* p, std::int32_t size)
+void b2BlockAllocator::Free(void *p, std::int32_t size)
 {
 	if (size == 0)
 	{
@@ -226,5 +226,5 @@ void b2BlockAllocator::Clear()
 
 	m_chunkCount = 0;
 	memset(m_chunks, 0, m_chunkSpace * sizeof(b2Chunk));
-	memset(m_freeLists, 0, sizeof(m_freeLists));
+	memset(m_freeLists.data(), 0, m_freeLists.size() * sizeof(b2Block *));
 }

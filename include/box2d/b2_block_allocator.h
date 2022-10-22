@@ -25,6 +25,8 @@
 #include "b2_api.h"
 #include "b2_settings.h"
 
+#include <array> 
+
 const std::int32_t b2_blockSizeCount = 14;
 
 struct b2Block;
@@ -51,7 +53,7 @@ private:
 
 	b2Chunk* m_chunks;
 	std::int32_t m_chunkCount;
-	std::int32_t m_chunkSpace;
+	std::size_t m_chunkSpace;
 
-	b2Block* m_freeLists[b2_blockSizeCount];
+	std::array<b2Block*, b2_blockSizeCount> m_freeLists;
 };

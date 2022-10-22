@@ -45,7 +45,7 @@ void b2DistanceProxy::Set(const b2Shape* shape, std::int32_t index)
 	case b2Shape::e_polygon:
 		{
 			const b2PolygonShape* polygon = static_cast<const b2PolygonShape*>(shape);
-			m_vertices = polygon->m_vertices;
+			m_vertices = polygon->m_vertices.data();
 			m_count = polygon->m_count;
 			m_radius = polygon->m_radius;
 		}
@@ -66,7 +66,7 @@ void b2DistanceProxy::Set(const b2Shape* shape, std::int32_t index)
 				m_buffer[1] = chain->m_vertices[0];
 			}
 
-			m_vertices = m_buffer;
+			m_vertices = m_buffer.data();
 			m_count = 2;
 			m_radius = chain->m_radius;
 		}
