@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 #include "test.h"
-#include "box2d/b2_time_of_impact.h"
+#include <box2d/b2_time_of_impact.h>
 
 class TimeOfImpact : public Test
 {

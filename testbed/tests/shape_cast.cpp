@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 #include "test.h"
-#include "box2d/b2_distance.h"
+#include <box2d/b2_distance.h>
 
 class ShapeCast : public Test
 {

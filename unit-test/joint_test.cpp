@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "box2d/box2d.h"
+#include <box2d/box2d.h>
 #include <doctest/doctest.h>
 #include <stdio.h>
 
