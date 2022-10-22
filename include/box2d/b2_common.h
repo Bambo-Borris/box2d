@@ -24,9 +24,9 @@
 
 #include <box2d/b2_settings.h>
 
-#include <stddef.h>
-#include <assert.h>
-#include <float.h>
+#include <cstddef>
+#include <cassert>
+#include <cfloat>
 
 #if !defined(NDEBUG)
 	#define b2DEBUG
