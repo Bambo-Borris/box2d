@@ -655,11 +655,9 @@ void b2DynamicTree::ValidateMetrics(std::int32_t index) const
 	assert(0 <= child1 && child1 < m_nodeCapacity);
 	assert(0 <= child2 && child2 < m_nodeCapacity);
 
-	std::int32_t height1 = m_nodes[child1].height;
-	std::int32_t height2 = m_nodes[child2].height;
-	std::int32_t height;
-	height = 1 + b2Max(height1, height2);
-	assert(node->height == height);
+	[[maybe_unused]] std::int32_t height1 = m_nodes[child1].height;
+	[[maybe_unused]] std::int32_t height2 = m_nodes[child2].height;
+	assert(node->height == 1 + b2Max(height1, height2));
 
 	b2AABB aabb;
 	aabb.Combine(m_nodes[child1].aabb, m_nodes[child2].aabb);

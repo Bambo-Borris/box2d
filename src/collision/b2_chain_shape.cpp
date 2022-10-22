@@ -51,8 +51,8 @@ void b2ChainShape::CreateLoop(const b2Vec2* vertices, std::int32_t count)
 
 	for (std::int32_t i = 1; i < count; ++i)
 	{
-		b2Vec2 v1 = vertices[i-1];
-		b2Vec2 v2 = vertices[i];
+		[[maybe_unused]] b2Vec2 v1 = vertices[i-1];
+		[[maybe_unused]] b2Vec2 v2 = vertices[i];
 		// If the code crashes here, it means your vertices are too close together.
 		assert(b2DistanceSquared(v1, v2) > b2_linearSlop * b2_linearSlop);
 	}

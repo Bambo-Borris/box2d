@@ -133,7 +133,7 @@ void* b2BlockAllocator::HandleAllocate(std::size_t size)
 	}
 	else
 	{
-		if (m_chunkCount == m_chunkSpace)
+		if (std::size_t(m_chunkCount) == m_chunkSpace)
 		{
 			b2Chunk* oldChunks = m_chunks;
 			m_chunkSpace += b2_chunkArrayIncrement;

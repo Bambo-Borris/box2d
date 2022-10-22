@@ -62,6 +62,11 @@ target_include_directories(box2d
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 target_compile_features(box2d PUBLIC cxx_std_17)
+if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
+    target_compile_options(box2d PRIVATE -Werror -Wall)
+elseif(MSVC)
+    target_compile_options(box2d PRIVATE /WX /W3)
+endif()
 
 set_target_properties(box2d PROPERTIES
     CXX_VISIBILITY_PRESET hidden
