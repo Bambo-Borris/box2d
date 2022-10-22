@@ -71,7 +71,7 @@ bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input
 	}
 
 	// Find the point of intersection of the line with the circle.
-	float a = -(c + b2Sqrt(sigma));
+	float a = -(c + std::sqrt(sigma));
 
 	// Is the intersection point on the segment?
 	if (0.0f <= a && a <= input.maxFraction * rr)

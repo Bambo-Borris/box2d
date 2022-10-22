@@ -33,7 +33,6 @@ inline bool b2IsValid(float x)
 	return std::isfinite(x);
 }
 
-#define	b2Sqrt(x)	sqrtf(x)
 #define	b2Atan2(y, x)	atan2f(y, x)
 
 /// A 2D column vector.
@@ -87,7 +86,7 @@ struct B2_API b2Vec2
 	/// Get the length of this vector (the norm).
 	float Length() const
 	{
-		return b2Sqrt(x * x + y * y);
+		return std::sqrt(x * x + y * y);
 	}
 
 	/// Get the length squared. For performance, use this instead of
