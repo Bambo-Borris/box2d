@@ -64,6 +64,8 @@ target_include_directories(box2d
 target_compile_features(box2d PUBLIC cxx_std_17)
 
 set_target_properties(box2d PROPERTIES
+    CXX_VISIBILITY_PRESET hidden
+    VISIBILITY_INLINES_HIDDEN ON
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
 )
