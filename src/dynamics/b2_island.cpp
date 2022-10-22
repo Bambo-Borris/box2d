@@ -348,7 +348,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 
 	if (allowSleep)
 	{
-		float minSleepTime = b2_maxFloat;
+		float minSleepTime = FLT_MAX;
 
 		const float linTolSqr = b2_linearSleepTolerance * b2_linearSleepTolerance;
 		const float angTolSqr = b2_angularSleepTolerance * b2_angularSleepTolerance;

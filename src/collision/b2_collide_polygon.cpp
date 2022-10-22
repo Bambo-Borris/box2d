@@ -36,7 +36,7 @@ static float b2FindMaxSeparation(std::int32_t* edgeIndex,
 	b2Transform xf = b2MulT(xf2, xf1);
 
 	std::int32_t bestIndex = 0;
-	float maxSeparation = -b2_maxFloat;
+	float maxSeparation = -FLT_MAX;
 	for (std::int32_t i = 0; i < count1; ++i)
 	{
 		// Get poly1 normal in frame2.
@@ -44,7 +44,7 @@ static float b2FindMaxSeparation(std::int32_t* edgeIndex,
 		b2Vec2 v1 = b2Mul(xf, v1s[i]);
 
 		// Find deepest point for normal i.
-		float si = b2_maxFloat;
+		float si = FLT_MAX;
 		for (std::int32_t j = 0; j < count2; ++j)
 		{
 			float sij = b2Dot(n, v2s[j] - v1);
@@ -82,7 +82,7 @@ static void b2FindIncidentEdge(std::array<b2ClipVertex, 2>& c,
 
 	// Find the incident edge on poly2.
 	std::int32_t index = 0;
-	float minDot = b2_maxFloat;
+	float minDot = FLT_MAX;
 	for (std::int32_t i = 0; i < count2; ++i)
 	{
 		float dot = b2Dot(normal1, normals2[i]);

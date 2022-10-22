@@ -742,7 +742,7 @@ void b2DynamicTree::RebuildBottomUp()
 
 	while (count > 1)
 	{
-		float minCost = b2_maxFloat;
+		float minCost = FLT_MAX;
 		std::int32_t iMin = -1, jMin = -1;
 		for (std::int32_t i = 0; i < count; ++i)
 		{

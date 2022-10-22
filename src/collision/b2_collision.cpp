@@ -39,7 +39,7 @@ void b2WorldManifold::Initialize(const b2Manifold* manifold,
 			normal.Set(1.0f, 0.0f);
 			b2Vec2 pointA = b2Mul(xfA, manifold->localPoint);
 			b2Vec2 pointB = b2Mul(xfB, manifold->points[0].localPoint);
-			if (b2DistanceSquared(pointA, pointB) > b2_epsilon * b2_epsilon)
+			if (b2DistanceSquared(pointA, pointB) > FLT_EPSILON * FLT_EPSILON)
 			{
 				normal = pointB - pointA;
 				normal.Normalize();
@@ -136,8 +136,8 @@ void b2GetPointStates(std::array<b2PointState, b2_maxManifoldPoints>&  state1, s
 // From Real-time Collision Detection, p179.
 bool b2AABB::RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const
 {
-	float tmin = -b2_maxFloat;
-	float tmax = b2_maxFloat;
+	float tmin = -FLT_MAX;
+	float tmax = FLT_MAX;
 
 	b2Vec2 p = input.p1;
 	b2Vec2 d = input.p2 - input.p1;
@@ -147,7 +147,7 @@ bool b2AABB::RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const
 
 	for (std::int32_t i = 0; i < 2; ++i)
 	{
-		if (absD(i) < b2_epsilon)
+		if (absD(i) < FLT_EPSILON)
 		{
 			// Parallel.
 			if (p(i) < lowerBound(i) || upperBound(i) < p(i))
@@ -254,5 +254,5 @@ bool b2TestOverlap(	const b2Shape* shapeA, std::int32_t indexA,
 
 	b2Distance(&output, &cache, &input);
 
-	return output.distance < 10.0f * b2_epsilon;
+	return output.distance < 10.0f * FLT_EPSILON;
 }

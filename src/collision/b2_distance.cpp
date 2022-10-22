@@ -133,7 +133,7 @@ struct b2Simplex
 		{
 			float metric1 = cache->metric;
 			float metric2 = GetMetric();
-			if (metric2 < 0.5f * metric1 || 2.0f * metric1 < metric2 || metric2 < b2_epsilon)
+			if (metric2 < 0.5f * metric1 || 2.0f * metric1 < metric2 || metric2 < FLT_EPSILON)
 			{
 				// Reset the simplex.
 				m_count = 0;
@@ -515,7 +515,7 @@ void b2Distance(b2DistanceOutput* output,
 		b2Vec2 d = simplex.GetSearchDirection();
 
 		// Ensure the search direction is numerically fit.
-		if (d.LengthSquared() < b2_epsilon * b2_epsilon)
+		if (d.LengthSquared() < FLT_EPSILON * FLT_EPSILON)
 		{
 			// The origin is probably contained by a line segment
 			// or triangle. Thus the shapes are overlapped.
@@ -572,7 +572,7 @@ void b2Distance(b2DistanceOutput* output,
 	// Apply radii if requested
 	if (input->useRadii)
 	{
-		if (output->distance < b2_epsilon)
+		if (output->distance < FLT_EPSILON)
 		{
 			// Shapes are too close to safely compute normal
 			b2Vec2 p = 0.5f * (output->pointA + output->pointB);
