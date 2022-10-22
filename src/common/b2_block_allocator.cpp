@@ -25,12 +25,12 @@
 #include <cstring>
 #include <cstddef>
 
-static const std::int32_t b2_chunkSize = 16 * 1024;
-static const std::int32_t b2_maxBlockSize = 640;
-static const std::size_t b2_chunkArrayIncrement = 128;
+static constexpr std::int32_t b2_chunkSize = 16 * 1024;
+static constexpr std::int32_t b2_maxBlockSize = 640;
+static constexpr std::size_t b2_chunkArrayIncrement = 128;
 
 // These are the supported object sizes. Actual allocations are rounded up the next size.
-static const std::int32_t b2_blockSizes[b2_blockSizeCount] =
+static constexpr std::int32_t b2_blockSizes[b2_blockSizeCount] =
 	{
 	16,		// 0
 	32,		// 1
