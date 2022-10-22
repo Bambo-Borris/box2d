@@ -1,9 +1,5 @@
-cmake_minimum_required(VERSION 3.8)
-
-# https://cmake.org/cmake/help/latest/command/project.html
+cmake_minimum_required(VERSION 3.16)
 project(box2d VERSION 2.4.1)
-
-# set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "" FORCE)
 
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
