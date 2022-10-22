@@ -447,7 +447,7 @@ void b2Rope::SolveBend_PBD_Angle()
 		float a = b2Cross(d1, d2);
 		float b = b2Dot(d1, d2);
 
-		float angle = b2Atan2(a, b);
+		float angle = std::atan2(a, b);
 
 		float L1sqr, L2sqr;
 		
@@ -541,7 +541,7 @@ void b2Rope::SolveBend_XPBD_Angle(float dt)
 		float a = b2Cross(d1, d2);
 		float b = b2Dot(d1, d2);
 
-		float angle = b2Atan2(a, b);
+		float angle = std::atan2(a, b);
 
 		b2Vec2 Jd1 = (-1.0f / L1sqr) * d1.Skew();
 		b2Vec2 Jd2 = (1.0f / L2sqr) * d2.Skew();
@@ -630,7 +630,7 @@ void b2Rope::ApplyBendForces(float dt)
 		float a = b2Cross(d1, d2);
 		float b = b2Dot(d1, d2);
 
-		float angle = b2Atan2(a, b);
+		float angle = std::atan2(a, b);
 
 		b2Vec2 Jd1 = (-1.0f / L1sqr) * d1.Skew();
 		b2Vec2 Jd2 = (1.0f / L2sqr) * d2.Skew();
