@@ -16,7 +16,7 @@ include(GNUInstallDirs)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-if (BOX2D_USER_SETTINGS)
+if(BOX2D_USER_SETTINGS)
 	add_compile_definitions(B2_USER_SETTINGS)
 endif()
 
@@ -32,22 +32,22 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 endif()
 
 option(BUILD_DOCS "Build the Box2D documentation" OFF)
-if (BUILD_DOCS)
+if(BUILD_DOCS)
     set(DOXYGEN_SKIP_DOT TRUE)
     find_package(Doxygen)
 endif()
 
-if (DOXYGEN_FOUND AND BUILD_DOCS)
+if(DOXYGEN_FOUND AND BUILD_DOCS)
     add_subdirectory(docs)
 endif()
 
 include(CTest)
-if (BUILD_TESTING)
+if(BUILD_TESTING)
 	add_subdirectory(unit-test)
 endif()
 
 option(BUILD_TESTBED "Build the Box2D testbed" ON)
-if (BUILD_TESTBED)
+if(BUILD_TESTBED)
 	add_subdirectory(extern/glad)
 	add_subdirectory(extern/glfw)
 	add_subdirectory(extern/imgui)
@@ -55,7 +55,7 @@ if (BUILD_TESTBED)
 	add_subdirectory(testbed)
 
 	# default startup project for Visual Studio
-	if (MSVC)
+	if(MSVC)
 		set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT testbed)
 		set_property(TARGET testbed PROPERTY VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/testbed)
 	endif()
