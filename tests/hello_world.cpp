@@ -29,7 +29,7 @@
 // box.
 // There are no graphics for this example. Box2D is meant to be used
 // with your rendering engine in your game engine.
-DOCTEST_TEST_CASE("hello world")
+TEST_CASE("hello world")
 {
 	// Define the gravity vector.
 	b2Vec2 gravity(0.0f, -10.0f);

@@ -11,11 +11,11 @@ set_target_properties(doctest_with_main PROPERTIES COMPILE_OPTIONS "" EXPORT_COM
 get_target_property(DOCTEST_INCLUDE_DIRS doctest INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(doctest SYSTEM INTERFACE ${DOCTEST_INCLUDE_DIRS})
 
-add_executable(unit_test
+add_executable(test-box2d
     hello_world.cpp
     collision_test.cpp
     joint_test.cpp
     math_test.cpp
     world_test.cpp)
-target_link_libraries(unit_test PUBLIC box2d::box2d doctest::doctest_with_main)
-doctest_discover_tests(unit_test)
+target_link_libraries(test-box2d PUBLIC box2d::box2d doctest::doctest_with_main)
+doctest_discover_tests(test-box2d)
