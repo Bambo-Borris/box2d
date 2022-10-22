@@ -14,6 +14,3 @@ set_target_properties(unit_test PROPERTIES
 )
 target_link_libraries(unit_test PUBLIC box2d)
 add_test(NAME unit_test COMMAND unit_test)
-
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES doctest.h
-    hello_world.cpp collision_test.cpp joint_test.cpp math_test.cpp world_test.cpp )
