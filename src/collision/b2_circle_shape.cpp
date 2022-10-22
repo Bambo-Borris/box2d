@@ -52,7 +52,7 @@ bool b2CircleShape::TestPoint(const b2Transform& transform, const b2Vec2& p) con
 bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 							const b2Transform& transform, std::int32_t childIndex) const
 {
-	B2_NOT_USED(childIndex);
+	(void)childIndex;
 
 	b2Vec2 position = transform.p + b2Mul(transform.q, m_p);
 	b2Vec2 s = input.p1 - position;
@@ -88,7 +88,7 @@ bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input
 
 void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2Transform& transform, std::int32_t childIndex) const
 {
-	B2_NOT_USED(childIndex);
+	(void)childIndex;
 
 	b2Vec2 p = transform.p + b2Mul(transform.q, m_p);
 	aabb->lowerBound.Set(p.x - m_radius, p.y - m_radius);

@@ -32,8 +32,6 @@
 	#define b2DEBUG
 #endif
 
-#define B2_NOT_USED(x) ((void)(x))
-
 #define b2_pi			3.14159265359f
 
 /// @file

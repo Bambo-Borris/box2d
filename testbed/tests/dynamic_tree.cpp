@@ -67,7 +67,7 @@ public:
 
 	void Step(Settings& settings) override
 	{
-		B2_NOT_USED(settings);
+		(void)settings;
 
 		m_rayActor = NULL;
 		for (std::int32_t i = 0; i < e_actorCount; ++i)
@@ -304,7 +304,7 @@ private:
 			}
 
 			bool overlap = b2TestOverlap(m_queryAABB, m_actors[i].aabb);
-			B2_NOT_USED(overlap);
+			(void)overlap;
 			assert(overlap == m_actors[i].overlap);
 		}
 	}
