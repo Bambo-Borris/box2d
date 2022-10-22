@@ -24,8 +24,8 @@
 
 #include <box2d/b2_settings.h>
 #include <cstdio>
-#include <stdarg.h>
-#include <stdlib.h>
+#include <cstdarg>
+#include <cstdlib>
 
 b2Version b2_version = {2, 4, 1};
 
