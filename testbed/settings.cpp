@@ -22,7 +22,7 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 #include "settings.h"
-#include "sajson/sajson.h"
+#include <sajson/sajson.h>
 #include <cstdio>
 
 static const char* fileName = "settings.ini";

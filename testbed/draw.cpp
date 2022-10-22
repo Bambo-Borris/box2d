@@ -25,7 +25,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
 
 #define BUFFER_OFFSET(x)  ((const void*) (x))
 

@@ -22,7 +22,7 @@
 
 #include "settings.h"
 #include "test.h"
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
 
 // Test the prismatic joint with limits and motor options.
 class PrismaticJoint : public Test
