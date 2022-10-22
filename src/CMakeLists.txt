@@ -60,11 +60,9 @@ target_include_directories(box2d
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
+target_compile_features(box2d PUBLIC cxx_std_17)
 
 set_target_properties(box2d PROPERTIES
-	CXX_STANDARD 17
-    CXX_STANDARD_REQUIRED YES
-    CXX_EXTENSIONS NO
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
 )
