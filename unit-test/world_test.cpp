@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 #include "box2d/box2d.h"
-#include "doctest.h"
+#include <doctest/doctest.h>
 #include <stdio.h>
 
 static bool begin_contact = false;
