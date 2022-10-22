@@ -474,7 +474,7 @@ std::int32_t b2DynamicTree::Balance(std::int32_t iA)
 
 		return iC;
 	}
-	
+
 	// Rotate B up
 	if (balance < -1)
 	{

@@ -164,7 +164,7 @@ void b2Rope::Create(const b2RopeDef& def)
 		b2Vec2 J3 = Jd2;
 
 		c.invEffectiveMass = c.invMass1 * b2Dot(J1, J1) + c.invMass2 * b2Dot(J2, J2) + c.invMass3 * b2Dot(J3, J3);
-	
+
 		b2Vec2 r = p3 - p1;
 
 		float rr = r.LengthSquared();
@@ -221,7 +221,7 @@ void b2Rope::SetTuning(const b2RopeTuning& tuning)
 		c.spring = mass * bendOmega * bendOmega;
 		c.damper = 2.0f * mass * m_tuning.bendDamping * bendOmega;
 	}
-	
+
 	const float stretchOmega = 2.0f * b2_pi * m_tuning.stretchHertz;
 
 	for (std::int32_t i = 0; i < m_stretchCount; ++i)
@@ -450,7 +450,7 @@ void b2Rope::SolveBend_PBD_Angle()
 		float angle = std::atan2(a, b);
 
 		float L1sqr, L2sqr;
-		
+
 		if (m_tuning.isometric)
 		{
 			L1sqr = c.L1 * c.L1;

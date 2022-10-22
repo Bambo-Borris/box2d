@@ -11,7 +11,7 @@ class Skier : public Test
 {
 public:
 	Skier()
-	{		
+	{
 		b2Body* ground = NULL;
 		{
 			b2BodyDef bd;
@@ -28,7 +28,7 @@ public:
 			*/
 			float const Angle1Degrees = -30.0f;
 			float const Angle2Degrees = 10.0f;
-			
+
 			/*
 			The larger the value of SlopeLength, the less likely the glitch will show up.
 			*/

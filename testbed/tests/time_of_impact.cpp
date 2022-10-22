@@ -88,7 +88,7 @@ public:
 
 		b2Transform transformB;
 		sweepB.GetTransform(&transformB, 0.0f);
-		
+
 		//b2Vec2 localPoint(2.0f, -0.1f);
 
 		for (std::int32_t i = 0; i < m_shapeB.m_count; ++i)

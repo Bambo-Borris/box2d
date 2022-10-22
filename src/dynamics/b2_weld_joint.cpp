@@ -276,7 +276,7 @@ bool b2WeldJoint::SolvePositionConstraints(const b2SolverData& data)
 		angularError = b2Abs(C2);
 
 		b2Vec3 C(C1.x, C1.y, C2);
-	
+
 		b2Vec3 impulse;
 		if (K.ez.z > 0.0f)
 		{

@@ -25,7 +25,7 @@
 #include <box2d/b2_api.h>
 #include <box2d/b2_math.h>
 
-#include <array> 
+#include <array>
 
 class b2Shape;
 

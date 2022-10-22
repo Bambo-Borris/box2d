@@ -31,7 +31,7 @@
 class PolygonShapesCallback : public b2QueryCallback
 {
 public:
-	
+
 	enum
 	{
 		e_maxCount = 4
@@ -55,7 +55,7 @@ public:
 		b2Shape* shape = fixture->GetShape();
 
 		bool overlap = b2TestOverlap(shape, 0, &m_circle, 0, body->GetTransform(), m_transform);
-			
+
 		if (overlap)
 		{
 			b2Color color(0.95f, 0.95f, 0.6f);
@@ -101,7 +101,7 @@ public:
 			vertices[2].Set(0.0f, 1.5f);
 			m_polygons[0].Set(vertices, 3);
 		}
-		
+
 		{
 			b2Vec2 vertices[3];
 			vertices[0].Set(-0.1f, 0.0f);

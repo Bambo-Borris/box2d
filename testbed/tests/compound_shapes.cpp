@@ -145,7 +145,7 @@ public:
 
 			b2PolygonShape box;
 			box.SetAsBox(4.0f, 0.1f, b2Vec2(0.0f, 3.0f), 0.0f);
-			
+
 			body->CreateFixture(&box, 2.0f);
 		}
 
@@ -160,7 +160,7 @@ public:
 
 			b2PolygonShape box;
 			box.SetAsBox(4.0f, 0.1f, b2Vec2(0.0f, 3.0f), 0.0f);
-			
+
 			body->CreateFixture(&box, 2.0f);
 		}
 

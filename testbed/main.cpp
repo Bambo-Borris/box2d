@@ -104,7 +104,7 @@ static void CreateUI(GLFWwindow* window, const char* glslVersion = NULL)
 		fontPath = fontPath1;
 		fclose(file1);
 	}
-	
+
 	if (file2)
 	{
 		fontPath = fontPath2;
@@ -293,7 +293,7 @@ static void MouseButtonCallback(GLFWwindow* window, std::int32_t button, std::in
 				s_test->MouseDown(pw);
 			}
 		}
-		
+
 		if (action == GLFW_RELEASE)
 		{
 			s_test->MouseUp(pw);
@@ -302,7 +302,7 @@ static void MouseButtonCallback(GLFWwindow* window, std::int32_t button, std::in
 	else if (button == GLFW_MOUSE_BUTTON_2)
 	{
 		if (action == GLFW_PRESS)
-		{	
+		{
 			s_clickPointWS = g_camera.ConvertScreenToWorld(ps);
 			s_rightMouseDown = true;
 		}
@@ -320,7 +320,7 @@ static void MouseMotionCallback(GLFWwindow*, double xd, double yd)
 
 	b2Vec2 pw = g_camera.ConvertScreenToWorld(ps);
 	s_test->MouseMove(pw);
-	
+
 	if (s_rightMouseDown)
 	{
 		b2Vec2 diff = pw - s_clickPointWS;
@@ -365,7 +365,7 @@ static void UpdateUI()
 				ImGui::SliderInt("Vel Iters", &s_settings.m_velocityIterations, 0, 50);
 				ImGui::SliderInt("Pos Iters", &s_settings.m_positionIterations, 0, 50);
 				ImGui::SliderFloat("Hertz", &s_settings.m_hertz, 5.0f, 120.0f, "%.0f hz");
-				
+
 				ImGui::Separator();
 
 				ImGui::Checkbox("Sleep", &s_settings.m_enableSleep);
@@ -559,7 +559,7 @@ int main(int, char**)
 		std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
 
 		glfwGetWindowSize(g_mainWindow, &g_camera.m_width, &g_camera.m_height);
-        
+
         int bufferWidth, bufferHeight;
         glfwGetFramebufferSize(g_mainWindow, &bufferWidth, &bufferHeight);
         glViewport(0, 0, bufferWidth, bufferHeight);
@@ -589,7 +589,7 @@ int main(int, char**)
 		UpdateUI();
 
 		// ImGui::ShowDemoWindow();
-			
+
 		if (g_debugDraw.m_showUI)
 		{
 			sprintf(buffer, "%.1f ms", 1000.0 * frameTime.count());

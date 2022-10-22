@@ -180,7 +180,7 @@ static GLuint sCreateShaderFromString(const char* source, GLenum type)
 	return res;
 }
 
-// 
+//
 static GLuint sCreateShaderProgram(const char* vs, const char* fs)
 {
 	GLuint vsId = sCreateShaderFromString(vs, GL_VERTEX_SHADER);

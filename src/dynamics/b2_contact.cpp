@@ -57,7 +57,7 @@ void b2Contact::AddType(b2ContactCreateFcn* createFcn, b2ContactDestroyFcn* dest
 {
 	assert(0 <= type1 && type1 < b2Shape::e_typeCount);
 	assert(0 <= type2 && type2 < b2Shape::e_typeCount);
-	
+
 	s_registers[type1][type2].createFcn = createFcn;
 	s_registers[type1][type2].destroyFcn = destoryFcn;
 	s_registers[type1][type2].primary = true;
@@ -83,7 +83,7 @@ b2Contact* b2Contact::Create(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture
 
 	assert(0 <= type1 && type1 < b2Shape::e_typeCount);
 	assert(0 <= type2 && type2 < b2Shape::e_typeCount);
-	
+
 	b2ContactCreateFcn* createFcn = s_registers[type1][type2].createFcn;
 	if (createFcn)
 	{

@@ -93,10 +93,10 @@ b2BlockAllocator::b2BlockAllocator()
 	m_chunkSpace = b2_chunkArrayIncrement;
 	m_chunkCount = 0;
 	m_chunks = (b2Chunk*)b2Alloc(static_cast<std::int32_t> (m_chunkSpace * sizeof(b2Chunk)));
-	
+
 	memset(m_chunks, 0, m_chunkSpace * sizeof(b2Chunk));
 	memset(m_freeLists.data(), 0, m_freeLists.size() * sizeof(b2Block *));
-} 
+}
 
 b2BlockAllocator::~b2BlockAllocator()
 {
