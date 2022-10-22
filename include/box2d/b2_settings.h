@@ -33,7 +33,7 @@
 
 /// This is a user file that includes custom definitions of the macros, structs, and functions
 /// defined below.
-#include "b2_user_settings.h"
+#include <box2d/b2_user_settings.h>
 
 #else
 
@@ -120,4 +120,4 @@ inline void b2Log(const char* string, ...)
 
 #endif // B2_USER_SETTINGS
 
-#include "b2_common.h"
+#include <box2d/b2_common.h>
