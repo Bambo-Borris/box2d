@@ -21,8 +21,7 @@
 // SOFTWARE.
 
 #include "box2d/box2d.h"
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"
+#include <doctest/doctest.h>
 #include <stdio.h>
 
 // This is a simple example of building and running a simulation
