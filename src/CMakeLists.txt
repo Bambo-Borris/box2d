@@ -69,12 +69,12 @@ set_target_properties(box2d PROPERTIES
 
 if(MSVC)
   set_target_properties(box2d PROPERTIES
-    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+    COMPILE_PDB_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMPILE_PDB_NAME box2d
   )
 
   install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/box2d.pdb"
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/box2d.pdb
     DESTINATION ${CMAKE_INSTALL_LIBDIR}
     OPTIONAL
   )
@@ -98,17 +98,17 @@ install(
 install(
   EXPORT box2dConfig
   NAMESPACE box2d::
-  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/box2d"
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/box2d
 )
 
 include(CMakePackageConfigHelpers)
 
 write_basic_package_version_file(
-  "${CMAKE_CURRENT_BINARY_DIR}/box2dConfigVersion.cmake"
+  ${CMAKE_CURRENT_BINARY_DIR}/box2dConfigVersion.cmake
   COMPATIBILITY SameMajorVersion
 )
 
 install(
-  FILES "${CMAKE_CURRENT_BINARY_DIR}/box2dConfigVersion.cmake"
-  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/box2d"
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/box2dConfigVersion.cmake
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/box2d
 )

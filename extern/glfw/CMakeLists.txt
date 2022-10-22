@@ -50,10 +50,10 @@ elseif (UNIX)
         message(FATAL_ERROR "The Xcursor headers were not found")
     endif()
 
-    list(APPEND glfw_INCLUDE_DIRS "${X11_Xrandr_INCLUDE_PATH}"
-                                  "${X11_Xinerama_INCLUDE_PATH}"
-                                  "${X11_Xkb_INCLUDE_PATH}"
-                                  "${X11_Xcursor_INCLUDE_PATH}")
+    list(APPEND glfw_INCLUDE_DIRS ${X11_Xrandr_INCLUDE_PATH}
+                                  ${X11_Xinerama_INCLUDE_PATH}
+                                  ${X11_Xkb_INCLUDE_PATH}
+                                  ${X11_Xcursor_INCLUDE_PATH})
 endif()
 
 set(common_HEADERS src/internal.h src/mappings.h
