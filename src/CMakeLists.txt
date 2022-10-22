@@ -53,6 +53,7 @@ add_library(box2d
 	dynamics/b2_world.cpp
 	dynamics/b2_world_callbacks.cpp
 	rope/b2_rope.cpp)
+add_library(box2d::box2d ALIAS box2d)
 target_include_directories(box2d
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
