@@ -30,12 +30,12 @@
 
 b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 {
-	b2Assert(bd->position.IsValid());
-	b2Assert(bd->linearVelocity.IsValid());
-	b2Assert(b2IsValid(bd->angle));
-	b2Assert(b2IsValid(bd->angularVelocity));
-	b2Assert(b2IsValid(bd->angularDamping) && bd->angularDamping >= 0.0f);
-	b2Assert(b2IsValid(bd->linearDamping) && bd->linearDamping >= 0.0f);
+	assert(bd->position.IsValid());
+	assert(bd->linearVelocity.IsValid());
+	assert(b2IsValid(bd->angle));
+	assert(b2IsValid(bd->angularVelocity));
+	assert(b2IsValid(bd->angularDamping) && bd->angularDamping >= 0.0f);
+	assert(b2IsValid(bd->linearDamping) && bd->linearDamping >= 0.0f);
 
 	m_flags = 0;
 
@@ -110,7 +110,7 @@ b2Body::~b2Body()
 
 void b2Body::SetType(b2BodyType type)
 {
-	b2Assert(m_world->IsLocked() == false);
+	assert(m_world->IsLocked() == false);
 	if (m_world->IsLocked() == true)
 	{
 		return;
@@ -164,7 +164,7 @@ void b2Body::SetType(b2BodyType type)
 
 b2Fixture* b2Body::CreateFixture(const b2FixtureDef* def)
 {
-	b2Assert(m_world->IsLocked() == false);
+	assert(m_world->IsLocked() == false);
 	if (m_world->IsLocked() == true)
 	{
 		return nullptr;
@@ -217,16 +217,16 @@ void b2Body::DestroyFixture(b2Fixture* fixture)
 		return;
 	}
 
-	b2Assert(m_world->IsLocked() == false);
+	assert(m_world->IsLocked() == false);
 	if (m_world->IsLocked() == true)
 	{
 		return;
 	}
 
-	b2Assert(fixture->m_body == this);
+	assert(fixture->m_body == this);
 
 	// Remove the fixture from this body's singly linked list.
-	b2Assert(m_fixtureCount > 0);
+	assert(m_fixtureCount > 0);
 	b2Fixture** node = &m_fixtureList;
 	bool found = false;
 	while (*node != nullptr)
@@ -242,7 +242,7 @@ void b2Body::DestroyFixture(b2Fixture* fixture)
 	}
 
 	// You tried to remove a shape that is not attached to this body.
-	b2Assert(found);
+	assert(found);
 
 	const float density = fixture->m_density;
 
@@ -305,7 +305,7 @@ void b2Body::ResetMassData()
 		return;
 	}
 
-	b2Assert(m_type == b2_dynamicBody);
+	assert(m_type == b2_dynamicBody);
 
 	// Accumulate mass over all fixtures.
 	b2Vec2 localCenter = b2Vec2_zero;
@@ -334,7 +334,7 @@ void b2Body::ResetMassData()
 	{
 		// Center the inertia about the center of mass.
 		m_I -= m_mass * b2Dot(localCenter, localCenter);
-		b2Assert(m_I > 0.0f);
+		assert(m_I > 0.0f);
 		m_invI = 1.0f / m_I;
 
 	}
@@ -355,7 +355,7 @@ void b2Body::ResetMassData()
 
 void b2Body::SetMassData(const b2MassData* massData)
 {
-	b2Assert(m_world->IsLocked() == false);
+	assert(m_world->IsLocked() == false);
 	if (m_world->IsLocked() == true)
 	{
 		return;
@@ -381,7 +381,7 @@ void b2Body::SetMassData(const b2MassData* massData)
 	if (massData->I > 0.0f && (m_flags & b2Body::e_fixedRotationFlag) == 0)
 	{
 		m_I = massData->I - m_mass * b2Dot(massData->center, massData->center);
-		b2Assert(m_I > 0.0f);
+		assert(m_I > 0.0f);
 		m_invI = 1.0f / m_I;
 	}
 
@@ -419,7 +419,7 @@ bool b2Body::ShouldCollide(const b2Body* other) const
 
 void b2Body::SetTransform(const b2Vec2& position, float angle)
 {
-	b2Assert(m_world->IsLocked() == false);
+	assert(m_world->IsLocked() == false);
 	if (m_world->IsLocked() == true)
 	{
 		return;
@@ -470,7 +470,7 @@ void b2Body::SynchronizeFixtures()
 
 void b2Body::SetEnabled(bool flag)
 {
-	b2Assert(m_world->IsLocked() == false);
+	assert(m_world->IsLocked() == false);
 
 	if (flag == IsEnabled())
 	{

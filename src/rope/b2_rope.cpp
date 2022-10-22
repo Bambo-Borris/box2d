@@ -76,7 +76,7 @@ b2Rope::~b2Rope()
 
 void b2Rope::Create(const b2RopeDef& def)
 {
-	b2Assert(def.count >= 3);
+	assert(def.count >= 3);
 	m_position = def.position;
 	m_count = def.count;
 	m_bindPositions = (b2Vec2*)b2Alloc(m_count * sizeof(b2Vec2));
@@ -384,7 +384,7 @@ void b2Rope::SolveStretch_PBD()
 
 void b2Rope::SolveStretch_XPBD(float dt)
 {
-	b2Assert(dt > 0.0f);
+	assert(dt > 0.0f);
 
 	for (std::int32_t i = 0; i < m_stretchCount; ++i)
 	{
@@ -503,7 +503,7 @@ void b2Rope::SolveBend_PBD_Angle()
 
 void b2Rope::SolveBend_XPBD_Angle(float dt)
 {
-	b2Assert(dt > 0.0f);
+	assert(dt > 0.0f);
 
 	for (std::int32_t i = 0; i < m_bendCount; ++i)
 	{

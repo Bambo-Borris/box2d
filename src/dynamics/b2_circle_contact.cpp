@@ -44,8 +44,8 @@ void b2CircleContact::Destroy(b2Contact* contact, b2BlockAllocator* allocator)
 b2CircleContact::b2CircleContact(b2Fixture* fixtureA, b2Fixture* fixtureB)
 	: b2Contact(fixtureA, 0, fixtureB, 0)
 {
-	b2Assert(m_fixtureA->GetType() == b2Shape::e_circle);
-	b2Assert(m_fixtureB->GetType() == b2Shape::e_circle);
+	assert(m_fixtureA->GetType() == b2Shape::e_circle);
+	assert(m_fixtureB->GetType() == b2Shape::e_circle);
 }
 
 void b2CircleContact::Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB)

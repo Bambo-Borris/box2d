@@ -54,7 +54,7 @@ void b2DistanceProxy::Set(const b2Shape* shape, std::int32_t index)
 	case b2Shape::e_chain:
 		{
 			const b2ChainShape* chain = static_cast<const b2ChainShape*>(shape);
-			b2Assert(0 <= index && index < chain->m_count);
+			assert(0 <= index && index < chain->m_count);
 
 			m_buffer[0] = chain->m_vertices[index];
 			if (index + 1 < chain->m_count)
@@ -82,7 +82,7 @@ void b2DistanceProxy::Set(const b2Shape* shape, std::int32_t index)
 		break;
 
 	default:
-		b2Assert(false);
+		assert(false);
 	}
 }
 
@@ -109,7 +109,7 @@ struct b2Simplex
 					const b2DistanceProxy* proxyA, const b2Transform& transformA,
 					const b2DistanceProxy* proxyB, const b2Transform& transformB)
 	{
-		b2Assert(cache->count <= 3);
+		assert(cache->count <= 3);
 		
 		// Copy data from cache.
 		m_count = cache->count;
@@ -192,7 +192,7 @@ struct b2Simplex
 			}
 
 		default:
-			b2Assert(false);
+			assert(false);
 			return b2Vec2_zero;
 		}
 	}
@@ -202,7 +202,7 @@ struct b2Simplex
 		switch (m_count)
 		{
 		case 0:
-			b2Assert(false);
+			assert(false);
 			return b2Vec2_zero;
 
 		case 1:
@@ -215,7 +215,7 @@ struct b2Simplex
 			return b2Vec2_zero;
 
 		default:
-			b2Assert(false);
+			assert(false);
 			return b2Vec2_zero;
 		}
 	}
@@ -225,7 +225,7 @@ struct b2Simplex
 		switch (m_count)
 		{
 		case 0:
-			b2Assert(false);
+			assert(false);
 			break;
 
 		case 1:
@@ -244,7 +244,7 @@ struct b2Simplex
 			break;
 
 		default:
-			b2Assert(false);
+			assert(false);
 			break;
 		}
 	}
@@ -254,7 +254,7 @@ struct b2Simplex
 		switch (m_count)
 		{
 		case 0:
-			b2Assert(false);
+			assert(false);
 			return 0.0f;
 
 		case 1:
@@ -267,7 +267,7 @@ struct b2Simplex
 			return b2Cross(m_v2.w - m_v1.w, m_v3.w - m_v1.w);
 
 		default:
-			b2Assert(false);
+			assert(false);
 			return 0.0f;
 		}
 	}
@@ -502,7 +502,7 @@ void b2Distance(b2DistanceOutput* output,
 			break;
 
 		default:
-			b2Assert(false);
+			assert(false);
 		}
 
 		// If we have 3 points, then the origin is in the corresponding triangle.
@@ -642,7 +642,7 @@ bool b2ShapeCast(b2ShapeCastOutput * output, const b2ShapeCastInput * input)
 	std::int32_t iter = 0;
 	while (iter < k_maxIters && v.Length() - sigma > tolerance)
 	{
-		b2Assert(simplex.m_count < 3);
+		assert(simplex.m_count < 3);
 
         output->iterations += 1;
 
@@ -703,7 +703,7 @@ bool b2ShapeCast(b2ShapeCastOutput * output, const b2ShapeCastInput * input)
 			break;
 
 		default:
-			b2Assert(false);
+			assert(false);
 		}
 		
 		// If we have 3 points, then the origin is in the corresponding triangle.

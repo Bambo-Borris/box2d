@@ -232,7 +232,7 @@ float b2MotorJoint::GetReactionTorque(float inv_dt) const
 
 void b2MotorJoint::SetMaxForce(float force)
 {
-	b2Assert(b2IsValid(force) && force >= 0.0f);
+	assert(b2IsValid(force) && force >= 0.0f);
 	m_maxForce = force;
 }
 
@@ -243,7 +243,7 @@ float b2MotorJoint::GetMaxForce() const
 
 void b2MotorJoint::SetMaxTorque(float torque)
 {
-	b2Assert(b2IsValid(torque) && torque >= 0.0f);
+	assert(b2IsValid(torque) && torque >= 0.0f);
 	m_maxTorque = torque;
 }
 
@@ -254,7 +254,7 @@ float b2MotorJoint::GetMaxTorque() const
 
 void b2MotorJoint::SetCorrectionFactor(float factor)
 {
-	b2Assert(b2IsValid(factor) && 0.0f <= factor && factor <= 1.0f);
+	assert(b2IsValid(factor) && 0.0f <= factor && factor <= 1.0f);
 	m_correctionFactor = factor;
 }
 

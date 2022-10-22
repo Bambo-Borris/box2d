@@ -618,9 +618,9 @@ DebugDraw::DebugDraw()
 //
 DebugDraw::~DebugDraw()
 {
-	b2Assert(m_points == NULL);
-	b2Assert(m_lines == NULL);
-	b2Assert(m_triangles == NULL);
+	assert(m_points == NULL);
+	assert(m_lines == NULL);
+	assert(m_triangles == NULL);
 }
 
 //

@@ -305,7 +305,7 @@ private:
 
 			bool overlap = b2TestOverlap(m_queryAABB, m_actors[i].aabb);
 			B2_NOT_USED(overlap);
-			b2Assert(overlap == m_actors[i].overlap);
+			assert(overlap == m_actors[i].overlap);
 		}
 	}
 
@@ -340,7 +340,7 @@ private:
 
 		if (bruteActor != NULL)
 		{
-			b2Assert(bruteOutput.fraction == m_rayCastOutput.fraction);
+			assert(bruteOutput.fraction == m_rayCastOutput.fraction);
 		}
 	}
 

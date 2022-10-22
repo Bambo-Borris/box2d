@@ -388,8 +388,8 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 
 void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::int32_t toiIndexB)
 {
-	b2Assert(toiIndexA < m_bodyCount);
-	b2Assert(toiIndexB < m_bodyCount);
+	assert(toiIndexA < m_bodyCount);
+	assert(toiIndexB < m_bodyCount);
 
 	// Initialize the body state.
 	for (std::int32_t i = 0; i < m_bodyCount; ++i)

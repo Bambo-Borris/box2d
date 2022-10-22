@@ -161,25 +161,25 @@ private:
 
 inline void* b2DynamicTree::GetUserData(std::int32_t proxyId) const
 {
-	b2Assert(0 <= proxyId && proxyId < m_nodeCapacity);
+	assert(0 <= proxyId && proxyId < m_nodeCapacity);
 	return m_nodes[proxyId].userData;
 }
 
 inline bool b2DynamicTree::WasMoved(std::int32_t proxyId) const
 {
-	b2Assert(0 <= proxyId && proxyId < m_nodeCapacity);
+	assert(0 <= proxyId && proxyId < m_nodeCapacity);
 	return m_nodes[proxyId].moved;
 }
 
 inline void b2DynamicTree::ClearMoved(std::int32_t proxyId)
 {
-	b2Assert(0 <= proxyId && proxyId < m_nodeCapacity);
+	assert(0 <= proxyId && proxyId < m_nodeCapacity);
 	m_nodes[proxyId].moved = false;
 }
 
 inline const b2AABB& b2DynamicTree::GetFatAABB(std::int32_t proxyId) const
 {
-	b2Assert(0 <= proxyId && proxyId < m_nodeCapacity);
+	assert(0 <= proxyId && proxyId < m_nodeCapacity);
 	return m_nodes[proxyId].aabb;
 }
 
@@ -224,7 +224,7 @@ inline void b2DynamicTree::RayCast(T* callback, const b2RayCastInput& input) con
 	b2Vec2 p1 = input.p1;
 	b2Vec2 p2 = input.p2;
 	b2Vec2 r = p2 - p1;
-	b2Assert(r.LengthSquared() > 0.0f);
+	assert(r.LengthSquared() > 0.0f);
 	r.Normalize();
 
 	// v is perpendicular to the segment.

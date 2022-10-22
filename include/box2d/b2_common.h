@@ -33,7 +33,6 @@
 #endif
 
 #define B2_NOT_USED(x) ((void)(x))
-#define b2Assert(A) assert(A)
 
 #define	b2_maxFloat		FLT_MAX
 #define	b2_epsilon		FLT_EPSILON

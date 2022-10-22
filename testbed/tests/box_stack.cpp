@@ -68,7 +68,7 @@ public:
 				bd.type = b2_dynamicBody;
 
 				std::int32_t n = j * e_rowCount + i;
-				b2Assert(n < e_rowCount * e_columnCount);
+				assert(n < e_rowCount * e_columnCount);
 				m_indices[n] = n;
 				bd.userData.pointer = n;
 

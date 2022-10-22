@@ -75,7 +75,7 @@ b2ContactSolver::b2ContactSolver(b2ContactSolverDef* def)
 		b2Manifold* manifold = contact->GetManifold();
 
 		std::int32_t pointCount = manifold->pointCount;
-		b2Assert(pointCount > 0);
+		assert(pointCount > 0);
 
 		b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
 		vc->friction = contact->m_friction;
@@ -174,7 +174,7 @@ void b2ContactSolver::InitializeVelocityConstraints()
 		b2Vec2 vB = m_velocities[indexB].v;
 		float wB = m_velocities[indexB].w;
 
-		b2Assert(manifold->pointCount > 0);
+		assert(manifold->pointCount > 0);
 
 		b2Transform xfA, xfB;
 		xfA.q.Set(aA);
@@ -317,7 +317,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 		b2Vec2 tangent = b2Cross(normal, 1.0f);
 		float friction = vc->friction;
 
-		b2Assert(pointCount == 1 || pointCount == 2);
+		assert(pointCount == 1 || pointCount == 2);
 
 		// Solve tangent constraints first because non-penetration is more important
 		// than friction.
@@ -415,7 +415,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 			b2VelocityConstraintPoint* cp2 = vc->points + 1;
 
 			b2Vec2 a(cp1->normalImpulse, cp2->normalImpulse);
-			b2Assert(a.x >= 0.0f && a.y >= 0.0f);
+			assert(a.x >= 0.0f && a.y >= 0.0f);
 
 			// Relative velocity at contact
 			b2Vec2 dv1 = vB + b2Cross(wB, cp1->rB) - vA - b2Cross(wA, cp1->rA);
@@ -475,8 +475,8 @@ void b2ContactSolver::SolveVelocityConstraints()
 					vn1 = b2Dot(dv1, normal);
 					vn2 = b2Dot(dv2, normal);
 
-					b2Assert(b2Abs(vn1 - cp1->velocityBias) < k_errorTol);
-					b2Assert(b2Abs(vn2 - cp2->velocityBias) < k_errorTol);
+					assert(b2Abs(vn1 - cp1->velocityBias) < k_errorTol);
+					assert(b2Abs(vn2 - cp2->velocityBias) < k_errorTol);
 #endif
 					break;
 				}
@@ -516,7 +516,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 					// Compute normal velocity
 					vn1 = b2Dot(dv1, normal);
 
-					b2Assert(b2Abs(vn1 - cp1->velocityBias) < k_errorTol);
+					assert(b2Abs(vn1 - cp1->velocityBias) < k_errorTol);
 #endif
 					break;
 				}
@@ -558,7 +558,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 					// Compute normal velocity
 					vn2 = b2Dot(dv2, normal);
 
-					b2Assert(b2Abs(vn2 - cp2->velocityBias) < k_errorTol);
+					assert(b2Abs(vn2 - cp2->velocityBias) < k_errorTol);
 #endif
 					break;
 				}
@@ -625,7 +625,7 @@ struct b2PositionSolverManifold
 {
 	void Initialize(b2ContactPositionConstraint* pc, const b2Transform& xfA, const b2Transform& xfB, std::int32_t index)
 	{
-		b2Assert(pc->pointCount > 0);
+		assert(pc->pointCount > 0);
 
 		switch (pc->type)
 		{

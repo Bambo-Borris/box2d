@@ -50,7 +50,7 @@ FILE* b2_dumpFile = nullptr;
 
 void b2OpenDump(const char* fileName)
 {
-	b2Assert(b2_dumpFile == nullptr);
+	assert(b2_dumpFile == nullptr);
 	b2_dumpFile = fopen(fileName, "w");
 }
 

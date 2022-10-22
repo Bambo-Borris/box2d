@@ -43,8 +43,8 @@ void b2ChainAndPolygonContact::Destroy(b2Contact* contact, b2BlockAllocator* all
 b2ChainAndPolygonContact::b2ChainAndPolygonContact(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture* fixtureB, std::int32_t indexB)
 : b2Contact(fixtureA, indexA, fixtureB, indexB)
 {
-	b2Assert(m_fixtureA->GetType() == b2Shape::e_chain);
-	b2Assert(m_fixtureB->GetType() == b2Shape::e_polygon);
+	assert(m_fixtureA->GetType() == b2Shape::e_chain);
+	assert(m_fixtureB->GetType() == b2Shape::e_polygon);
 }
 
 void b2ChainAndPolygonContact::Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB)

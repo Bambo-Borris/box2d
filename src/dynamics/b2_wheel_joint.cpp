@@ -541,7 +541,7 @@ float b2WheelJoint::GetUpperLimit() const
 
 void b2WheelJoint::SetLimits(float lower, float upper)
 {
-	b2Assert(lower <= upper);
+	assert(lower <= upper);
 	if (lower != m_lowerTranslation || upper != m_upperTranslation)
 	{
 		m_bodyA->SetAwake(true);

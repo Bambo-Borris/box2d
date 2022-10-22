@@ -138,7 +138,7 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 	
 	// Region AB
 	float den = b2Dot(e, e);
-	b2Assert(den > 0.0f);
+	assert(den > 0.0f);
 	b2Vec2 P = (1.0f / den) * (u * A + v * B);
 	b2Vec2 d = Q - P;
 	float dd = b2Dot(d, d);
