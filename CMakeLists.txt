@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(box2d VERSION 2.4.1)
 
-option(BOX2D_BUILD_UNIT_TESTS "Build the Box2D unit tests" ON)
-option(BOX2D_BUILD_TESTBED "Build the Box2D testbed" ON)
-option(BOX2D_BUILD_DOCS "Build the Box2D documentation" OFF)
 option(BOX2D_USER_SETTINGS "Override Box2D settings with b2UserSettings.h" OFF)
 
 option(BUILD_SHARED_LIBS "Build Box2D as a shared library" OFF)
@@ -25,21 +22,32 @@ endif()
 
 add_subdirectory(src)
 
-if (BOX2D_BUILD_DOCS)
+install(
+  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/box2d
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+if(NOT CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    return()
+endif()
+
+option(BUILD_DOCS "Build the Box2D documentation" OFF)
+if (BUILD_DOCS)
     set(DOXYGEN_SKIP_DOT TRUE)
     find_package(Doxygen)
 endif()
 
-if (DOXYGEN_FOUND AND BOX2D_BUILD_DOCS)
+if (DOXYGEN_FOUND AND BUILD_DOCS)
     add_subdirectory(docs)
 endif()
 
-if (BOX2D_BUILD_UNIT_TESTS)
-	enable_testing()
+include(CTest)
+if (BUILD_TESTING)
 	add_subdirectory(unit-test)
 endif()
 
-if (BOX2D_BUILD_TESTBED)
+option(BUILD_TESTBED "Build the Box2D testbed" ON)
+if (BUILD_TESTBED)
 	add_subdirectory(extern/glad)
 	add_subdirectory(extern/glfw)
 	add_subdirectory(extern/imgui)
@@ -52,8 +60,3 @@ if (BOX2D_BUILD_TESTBED)
 		set_property(TARGET testbed PROPERTY VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/testbed)
 	endif()
 endif()
-
-install(
-  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/box2d
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
