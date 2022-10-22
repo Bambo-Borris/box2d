@@ -25,7 +25,7 @@
 #include <cstdio>
 
 // Unit tests for collision algorithms
-DOCTEST_TEST_CASE("collision test")
+TEST_CASE("collision test")
 {
 	SUBCASE("polygon mass data")
 	{

@@ -35,7 +35,7 @@ endif()
 
 include(CTest)
 if(BUILD_TESTING)
-	add_subdirectory(unit-test)
+	add_subdirectory(tests)
 endif()
 
 option(BUILD_TESTBED "Build the Box2D testbed" ON)

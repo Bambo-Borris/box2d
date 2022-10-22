@@ -1,6 +1,6 @@
 // MIT License
 
-// Copyright (c) 2020 Erin Catto
+// Copyright (c) 2019 Erin Catto
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,31 +24,50 @@
 #include <doctest/doctest.h>
 #include <cstdio>
 
-DOCTEST_TEST_CASE("math test")
+static bool begin_contact = false;
+
+class MyContactListener : public b2ContactListener
 {
-	SUBCASE("sweep")
+public:
+	void BeginContact(b2Contact* contact)
 	{
-		// From issue #447
-		b2Sweep sweep{};
-		sweep.localCenter.SetZero();
-		sweep.c0.Set(-2.0f, 4.0f);
-		sweep.c.Set(3.0f, 8.0f);
-		sweep.a0 = 0.5f;
-		sweep.a = 5.0f;
-		sweep.alpha0 = 0.0f;
-
-		b2Transform transform;
-
-		sweep.GetTransform(&transform, 0.0f);
-		DOCTEST_REQUIRE_EQ(transform.p.x, sweep.c0.x);
-		DOCTEST_REQUIRE_EQ(transform.p.y, sweep.c0.y);
-		DOCTEST_REQUIRE_EQ(transform.q.c, cosf(sweep.a0));
-		DOCTEST_REQUIRE_EQ(transform.q.s, sinf(sweep.a0));
-
-		sweep.GetTransform(&transform, 1.0f);
-		DOCTEST_REQUIRE_EQ(transform.p.x, sweep.c.x);
-		DOCTEST_REQUIRE_EQ(transform.p.y, sweep.c.y);
-		DOCTEST_REQUIRE_EQ(transform.q.c, cosf(sweep.a));
-		DOCTEST_REQUIRE_EQ(transform.q.s, sinf(sweep.a));
+		begin_contact = true;
 	}
+};
+
+TEST_CASE("begin contact")
+{
+	b2World world = b2World(b2Vec2(0.0f, -10.0f));
+	MyContactListener listener;
+	world.SetContactListener(&listener);
+
+	b2CircleShape circle;
+	circle.m_radius = 5.f;
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+
+	b2Body* bodyA = world.CreateBody(&bodyDef);
+	b2Body* bodyB = world.CreateBody(&bodyDef);
+	bodyA->CreateFixture(&circle, 0.0f);
+	bodyB->CreateFixture(&circle, 0.0f);
+
+	bodyA->SetTransform(b2Vec2(0.f, 0.f), 0.f);
+	bodyB->SetTransform(b2Vec2(100.f, 0.f), 0.f);
+
+	const float timeStep = 1.f / 60.f;
+	const std::int32_t velocityIterations = 6;
+	const std::int32_t positionIterations = 2;
+
+	world.Step(timeStep, velocityIterations, positionIterations);
+
+	CHECK(world.GetContactList() == nullptr);
+	CHECK(begin_contact == false);
+
+	bodyB->SetTransform(b2Vec2(1.f, 0.f), 0.f);
+
+	world.Step(timeStep, velocityIterations, positionIterations);
+
+	CHECK(world.GetContactList() != nullptr);
+	CHECK(begin_contact == true);
 }

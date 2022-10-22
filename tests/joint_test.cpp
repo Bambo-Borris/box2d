@@ -24,7 +24,7 @@
 #include <doctest/doctest.h>
 #include <cstdio>
 
-DOCTEST_TEST_CASE("joint reactions")
+TEST_CASE("joint reactions")
 {
 	b2Vec2 gravity(0, -10.0f);
 	b2World world = b2World(gravity);
