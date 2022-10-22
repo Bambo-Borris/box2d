@@ -1,7 +1,7 @@
 find_package(Threads REQUIRED)
 
 # Establish target libraries and include directories
-if (APPLE)
+if(APPLE)
 
     list(APPEND glfw_LIBRARIES
         "-framework Cocoa"
@@ -9,18 +9,18 @@ if (APPLE)
         "-framework CoreFoundation"
         "-framework CoreVideo")
 
-elseif (UNIX)
+elseif(UNIX)
     find_library(RT_LIBRARY rt)
-    if (RT_LIBRARY)
+    if(RT_LIBRARY)
         list(APPEND glfw_LIBRARIES "${RT_LIBRARY}")
     endif()
 
     find_library(MATH_LIBRARY m)
-    if (MATH_LIBRARY)
+    if(MATH_LIBRARY)
         list(APPEND glfw_LIBRARIES "${MATH_LIBRARY}")
     endif()
 
-    if (CMAKE_DL_LIBS)
+    if(CMAKE_DL_LIBS)
         list(APPEND glfw_LIBRARIES "${CMAKE_DL_LIBS}")
     endif()
 
@@ -31,22 +31,22 @@ elseif (UNIX)
     list(APPEND glfw_LIBRARIES "${X11_X11_LIB}" "${CMAKE_THREAD_LIBS_INIT}")
 
     # Check for XRandR (modern resolution switching and gamma control)
-    if (NOT X11_Xrandr_FOUND)
+    if(NOT X11_Xrandr_FOUND)
         message(FATAL_ERROR "The RandR headers were not found")
     endif()
 
     # Check for Xinerama (legacy multi-monitor support)
-    if (NOT X11_Xinerama_FOUND)
+    if(NOT X11_Xinerama_FOUND)
         message(FATAL_ERROR "The Xinerama headers were not found")
     endif()
 
     # Check for Xkb (X keyboard extension)
-    if (NOT X11_Xkb_FOUND)
+    if(NOT X11_Xkb_FOUND)
         message(FATAL_ERROR "The X keyboard extension headers were not found")
     endif()
 
     # Check for Xcursor (cursor creation from RGBA images)
-    if (NOT X11_Xcursor_FOUND)
+    if(NOT X11_Xcursor_FOUND)
         message(FATAL_ERROR "The Xcursor headers were not found")
     endif()
 
@@ -61,16 +61,16 @@ set(common_HEADERS src/internal.h src/mappings.h
                    include/GLFW/glfw3native.h)
 set(common_SOURCES src/context.c src/init.c src/input.c src/monitor.c src/vulkan.c src/window.c)
 
-if (APPLE)
+if(APPLE)
     set(glfw_SOURCES ${common_SOURCES} src/cocoa_init.m src/cocoa_joystick.m
                      src/cocoa_monitor.m src/cocoa_window.m src/cocoa_time.c src/posix_thread.c
                      src/nsgl_context.m src/egl_context.c src/osmesa_context.c)
     set_source_files_properties(${glfw_SOURCES} PROPERTIES LANGUAGE C)
-elseif (WIN32)
+elseif(WIN32)
     set(glfw_SOURCES ${common_SOURCES} src/win32_init.c src/win32_joystick.c
                      src/win32_monitor.c src/win32_time.c src/win32_thread.c src/win32_window.c
                      src/wgl_context.c src/egl_context.c src/osmesa_context.c)
-elseif (UNIX)
+elseif(UNIX)
     set(glfw_SOURCES ${common_SOURCES} src/x11_init.c src/x11_monitor.c src/x11_window.c
                      src/xkb_unicode.c src/posix_time.c src/posix_thread.c src/glx_context.c
                      src/egl_context.c src/osmesa_context.c)

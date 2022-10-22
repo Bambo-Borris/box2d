@@ -81,7 +81,7 @@ if(MSVC)
   )
 endif()
 
-if (BUILD_SHARED_LIBS)
+if(BUILD_SHARED_LIBS)
   target_compile_definitions(box2d
     PUBLIC
       B2_SHARED
