@@ -26,7 +26,7 @@
 #include <box2d/b2_block_allocator.h>
 
 #include <new>
-#include <string.h>
+#include <cstring>
 
 b2ChainShape::~b2ChainShape()
 {

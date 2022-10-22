@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include <limits.h>
+#include <climits>
 #include <array> 
 
 #include <box2d/b2_api.h>

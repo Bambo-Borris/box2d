@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 #include <box2d/b2_broad_phase.h>
-#include <string.h>
+#include <cstring>
 
 b2BroadPhase::b2BroadPhase()
 {

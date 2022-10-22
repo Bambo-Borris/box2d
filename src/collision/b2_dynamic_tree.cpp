@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 #include <box2d/b2_dynamic_tree.h>
-#include <string.h>
+#include <cstring>
 
 b2DynamicTree::b2DynamicTree()
 {

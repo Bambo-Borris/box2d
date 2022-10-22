@@ -21,9 +21,9 @@
 // SOFTWARE.
 
 #include <box2d/b2_block_allocator.h>
-#include <limits.h>
-#include <string.h>
-#include <stddef.h>
+#include <climits>
+#include <cstring>
+#include <cstddef>
 
 static const std::int32_t b2_chunkSize = 16 * 1024;
 static const std::int32_t b2_maxBlockSize = 640;

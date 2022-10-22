@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include <math.h>
+#include <cmath>
 
 #include <box2d/b2_api.h>
 #include <box2d/b2_settings.h>
@@ -30,7 +30,7 @@
 /// This function is used to ensure that a floating point number is not a NaN or infinity.
 inline bool b2IsValid(float x)
 {
-	return isfinite(x);
+	return std::isfinite(x);
 }
 
 #define	b2Sqrt(x)	sqrtf(x)
