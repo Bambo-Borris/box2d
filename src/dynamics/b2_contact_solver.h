@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include "box2d/b2_collision.h"
-#include "box2d/b2_math.h"
-#include "box2d/b2_time_step.h"
+#include <box2d/b2_collision.h>
+#include <box2d/b2_math.h>
+#include <box2d/b2_time_step.h>
 
 class b2Contact;
 class b2Body;

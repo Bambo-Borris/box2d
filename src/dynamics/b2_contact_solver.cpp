@@ -22,11 +22,11 @@
 
 #include "b2_contact_solver.h"
 
-#include "box2d/b2_body.h"
-#include "box2d/b2_contact.h"
-#include "box2d/b2_fixture.h"
-#include "box2d/b2_stack_allocator.h"
-#include "box2d/b2_world.h"
+#include <box2d/b2_body.h>
+#include <box2d/b2_contact.h>
+#include <box2d/b2_fixture.h>
+#include <box2d/b2_stack_allocator.h>
+#include <box2d/b2_world.h>
 
 // Solver debugging is normally disabled because the block solver sometimes has to deal with a poorly conditioned effective mass matrix.
 #define B2_DEBUG_SOLVER 0

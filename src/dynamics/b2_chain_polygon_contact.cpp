@@ -21,10 +21,10 @@
 // SOFTWARE.
 
 #include "b2_chain_polygon_contact.h"
-#include "box2d/b2_block_allocator.h"
-#include "box2d/b2_fixture.h"
-#include "box2d/b2_chain_shape.h"
-#include "box2d/b2_edge_shape.h"
+#include <box2d/b2_block_allocator.h>
+#include <box2d/b2_fixture.h>
+#include <box2d/b2_chain_shape.h>
+#include <box2d/b2_edge_shape.h>
 
 #include <new>
 
