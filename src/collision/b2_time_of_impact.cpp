@@ -27,7 +27,7 @@
 #include <box2d/b2_time_of_impact.h>
 #include <box2d/b2_timer.h>
 
-#include <stdio.h>
+#include <cstdio>
 
 B2_API float b2_toiTime, b2_toiMaxTime;
 B2_API std::int32_t b2_toiCalls, b2_toiIters, b2_toiMaxIters;

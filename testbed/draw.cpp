@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 #include "draw.h"
-#include <stdio.h>
+#include <cstdio>
 #include <stdarg.h>
 #include <stdlib.h>
 

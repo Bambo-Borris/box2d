@@ -22,7 +22,7 @@
 
 #include <box2d/box2d.h>
 #include <doctest/doctest.h>
-#include <stdio.h>
+#include <cstdio>
 
 // Unit tests for collision algorithms
 DOCTEST_TEST_CASE("collision test")

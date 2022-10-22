@@ -23,7 +23,7 @@
 #include <box2d/b2_draw.h>
 #include <box2d/b2_rope.h>
 
-#include <stdio.h>
+#include <cstdio>
 
 struct b2RopeStretch
 {
