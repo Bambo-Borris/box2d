@@ -36,7 +36,7 @@ inline bool b2IsValid(float x)
 /// A 2D column vector.
 struct B2_API b2Vec2
 {
-	/// Default constructor does nothing (for performance).
+	/// Default to zeroes
 	b2Vec2() = default;
 
 	/// Construct using coordinates.
@@ -121,7 +121,8 @@ struct B2_API b2Vec2
 		return b2Vec2(-y, x);
 	}
 
-	float x, y;
+	float x{};
+	float y{};
 };
 
 /// A 2D column vector with 3 elements.
