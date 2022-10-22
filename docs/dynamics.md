@@ -1537,7 +1537,7 @@ while (node)
 {
     b2Body* b = node;
     node = node->GetNext();
-    
+
     GameActor* myActor = (GameActor*)b->GetUserData().pointer;
     if (myActor->IsDead())
     {

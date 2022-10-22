@@ -25,7 +25,7 @@
 #include <box2d/b2_api.h>
 #include <box2d/b2_settings.h>
 
-#include <array> 
+#include <array>
 
 const std::int32_t b2_blockSizeCount = 14;
 

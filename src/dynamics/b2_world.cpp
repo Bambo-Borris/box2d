@@ -847,7 +847,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 					{
 						continue;
 					}
-					
+
 					// Add the other body to the island.
 					other->m_flags |= b2Body::e_islandFlag;
 
@@ -931,7 +931,7 @@ void b2World::Step(float dt, std::int32_t velocityIterations, std::int32_t posit
 	step.dtRatio = m_inv_dt0 * dt;
 
 	step.warmStarting = m_warmStarting;
-	
+
 	// Update contacts. This is where some contacts are destroyed.
 	{
 		b2Timer timer;

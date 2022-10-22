@@ -110,7 +110,7 @@ struct b2Simplex
 					const b2DistanceProxy* proxyB, const b2Transform& transformB)
 	{
 		assert(cache->count <= 3);
-		
+
 		// Copy data from cache.
 		m_count = cache->count;
 		b2SimplexVertex* vertices = &m_v1;
@@ -377,7 +377,7 @@ void b2Simplex::Solve3()
 	float w3e23 = b2Dot(w3, e23);
 	float d23_1 = w3e23;
 	float d23_2 = -w2e23;
-	
+
 	// Triangle123
 	float n123 = b2Cross(e12, e13);
 
@@ -705,7 +705,7 @@ bool b2ShapeCast(b2ShapeCastOutput * output, const b2ShapeCastInput * input)
 		default:
 			assert(false);
 		}
-		
+
 		// If we have 3 points, then the origin is in the corresponding triangle.
 		if (simplex.m_count == 3)
 		{

@@ -133,7 +133,7 @@ Unfortunately this will lead to a poor simulation and possibly weird
 behavior. An object of length 200 pixels would be seen by Box2D as the
 size of a 45 story building.
 
-> **Caution**: 
+> **Caution**:
 > Box2D is tuned for MKS units. Keep the size of moving objects roughly
 > between 0.1 and 10 meters. You'll need to use some scaling system when
 > you render your environment and actors. The Box2D testbed does this by
@@ -149,7 +149,7 @@ Another limitation to consider is overall world size. If your world units
 become larger than 2 kilometers or so, then the lost precision can affect
 stability.
 
-> **Caution**: 
+> **Caution**:
 > Box2D works best with world sizes less than 2 kilometers. Use
 > b2World::ShiftOrigin to support larger worlds.
 

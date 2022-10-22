@@ -33,13 +33,13 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 							const b2CircleShape* circleB, const b2Transform& xfB)
 {
 	manifold->pointCount = 0;
-	
+
 	// Compute circle in frame of edge
 	b2Vec2 Q = b2MulT(xfA, b2Mul(xfB, circleB->m_p));
-	
+
 	b2Vec2 A = edgeA->m_vertex1, B = edgeA->m_vertex2;
 	b2Vec2 e = B - A;
-	
+
 	// Normal points to the right for a CCW winding
 	b2Vec2 n(e.y, -e.x);
 	float offset = b2Dot(n, Q - A);
@@ -53,13 +53,13 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 	// Barycentric coordinates
 	float u = b2Dot(e, B - Q);
 	float v = b2Dot(e, Q - A);
-	
+
 	float radius = edgeA->m_radius + circleB->m_radius;
-	
+
 	b2ContactFeature cf;
 	cf.indexB = 0;
 	cf.typeB = b2ContactFeature::e_vertex;
-	
+
 	// Region A
 	if (v <= 0.0f)
 	{
@@ -70,7 +70,7 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 		{
 			return;
 		}
-		
+
 		// Is there an edge connected to A?
 		if (edgeA->m_oneSided)
 		{
@@ -78,14 +78,14 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 			b2Vec2 B1 = A;
 			b2Vec2 e1 = B1 - A1;
 			float u1 = b2Dot(e1, B1 - Q);
-			
+
 			// Is the circle in Region AB of the previous edge?
 			if (u1 > 0.0f)
 			{
 				return;
 			}
 		}
-		
+
 		cf.indexA = 0;
 		cf.typeA = b2ContactFeature::e_vertex;
 		manifold->pointCount = 1;
@@ -97,7 +97,7 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 		manifold->points[0].localPoint = circleB->m_p;
 		return;
 	}
-	
+
 	// Region B
 	if (u <= 0.0f)
 	{
@@ -108,7 +108,7 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 		{
 			return;
 		}
-		
+
 		// Is there an edge connected to B?
 		if (edgeA->m_oneSided)
 		{
@@ -116,14 +116,14 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 			b2Vec2 A2 = B;
 			b2Vec2 e2 = B2 - A2;
 			float v2 = b2Dot(e2, Q - A2);
-			
+
 			// Is the circle in Region AB of the next edge?
 			if (v2 > 0.0f)
 			{
 				return;
 			}
 		}
-		
+
 		cf.indexA = 1;
 		cf.typeA = b2ContactFeature::e_vertex;
 		manifold->pointCount = 1;
@@ -135,7 +135,7 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 		manifold->points[0].localPoint = circleB->m_p;
 		return;
 	}
-	
+
 	// Region AB
 	float den = b2Dot(e, e);
 	assert(den > 0.0f);
@@ -146,13 +146,13 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 	{
 		return;
 	}
-	
+
 	if (offset < 0.0f)
 	{
 		n.Set(-n.x, -n.y);
 	}
 	n.Normalize();
-	
+
 	cf.indexA = 0;
 	cf.typeA = b2ContactFeature::e_face;
 	manifold->pointCount = 1;
@@ -173,7 +173,7 @@ struct b2EPAxis
 		e_edgeA,
 		e_edgeB
 	};
-	
+
 	b2Vec2 normal;
 	Type type;
 	std::int32_t index;
@@ -194,10 +194,10 @@ struct b2ReferenceFace
 	std::int32_t i1, i2;
 	b2Vec2 v1, v2;
 	b2Vec2 normal;
-	
+
 	b2Vec2 sideNormal1;
 	float sideOffset1;
-	
+
 	b2Vec2 sideNormal2;
 	float sideOffset2;
 };
@@ -440,7 +440,7 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 
 		clipPoints[1].v = v1;
 		clipPoints[1].id.cf.indexA = 0;
-		clipPoints[1].id.cf.indexB = static_cast<std::uint8_t>(primaryAxis.index);		
+		clipPoints[1].id.cf.indexB = static_cast<std::uint8_t>(primaryAxis.index);
 		clipPoints[1].id.cf.typeA = b2ContactFeature::e_vertex;
 		clipPoints[1].id.cf.typeB = b2ContactFeature::e_face;
 

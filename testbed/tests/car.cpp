@@ -27,7 +27,7 @@ class Car : public Test
 {
 public:
 	Car()
-	{		
+	{
 		m_speed = 50.0f;
 
 		b2Body* ground = NULL;

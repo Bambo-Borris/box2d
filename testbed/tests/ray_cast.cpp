@@ -61,14 +61,14 @@ public:
 		// are reported in order. However, by clipping, we can always get the closest fixture.
 		return fraction;
 	}
-	
+
 	bool m_hit;
 	b2Vec2 m_point;
 	b2Vec2 m_normal;
 };
 
 // This callback finds any hit. Polygon 0 is filtered. For this type of query we are usually
-// just checking for obstruction, so the actual fixture and hit point are irrelevant. 
+// just checking for obstruction, so the actual fixture and hit point are irrelevant.
 class RayCastAnyCallback : public b2RayCastCallback
 {
 public:
@@ -352,7 +352,7 @@ public:
 		case e_closest:
 			g_debugDraw.DrawString(5, m_textLine, "Ray-cast mode: closest - find closest fixture along the ray");
 			break;
-		
+
 		case e_any:
 			g_debugDraw.DrawString(5, m_textLine, "Ray-cast mode: any - check for obstruction");
 			break;

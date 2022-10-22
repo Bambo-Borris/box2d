@@ -98,7 +98,7 @@ public:
 		ImGui::Separator();
 
         ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.5f);
-        
+
 		const ImGuiComboFlags comboFlags = 0;
 		const char* bendModels[] = { "Spring", "PBD Ang", "XPBD Ang", "PBD Dist", "PBD Height", "PBD Triangle" };
 		const char* stretchModels[] = { "PBD", "XPBD" };

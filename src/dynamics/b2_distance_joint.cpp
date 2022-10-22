@@ -31,7 +31,7 @@
 // x2 = x1 + h * v2
 
 // 1-D mass-damper-spring system
-// m (v2 - v1) + h * d * v2 + h * k * 
+// m (v2 - v1) + h * d * v2 + h * k *
 
 // C = norm(p2 - p1) - L
 // u = (p2 - p1) / norm(p2 - p1)
@@ -400,7 +400,7 @@ void b2DistanceJoint::Draw(b2Draw* draw) const
 	b2Color c4(0.4f, 0.4f, 0.4f);
 
 	draw->DrawSegment(pA, pB, c4);
-	
+
 	b2Vec2 pRest = pA + m_length * axis;
 	draw->DrawPoint(pRest, 8.0f, c1);
 

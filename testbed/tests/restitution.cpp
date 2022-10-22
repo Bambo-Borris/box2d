@@ -38,7 +38,7 @@ public:
 
 			b2EdgeShape shape;
 			shape.SetTwoSided(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
-			
+
 			b2FixtureDef fd;
 			fd.shape = &shape;
 			fd.restitutionThreshold = threshold;

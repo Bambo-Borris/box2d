@@ -38,7 +38,7 @@ public:
 			float maxX = 0.0f;
 			float minY = 4.0f;
 			float maxY = 6.0f;
-			
+
 			for (std::int32_t i = 0; i < 400; ++i)
 			{
 				b2BodyDef bd;
@@ -48,7 +48,7 @@ public:
 				body->CreateFixture(&shape, 0.01f);
 			}
 		}
-		
+
 		{
 			b2PolygonShape shape;
 			shape.SetAsBox(1.5f, 1.5f);

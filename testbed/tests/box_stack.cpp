@@ -118,7 +118,7 @@ public:
 				m_bullet->SetLinearVelocity(b2Vec2(400.0f, 0.0f));
 			}
 			break;
-                
+
         case GLFW_KEY_B:
             g_blockSolve = !g_blockSolve;
             break;

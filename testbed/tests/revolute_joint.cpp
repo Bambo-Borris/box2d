@@ -136,7 +136,7 @@ public:
 	void Step(Settings& settings) override
 	{
 		Test::Step(settings);
-		
+
 		float torque1 = m_joint1->GetMotorTorque(settings.m_hertz);
 		g_debugDraw.DrawString(5, m_textLine, "Motor Torque 1= %4.0f", torque1);
 		m_textLine += m_textIncrement;
