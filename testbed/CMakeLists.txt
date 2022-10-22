@@ -1,4 +1,4 @@
-set (TESTBED_SOURCE_FILES
+add_executable(testbed
 	draw.cpp
 	draw.h
 	imgui_impl_glfw.cpp
@@ -69,8 +69,6 @@ set (TESTBED_SOURCE_FILES
 	tests/wheel_joint.cpp
 	tests/wrecking_ball.cpp
 )
-
-add_executable(testbed ${TESTBED_SOURCE_FILES})
 target_include_directories(testbed PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(testbed PUBLIC box2d glfw imgui sajson glad)
 set_target_properties(testbed PROPERTIES
@@ -88,5 +86,3 @@ add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E copy_directory
                 ${CMAKE_CURRENT_SOURCE_DIR}/data/
                 ${CMAKE_CURRENT_BINARY_DIR}/data/)
-
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TESTBED_SOURCE_FILES})
