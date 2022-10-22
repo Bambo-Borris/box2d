@@ -386,7 +386,7 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 		}
 	}
 
-	b2ClipVertex clipPoints[2];
+	std::array<b2ClipVertex, 2> clipPoints;
 	b2ReferenceFace ref;
 	if (primaryAxis.type == b2EPAxis::e_edgeA)
 	{
@@ -459,8 +459,8 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 	ref.sideOffset2 = b2Dot(ref.sideNormal2, ref.v2);
 
 	// Clip incident edge against reference face side planes
-	b2ClipVertex clipPoints1[2];
-	b2ClipVertex clipPoints2[2];
+	std::array<b2ClipVertex, 2> clipPoints1;
+	std::array<b2ClipVertex, 2> clipPoints2;
 	std::int32_t np;
 
 	// Clip to side 1

@@ -89,7 +89,7 @@ void b2WorldManifold::Initialize(const b2Manifold* manifold,
 	}
 }
 
-void b2GetPointStates(b2PointState state1[b2_maxManifoldPoints], b2PointState state2[b2_maxManifoldPoints],
+void b2GetPointStates(std::array<b2PointState, b2_maxManifoldPoints>&  state1, std::array<b2PointState, b2_maxManifoldPoints>& state2,
 					  const b2Manifold* manifold1, const b2Manifold* manifold2)
 {
 	for (std::int32_t i = 0; i < b2_maxManifoldPoints; ++i)
@@ -202,7 +202,7 @@ bool b2AABB::RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const
 }
 
 // Sutherland-Hodgman clipping.
-std::int32_t b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
+std::int32_t b2ClipSegmentToLine(std::array<b2ClipVertex, 2>& vOut, const std::array<b2ClipVertex, 2>& vIn,
 						const b2Vec2& normal, float offset, std::int32_t vertexIndexA)
 {
 	// Start with no output points
