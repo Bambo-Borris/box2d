@@ -720,7 +720,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 			}
 		}
 
-		if (minContact == nullptr || 1.0f - 10.0f * b2_epsilon < minAlpha)
+		if (minContact == nullptr || 1.0f - 10.0f * FLT_EPSILON < minAlpha)
 		{
 			// No more TOI events. Done!
 			m_stepComplete = true;

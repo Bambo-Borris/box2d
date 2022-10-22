@@ -110,7 +110,7 @@ static b2Vec2 ComputeCentroid(const b2Vec2* vs, std::int32_t count)
 	}
 
 	// Centroid
-	assert(area > b2_epsilon);
+	assert(area > FLT_EPSILON);
 	c = (1.0f / area) * c + s;
 	return c;
 }
@@ -238,7 +238,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
 		std::int32_t i1 = i;
 		std::int32_t i2 = i + 1 < m ? i + 1 : 0;
 		b2Vec2 edge = m_vertices[i2] - m_vertices[i1];
-		assert(edge.LengthSquared() > b2_epsilon * b2_epsilon);
+		assert(edge.LengthSquared() > FLT_EPSILON * FLT_EPSILON);
 		m_normals[i] = b2Cross(edge, 1.0f);
 		m_normals[i].Normalize();
 	}
@@ -316,7 +316,7 @@ bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& inpu
 		// The use of epsilon here causes the assert on lower to trip
 		// in some cases. Apparently the use of epsilon was to make edge
 		// shapes work, but now those are handled separately.
-		//if (upper < lower - b2_epsilon)
+		//if (upper < lower - FLT_EPSILON)
 		if (upper < lower)
 		{
 			return false;
@@ -419,7 +419,7 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float density) const
 	massData->mass = density * area;
 
 	// Center of mass
-	assert(area > b2_epsilon);
+	assert(area > FLT_EPSILON);
 	center *= 1.0f / area;
 	massData->center = center + s;
 

@@ -65,7 +65,7 @@ bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input
 	float sigma = c * c - rr * b;
 
 	// Check for negative discriminant and short segment.
-	if (sigma < 0.0f || rr < b2_epsilon)
+	if (sigma < 0.0f || rr < FLT_EPSILON)
 	{
 		return false;
 	}

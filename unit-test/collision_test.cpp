@@ -41,8 +41,8 @@ DOCTEST_TEST_CASE("collision test")
 		b2PolygonShape polygon1;
 		polygon1.SetAsBox(hx, hy, center, angle1);
 
-		const float absTol = 2.0f * b2_epsilon;
-		const float relTol = 2.0f * b2_epsilon;
+		const float absTol = 2.0f * FLT_EPSILON;
+		const float relTol = 2.0f * FLT_EPSILON;
 
 		CHECK(b2Abs(polygon1.m_centroid.x - center.x) < absTol + relTol * b2Abs(center.x));
 		CHECK(b2Abs(polygon1.m_centroid.y - center.y) < absTol + relTol * b2Abs(center.y));
