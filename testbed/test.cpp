@@ -22,7 +22,7 @@
 
 #include "test.h"
 #include "settings.h"
-#include <stdio.h>
+#include <cstdio>
 #include <array>
 
 void DestructionListener::SayGoodbye(b2Joint* joint)

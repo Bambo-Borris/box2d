@@ -31,7 +31,7 @@
 #include "test.h"
 
 #include <algorithm>
-#include <stdio.h>
+#include <cstdio>
 #include <thread>
 #include <chrono>
 
