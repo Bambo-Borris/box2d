@@ -191,8 +191,8 @@ public:
 
 		{
 			float w = 1.0f;
-			float b = w / (2.0f + b2Sqrt(2.0f));
-			float s = b2Sqrt(2.0f) * b;
+			float b = w / (2.0f + std::sqrt(2.0f));
+			float s = std::sqrt(2.0f) * b;
 
 			b2Vec2 vertices[8];
 			vertices[0].Set(0.5f * s, 0.0f);

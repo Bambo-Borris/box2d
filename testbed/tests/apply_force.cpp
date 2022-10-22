@@ -113,7 +113,7 @@ public:
 			// Compute an effective radius that can be used to
 			// set the max torque for a friction joint
 			// For a circle: I = 0.5 * m * r * r ==> r = sqrt(2 * I / m)
-			float radius = b2Sqrt(2.0f * I / mass);
+			float radius = std::sqrt(2.0f * I / mass);
 
 			b2FrictionJointDef jd;
 			jd.bodyA = ground;
@@ -151,7 +151,7 @@ public:
 				float mass = body->GetMass();
 
 				// For a circle: I = 0.5 * m * r * r ==> r = sqrt(2 * I / m)
-				float radius = b2Sqrt(2.0f * I / mass);
+				float radius = std::sqrt(2.0f * I / mass);
 
 				b2FrictionJointDef jd;
 				jd.localAnchorA.SetZero();
