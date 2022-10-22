@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_joint.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_joint.h>
 
 const float b2_minPulleyLength = 2.0f;
 

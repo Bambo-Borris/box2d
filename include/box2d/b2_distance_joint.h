@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_joint.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_joint.h>
 
 /// Distance joint definition. This requires defining an anchor point on both
 /// bodies and the non-zero distance of the distance joint. The definition uses

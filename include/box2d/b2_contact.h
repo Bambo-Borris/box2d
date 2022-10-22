@@ -22,11 +22,11 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_collision.h"
-#include "b2_fixture.h"
-#include "b2_math.h"
-#include "b2_shape.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_collision.h>
+#include <box2d/b2_fixture.h>
+#include <box2d/b2_math.h>
+#include <box2d/b2_shape.h>
 
 class b2Body;
 class b2Contact;

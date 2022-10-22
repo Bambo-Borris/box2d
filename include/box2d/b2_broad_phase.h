@@ -22,10 +22,10 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_settings.h"
-#include "b2_collision.h"
-#include "b2_dynamic_tree.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_settings.h>
+#include <box2d/b2_collision.h>
+#include <box2d/b2_dynamic_tree.h>
 
 struct B2_API b2Pair
 {

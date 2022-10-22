@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_math.h"
-#include "b2_distance.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_math.h>
+#include <box2d/b2_distance.h>
 
 /// Input parameters for b2TimeOfImpact
 struct B2_API b2TOIInput

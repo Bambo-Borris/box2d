@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "b2_settings.h"
+#include <box2d/b2_settings.h>
 
 #include <stddef.h>
 #include <assert.h>

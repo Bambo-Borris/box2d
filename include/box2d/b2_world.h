@@ -22,13 +22,13 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_block_allocator.h"
-#include "b2_contact_manager.h"
-#include "b2_math.h"
-#include "b2_stack_allocator.h"
-#include "b2_time_step.h"
-#include "b2_world_callbacks.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_block_allocator.h>
+#include <box2d/b2_contact_manager.h>
+#include <box2d/b2_math.h>
+#include <box2d/b2_stack_allocator.h>
+#include <box2d/b2_time_step.h>
+#include <box2d/b2_world_callbacks.h>
 
 struct b2AABB;
 struct b2BodyDef;
