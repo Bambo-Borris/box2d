@@ -33,8 +33,6 @@ inline bool b2IsValid(float x)
 	return std::isfinite(x);
 }
 
-#define	b2Atan2(y, x)	atan2f(y, x)
-
 /// A 2D column vector.
 struct B2_API b2Vec2
 {
@@ -312,7 +310,7 @@ struct B2_API b2Rot
 	/// Get the angle in radians
 	float GetAngle() const
 	{
-		return b2Atan2(s, c);
+		return std::atan2(s, c);
 	}
 
 	/// Get the x-axis
