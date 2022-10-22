@@ -22,8 +22,8 @@
 
 #include "b2_polygon_circle_contact.h"
 
-#include "box2d/b2_block_allocator.h"
-#include "box2d/b2_fixture.h"
+#include <box2d/b2_block_allocator.h>
+#include <box2d/b2_fixture.h>
 
 #include <new>
 

@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "box2d/b2_circle_shape.h"
-#include "box2d/b2_block_allocator.h"
+#include <box2d/b2_circle_shape.h>
+#include <box2d/b2_block_allocator.h>
 
 #include <new>
 
