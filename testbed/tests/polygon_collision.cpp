@@ -47,7 +47,7 @@ public:
 
 	void Step(Settings& settings) override
 	{
-		B2_NOT_USED(settings);
+		(void)settings;
 
 		b2Manifold manifold;
 		b2CollidePolygons(&manifold, &m_polygonA, m_transformA, &m_polygonB, m_transformB);

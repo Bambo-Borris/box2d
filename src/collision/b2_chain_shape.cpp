@@ -128,8 +128,8 @@ void b2ChainShape::GetChildEdge(b2EdgeShape* edge, std::int32_t index) const
 
 bool b2ChainShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 {
-	B2_NOT_USED(xf);
-	B2_NOT_USED(p);
+	(void)xf;
+	(void)p;
 	return false;
 }
 
@@ -177,7 +177,7 @@ void b2ChainShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, std::int32_t
 
 void b2ChainShape::ComputeMass(b2MassData* massData, float density) const
 {
-	B2_NOT_USED(density);
+	(void)density;
 
 	massData->mass = 0.0f;
 	massData->center.SetZero();

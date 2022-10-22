@@ -205,7 +205,7 @@ void b2MotorJoint::SolveVelocityConstraints(const b2SolverData& data)
 
 bool b2MotorJoint::SolvePositionConstraints(const b2SolverData& data)
 {
-	B2_NOT_USED(data);
+	(void)data;
 
 	return true;
 }

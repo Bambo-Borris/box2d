@@ -160,7 +160,7 @@ void b2MouseJoint::SolveVelocityConstraints(const b2SolverData& data)
 
 bool b2MouseJoint::SolvePositionConstraints(const b2SolverData& data)
 {
-	B2_NOT_USED(data);
+	(void)data;
 	return true;
 }
 

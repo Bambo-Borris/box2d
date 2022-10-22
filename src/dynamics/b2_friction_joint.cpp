@@ -191,7 +191,7 @@ void b2FrictionJoint::SolveVelocityConstraints(const b2SolverData& data)
 
 bool b2FrictionJoint::SolvePositionConstraints(const b2SolverData& data)
 {
-	B2_NOT_USED(data);
+	(void)data;
 
 	return true;
 }

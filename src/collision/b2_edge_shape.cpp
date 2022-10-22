@@ -55,8 +55,8 @@ std::int32_t b2EdgeShape::GetChildCount() const
 
 bool b2EdgeShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 {
-	B2_NOT_USED(xf);
-	B2_NOT_USED(p);
+	(void)xf;
+	(void)p;
 	return false;
 }
 
@@ -67,7 +67,7 @@ bool b2EdgeShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 bool b2EdgeShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 							const b2Transform& xf, std::int32_t childIndex) const
 {
-	B2_NOT_USED(childIndex);
+	(void)childIndex;
 
 	// Put the ray into the edge's frame of reference.
 	b2Vec2 p1 = b2MulT(xf.q, input.p1 - xf.p);
@@ -135,7 +135,7 @@ bool b2EdgeShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 
 void b2EdgeShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, std::int32_t childIndex) const
 {
-	B2_NOT_USED(childIndex);
+	(void)childIndex;
 
 	b2Vec2 v1 = b2Mul(xf, m_vertex1);
 	b2Vec2 v2 = b2Mul(xf, m_vertex2);
@@ -150,7 +150,7 @@ void b2EdgeShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, std::int32_t 
 
 void b2EdgeShape::ComputeMass(b2MassData* massData, float density) const
 {
-	B2_NOT_USED(density);
+	(void)density;
 
 	massData->mass = 0.0f;
 	massData->center = 0.5f * (m_vertex1 + m_vertex2);

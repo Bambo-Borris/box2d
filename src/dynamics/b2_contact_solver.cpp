@@ -433,7 +433,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 			b -= b2Mul(vc->K, a);
 
 			const float k_errorTol = 1e-3f;
-			B2_NOT_USED(k_errorTol);
+			(void)k_errorTol;
 
 			for (;;)
 			{

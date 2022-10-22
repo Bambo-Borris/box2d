@@ -56,7 +56,7 @@ inline float RandomFloat(float lo, float hi)
 class DestructionListener : public b2DestructionListener
 {
 public:
-	void SayGoodbye(b2Fixture* fixture) override { B2_NOT_USED(fixture); }
+	void SayGoodbye(b2Fixture* fixture) override { (void)fixture; }
 	void SayGoodbye(b2Joint* joint) override;
 
 	Test* test;
@@ -86,8 +86,8 @@ public:
 	void DrawTitle(const char* string);
 	virtual void Step(Settings& settings);
 	virtual void UpdateUI() {}
-	virtual void Keyboard(int key) { B2_NOT_USED(key); }
-	virtual void KeyboardUp(int key) { B2_NOT_USED(key); }
+	virtual void Keyboard(int key) { (void)key; }
+	virtual void KeyboardUp(int key) { (void)key; }
 	void ShiftMouseDown(const b2Vec2& p);
 	virtual void MouseDown(const b2Vec2& p);
 	virtual void MouseUp(const b2Vec2& p);
@@ -99,16 +99,16 @@ public:
 	void CompleteBombSpawn(const b2Vec2& p);
 
 	// Let derived tests know that a joint was destroyed.
-	virtual void JointDestroyed(b2Joint* joint) { B2_NOT_USED(joint); }
+	virtual void JointDestroyed(b2Joint* joint) { (void)joint; }
 
 	// Callbacks for derived classes.
-	virtual void BeginContact(b2Contact* contact)  override { B2_NOT_USED(contact); }
-	virtual void EndContact(b2Contact* contact)  override { B2_NOT_USED(contact); }
+	virtual void BeginContact(b2Contact* contact)  override { (void)contact; }
+	virtual void EndContact(b2Contact* contact)  override { (void)contact; }
 	virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) override;
 	virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) override
 	{
-		B2_NOT_USED(contact);
-		B2_NOT_USED(impulse);
+		(void)contact;
+		(void)impulse;
 	}
 
 	void ShiftOrigin(const b2Vec2& newOrigin);

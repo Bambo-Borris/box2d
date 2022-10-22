@@ -266,7 +266,7 @@ bool b2PolygonShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 								const b2Transform& xf, std::int32_t childIndex) const
 {
-	B2_NOT_USED(childIndex);
+	(void)childIndex;
 
 	// Put the ray into the polygon's frame of reference.
 	b2Vec2 p1 = b2MulT(xf.q, input.p1 - xf.p);
@@ -337,7 +337,7 @@ bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& inpu
 
 void b2PolygonShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, std::int32_t childIndex) const
 {
-	B2_NOT_USED(childIndex);
+	(void)childIndex;
 
 	b2Vec2 lower = b2Mul(xf, m_vertices[0]);
 	b2Vec2 upper = lower;

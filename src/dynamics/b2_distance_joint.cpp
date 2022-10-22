@@ -331,7 +331,7 @@ b2Vec2 b2DistanceJoint::GetReactionForce(float inv_dt) const
 
 float b2DistanceJoint::GetReactionTorque(float inv_dt) const
 {
-	B2_NOT_USED(inv_dt);
+	(void)inv_dt;
 	return 0.0f;
 }
 
