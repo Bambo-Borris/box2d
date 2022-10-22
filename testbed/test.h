@@ -25,7 +25,7 @@
 #include <box2d/box2d.h>
 #include "draw.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 struct Settings;
 class Test;

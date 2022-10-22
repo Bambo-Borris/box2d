@@ -37,8 +37,8 @@
 
 #else
 
-#include <stdarg.h>
-#include <stdint.h>
+#include <cstdarg>
+#include <cstdint>
 
 // Tunable Constants
 

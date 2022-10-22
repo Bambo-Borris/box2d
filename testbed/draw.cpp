@@ -22,8 +22,8 @@
 
 #include "draw.h"
 #include <cstdio>
-#include <stdarg.h>
-#include <stdlib.h>
+#include <cstdarg>
+#include <cstdlib>
 
 #include <imgui/imgui.h>
 
