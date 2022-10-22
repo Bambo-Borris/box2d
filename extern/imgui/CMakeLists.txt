@@ -1,4 +1,3 @@
-# dear imgui
 add_library(imgui STATIC
   imgui.cpp
   imgui_demo.cpp

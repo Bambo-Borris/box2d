@@ -19,7 +19,6 @@ foreach(path IN LISTS BOX2D_DOXYGEN_SOURCES)
     set(BOX2D_DOXYGEN_INPUT "${BOX2D_DOXYGEN_INPUT} \\\n\"${CMAKE_SOURCE_DIR}/${path}\"")
 endforeach()
 
-# https://cmake.org/cmake/help/latest/command/configure_file.html
 configure_file(Doxyfile.in Doxyfile @ONLY)
 
 add_custom_target(docs ALL ${DOXYGEN_EXECUTABLE}

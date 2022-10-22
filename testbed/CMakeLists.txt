@@ -72,9 +72,6 @@ add_executable(testbed
 target_include_directories(testbed PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(testbed PUBLIC box2d::box2d glfw imgui sajson glad)
 
-# message(STATUS "runtime = ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
-# message(STATUS "binary = ${CMAKE_CURRENT_BINARY_DIR}")
-
 # Copy font files, etc
 add_custom_command(
         TARGET testbed POST_BUILD
