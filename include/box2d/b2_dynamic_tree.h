@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_collision.h"
-#include "b2_growable_stack.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_collision.h>
+#include <box2d/b2_growable_stack.h>
 
 #define b2_nullNode (-1)
 

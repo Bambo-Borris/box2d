@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_math.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_math.h>
 
 /// Color for debug drawing. Each value has the range [0,1].
 struct B2_API b2Color

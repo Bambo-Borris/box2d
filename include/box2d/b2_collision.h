@@ -25,8 +25,8 @@
 #include <limits.h>
 #include <array> 
 
-#include "b2_api.h"
-#include "b2_math.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_math.h>
 
 /// @file
 /// Structures and functions used for computing contact points, distance

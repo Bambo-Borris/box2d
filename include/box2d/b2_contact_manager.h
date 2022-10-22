@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_broad_phase.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_broad_phase.h>
 
 class b2Contact;
 class b2ContactFilter;

@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_shape.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_shape.h>
 
 /// A solid circle shape
 class B2_API b2CircleShape : public b2Shape

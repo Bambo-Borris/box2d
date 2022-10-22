@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_math.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_math.h>
 
 class b2Body;
 class b2Draw;

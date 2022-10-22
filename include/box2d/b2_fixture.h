@@ -22,10 +22,10 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_body.h"
-#include "b2_collision.h"
-#include "b2_shape.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_body.h>
+#include <box2d/b2_collision.h>
+#include <box2d/b2_shape.h>
 
 class b2BlockAllocator;
 class b2Body;

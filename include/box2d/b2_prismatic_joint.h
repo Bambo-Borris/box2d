@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_joint.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_joint.h>
 
 /// Prismatic joint definition. This requires defining a line of
 /// motion using an axis and an anchor point. The definition uses local

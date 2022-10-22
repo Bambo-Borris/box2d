@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_joint.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_joint.h>
 
 /// Revolute joint definition. This requires defining an anchor point where the
 /// bodies are joined. The definition uses local anchor points so that the

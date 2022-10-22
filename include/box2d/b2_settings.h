@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "b2_api.h"
+#include <box2d/b2_api.h>
 
 /// @file
 /// Settings that can be overriden for your application

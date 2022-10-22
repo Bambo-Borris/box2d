@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_settings.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_settings.h>
 
 /// Timer for profiling. This has platform specific code and may
 /// not work on every platform.

@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_joint.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_joint.h>
 
 /// Weld joint definition. You need to specify local anchor points
 /// where they are attached and the relative body angle. The position

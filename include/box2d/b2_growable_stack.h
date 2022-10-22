@@ -25,7 +25,7 @@
 #include <string.h>
 #include <array>
 
-#include "b2_settings.h"
+#include <box2d/b2_settings.h>
 
 /// This is a growable LIFO stack with an initial capacity of N.
 /// If the stack size exceeds the initial capacity, the heap is used

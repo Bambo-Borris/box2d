@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "b2_joint.h"
+#include <box2d/b2_joint.h>
 
 /// Gear joint definition. This definition requires two existing
 /// revolute or prismatic joints (any combination will work).

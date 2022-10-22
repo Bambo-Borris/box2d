@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_math.h"
-#include "b2_shape.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_math.h>
+#include <box2d/b2_shape.h>
 
 class b2Fixture;
 class b2Joint;

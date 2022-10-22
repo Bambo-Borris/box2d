@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "b2_api.h"
-#include "b2_math.h"
+#include <box2d/b2_api.h>
+#include <box2d/b2_math.h>
 
 /// Profiling data. Times are in milliseconds.
 struct B2_API b2Profile
