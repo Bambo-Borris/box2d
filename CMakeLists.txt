@@ -22,11 +22,6 @@ endif()
 
 add_subdirectory(src)
 
-install(
-  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/box2d
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
 if(NOT CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     return()
 endif()
