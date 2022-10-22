@@ -25,6 +25,8 @@
 #include "b2_api.h"
 #include "b2_math.h"
 
+#include <array> 
+
 class b2Shape;
 
 /// A distance proxy is used by the GJK algorithm.
@@ -53,7 +55,7 @@ struct B2_API b2DistanceProxy
 	/// Get a vertex by index. Used by b2Distance.
 	const b2Vec2& GetVertex(std::int32_t index) const;
 
-	b2Vec2 m_buffer[2];
+	std::array<b2Vec2, 2> m_buffer;
 	const b2Vec2* m_vertices;
 	std::int32_t m_count;
 	float m_radius;
@@ -65,8 +67,8 @@ struct B2_API b2SimplexCache
 {
 	float metric;		///< length or area
 	std::uint16_t count;
-	std::uint8_t indexA[3];	///< vertices on shape A
-	std::uint8_t indexB[3];	///< vertices on shape B
+	std::array<std::uint8_t, 3> indexA;	///< vertices on shape A
+	std::array<std::uint8_t, 3> indexB;	///< vertices on shape B
 };
 
 /// Input for b2Distance.

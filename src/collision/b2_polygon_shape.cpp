@@ -244,7 +244,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
 	}
 
 	// Compute the polygon centroid.
-	m_centroid = ComputeCentroid(m_vertices, m);
+	m_centroid = ComputeCentroid(m_vertices.data(), m);
 }
 
 bool b2PolygonShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const

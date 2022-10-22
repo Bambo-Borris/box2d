@@ -23,6 +23,7 @@
 #pragma once
 
 #include <limits.h>
+#include <array> 
 
 #include "b2_api.h"
 #include "b2_math.h"
@@ -122,9 +123,9 @@ struct B2_API b2WorldManifold
 					const b2Transform& xfA, float radiusA,
 					const b2Transform& xfB, float radiusB);
 
-	b2Vec2 normal;								///< world vector pointing from A to B
-	b2Vec2 points[b2_maxManifoldPoints];		///< world contact point (point of intersection)
-	float separations[b2_maxManifoldPoints];	///< a negative value indicates overlap, in meters
+	b2Vec2 normal;											///< world vector pointing from A to B
+	std::array<b2Vec2, b2_maxManifoldPoints> points;		///< world contact point (point of intersection)
+	std::array<float, b2_maxManifoldPoints> separations;	///< a negative value indicates overlap, in meters
 };
 
 /// This is used for determining the state of contact points.
@@ -138,7 +139,7 @@ enum b2PointState
 
 /// Compute the point states given two manifolds. The states pertain to the transition from manifold1
 /// to manifold2. So state1 is either persist or remove while state2 is either add or persist.
-B2_API void b2GetPointStates(b2PointState state1[b2_maxManifoldPoints], b2PointState state2[b2_maxManifoldPoints],
+B2_API void b2GetPointStates(std::array<b2PointState, b2_maxManifoldPoints>&  state1, std::array<b2PointState, b2_maxManifoldPoints>& state2,
 					  const b2Manifold* manifold1, const b2Manifold* manifold2);
 
 /// Used for computing contact manifolds.
@@ -246,7 +247,7 @@ B2_API void b2CollideEdgeAndPolygon(b2Manifold* manifold,
 							   const b2PolygonShape* circleB, const b2Transform& xfB);
 
 /// Clipping for contact manifolds.
-B2_API std::int32_t b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
+B2_API std::int32_t b2ClipSegmentToLine(std::array<b2ClipVertex, 2>& vOut, const std::array<b2ClipVertex, 2>& vIn,
 							const b2Vec2& normal, float offset, std::int32_t vertexIndexA);
 
 /// Determine if two generic shapes overlap.

@@ -25,6 +25,8 @@
 #include "b2_api.h"
 #include "b2_settings.h"
 
+#include <array>
+
 const std::int32_t b2_stackSize = 100 * 1024;	// 100k
 const std::int32_t b2_maxStackEntries = 32;
 
@@ -51,12 +53,12 @@ public:
 
 private:
 
-	char m_data[b2_stackSize];
+	std::array<char, b2_stackSize> m_data;
 	std::int32_t m_index;
 
 	std::int32_t m_allocation;
 	std::int32_t m_maxAllocation;
 
-	b2StackEntry m_entries[b2_maxStackEntries];
+	std::array<b2StackEntry, b2_maxStackEntries> m_entries;
 	std::int32_t m_entryCount;
 };

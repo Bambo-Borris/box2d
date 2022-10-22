@@ -25,6 +25,8 @@
 #include "b2_api.h"
 #include "b2_shape.h"
 
+#include <array>
+
 /// A solid convex polygon. It is assumed that the interior of the polygon is to
 /// the left of each edge.
 /// Polygons have a maximum number of vertices equal to b2_maxPolygonVertices.
@@ -79,8 +81,8 @@ public:
 	bool Validate() const;
 
 	b2Vec2 m_centroid;
-	b2Vec2 m_vertices[b2_maxPolygonVertices];
-	b2Vec2 m_normals[b2_maxPolygonVertices];
+	std::array<b2Vec2, b2_maxPolygonVertices> m_vertices;
+	std::array<b2Vec2, b2_maxPolygonVertices> m_normals;
 	std::int32_t m_count;
 };
 
