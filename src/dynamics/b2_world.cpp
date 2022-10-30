@@ -420,7 +420,7 @@ void b2World::Solve(const b2TimeStep& step)
 
 	// Build and simulate all awake islands.
 	std::int32_t stackSize = m_bodyCount;
-	b2Body** stack = (b2Body**)m_stackAllocator.Allocate(stackSize * sizeof(b2Body*));
+	b2Body** stack = (b2Body**)m_stackAllocator.Allocate<b2Body*>(stackSize);
 	for (b2Body* seed = m_bodyList; seed; seed = seed->m_next)
 	{
 		if (seed->m_flags & b2Body::e_islandFlag)
