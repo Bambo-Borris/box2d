@@ -37,7 +37,7 @@ b2StackAllocator::~b2StackAllocator()
 	assert(m_entryCount == 0);
 }
 
-void* b2StackAllocator::Allocate(std::int32_t size)
+void* b2StackAllocator::HandleAllocate(std::size_t size)
 {
 	assert(m_entryCount < b2_maxStackEntries);
 
@@ -62,7 +62,7 @@ void* b2StackAllocator::Allocate(std::int32_t size)
 	return entry->data;
 }
 
-void b2StackAllocator::Free(void* p)
+void b2StackAllocator::HandleFree(void* p)
 {
 	assert(m_entryCount > 0);
 	b2StackEntry* entry = m_entries.data() + m_entryCount - 1;
@@ -81,7 +81,7 @@ void b2StackAllocator::Free(void* p)
 	p = nullptr;
 }
 
-std::int32_t b2StackAllocator::GetMaxAllocation() const
+std::size_t b2StackAllocator::GetMaxAllocation() const
 {
 	return m_maxAllocation;
 }

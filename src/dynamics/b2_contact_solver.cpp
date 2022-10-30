@@ -53,8 +53,8 @@ b2ContactSolver::b2ContactSolver(b2ContactSolverDef* def)
 	m_step = def->step;
 	m_allocator = def->allocator;
 	m_count = def->count;
-	m_positionConstraints = (b2ContactPositionConstraint*)m_allocator->Allocate(m_count * sizeof(b2ContactPositionConstraint));
-	m_velocityConstraints = (b2ContactVelocityConstraint*)m_allocator->Allocate(m_count * sizeof(b2ContactVelocityConstraint));
+	m_positionConstraints = (b2ContactPositionConstraint*)m_allocator->Allocate<b2ContactPositionConstraint>(m_count);
+	m_velocityConstraints = (b2ContactVelocityConstraint*)m_allocator->Allocate<b2ContactVelocityConstraint>(m_count);
 	m_positions = def->positions;
 	m_velocities = def->velocities;
 	m_contacts = def->contacts;

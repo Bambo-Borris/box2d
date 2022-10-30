@@ -27,13 +27,13 @@
 
 #include <array>
 
-const std::int32_t b2_stackSize = 100 * 1024;	// 100k
-const std::int32_t b2_maxStackEntries = 32;
+constexpr std::size_t b2_stackSize = 100 * 1024;	// 100k
+constexpr std::size_t b2_maxStackEntries = 32;
 
 struct B2_API b2StackEntry
 {
 	char* data;
-	std::int32_t size;
+	std::size_t size;
 	bool usedMalloc;
 };
 
@@ -46,19 +46,37 @@ public:
 	b2StackAllocator();
 	~b2StackAllocator();
 
-	void* Allocate(std::int32_t size);
-	void Free(void* p);
+	template<typename T> 
+	[[nodiscard]] void* Allocate(std::size_t count = 1); 
 
-	std::int32_t GetMaxAllocation() const;
+	template<typename T>
+	void Free(T* ptr);
+
+	std::size_t GetMaxAllocation() const;
 
 private:
+	
+	void* HandleAllocate(std::size_t size);
+	void HandleFree(void* p);
 
 	std::array<char, b2_stackSize> m_data;
-	std::int32_t m_index;
+	std::size_t m_index;
 
-	std::int32_t m_allocation;
-	std::int32_t m_maxAllocation;
+	std::size_t m_allocation;
+	std::size_t m_maxAllocation;
 
 	std::array<b2StackEntry, b2_maxStackEntries> m_entries;
-	std::int32_t m_entryCount;
+	std::size_t m_entryCount;
 };
+
+template<typename T>
+void* b2StackAllocator::Allocate(std::size_t count)
+{
+	return HandleAllocate(sizeof(T) * count);
+}
+
+template<typename T>
+void b2StackAllocator::Free(T* ptr)
+{
+	HandleFree(static_cast<void*>(ptr));
+}
