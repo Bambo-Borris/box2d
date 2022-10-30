@@ -30,14 +30,14 @@
 
 b2Contact* b2ChainAndPolygonContact::Create(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture* fixtureB, std::int32_t indexB, b2BlockAllocator* allocator)
 {
-	void* mem = allocator->Allocate(sizeof(b2ChainAndPolygonContact));
+	void* mem = allocator->Allocate<b2ChainAndPolygonContact>();
 	return new (mem) b2ChainAndPolygonContact(fixtureA, indexA, fixtureB, indexB);
 }
 
 void b2ChainAndPolygonContact::Destroy(b2Contact* contact, b2BlockAllocator* allocator)
 {
 	((b2ChainAndPolygonContact*)contact)->~b2ChainAndPolygonContact();
-	allocator->Free(contact, sizeof(b2ChainAndPolygonContact));
+	allocator->Free(contact);
 }
 
 b2ChainAndPolygonContact::b2ChainAndPolygonContact(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture* fixtureB, std::int32_t indexB)

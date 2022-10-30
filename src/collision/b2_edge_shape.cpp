@@ -42,7 +42,7 @@ void b2EdgeShape::SetTwoSided(const b2Vec2& v1, const b2Vec2& v2)
 
 b2Shape* b2EdgeShape::Clone(b2BlockAllocator* allocator) const
 {
-	void* mem = allocator->Allocate(sizeof(b2EdgeShape));
+	void* mem = allocator->Allocate<b2EdgeShape>();
 	b2EdgeShape* clone = new (mem) b2EdgeShape;
 	*clone = *this;
 	return clone;
@@ -65,7 +65,7 @@ bool b2EdgeShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 // p1 + t * d = v1 + s * e
 // s * e - t * d = p1 - v1
 bool b2EdgeShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
-							const b2Transform& xf, std::int32_t childIndex) const
+	const b2Transform& xf, std::int32_t childIndex) const
 {
 	(void)childIndex;
 

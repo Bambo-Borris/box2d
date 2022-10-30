@@ -31,14 +31,14 @@
 
 b2Contact* b2CircleContact::Create(b2Fixture* fixtureA, std::int32_t, b2Fixture* fixtureB, std::int32_t, b2BlockAllocator* allocator)
 {
-	void* mem = allocator->Allocate(sizeof(b2CircleContact));
+	void* mem = allocator->Allocate<b2CircleContact>();
 	return new (mem) b2CircleContact(fixtureA, fixtureB);
 }
 
 void b2CircleContact::Destroy(b2Contact* contact, b2BlockAllocator* allocator)
 {
 	((b2CircleContact*)contact)->~b2CircleContact();
-	allocator->Free(contact, sizeof(b2CircleContact));
+	allocator->Free(contact);
 }
 
 b2CircleContact::b2CircleContact(b2Fixture* fixtureA, b2Fixture* fixtureB)
