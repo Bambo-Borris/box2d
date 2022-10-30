@@ -108,7 +108,7 @@ b2BlockAllocator::~b2BlockAllocator()
 	b2Free(m_chunks);
 }
 
-void* b2BlockAllocator::Allocate(std::int32_t size)
+void* b2BlockAllocator::HandleAllocate(std::size_t size)
 {
 	if (size == 0)
 	{
@@ -168,7 +168,7 @@ void* b2BlockAllocator::Allocate(std::int32_t size)
 	}
 }
 
-void b2BlockAllocator::Free(void *p, std::int32_t size)
+void b2BlockAllocator::HandleFree(void *p, std::size_t size)
 {
 	if (size == 0)
 	{

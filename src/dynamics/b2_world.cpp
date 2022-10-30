@@ -120,7 +120,7 @@ b2Body* b2World::CreateBody(const b2BodyDef* def)
 		return nullptr;
 	}
 
-	void* mem = m_blockAllocator.Allocate(sizeof(b2Body));
+	void* mem = m_blockAllocator.Allocate<b2Body>();
 	b2Body* b = new (mem) b2Body(def, this);
 
 	// Add to world doubly linked list.
@@ -188,7 +188,7 @@ void b2World::DestroyBody(b2Body* b)
 		f0->DestroyProxies(&m_contactManager.m_broadPhase);
 		f0->Destroy(&m_blockAllocator);
 		f0->~b2Fixture();
-		m_blockAllocator.Free(f0, sizeof(b2Fixture));
+		m_blockAllocator.Free(f0);
 
 		b->m_fixtureList = f;
 		b->m_fixtureCount -= 1;
@@ -214,7 +214,7 @@ void b2World::DestroyBody(b2Body* b)
 
 	--m_bodyCount;
 	b->~b2Body();
-	m_blockAllocator.Free(b, sizeof(b2Body));
+	m_blockAllocator.Free(b);
 }
 
 b2Joint* b2World::CreateJoint(const b2JointDef* def)

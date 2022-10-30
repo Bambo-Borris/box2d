@@ -32,14 +32,14 @@
 
 b2Contact* b2PolygonContact::Create(b2Fixture* fixtureA, std::int32_t, b2Fixture* fixtureB, std::int32_t, b2BlockAllocator* allocator)
 {
-	void* mem = allocator->Allocate(sizeof(b2PolygonContact));
+	void* mem = allocator->Allocate<b2PolygonContact>();
 	return new (mem) b2PolygonContact(fixtureA, fixtureB);
 }
 
 void b2PolygonContact::Destroy(b2Contact* contact, b2BlockAllocator* allocator)
 {
 	((b2PolygonContact*)contact)->~b2PolygonContact();
-	allocator->Free(contact, sizeof(b2PolygonContact));
+	allocator->Free(contact);
 }
 
 b2PolygonContact::b2PolygonContact(b2Fixture* fixtureA, b2Fixture* fixtureB)

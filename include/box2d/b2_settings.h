@@ -39,6 +39,7 @@
 
 #include <cstdarg>
 #include <cstdint>
+#include <cstddef>
 
 // Tunable Constants
 
@@ -91,11 +92,11 @@ struct B2_API b2JointUserData
 // Memory Allocation
 
 /// Default allocation functions
-B2_API void* b2Alloc_Default(std::int32_t size);
+B2_API void* b2Alloc_Default(std::size_t size);
 B2_API void b2Free_Default(void* mem);
 
 /// Implement this function to use your own memory allocator.
-inline void* b2Alloc(std::int32_t size)
+inline void* b2Alloc(std::size_t size)
 {
 	return b2Alloc_Default(size);
 }

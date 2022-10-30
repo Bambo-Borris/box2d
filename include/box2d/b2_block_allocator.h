@@ -42,14 +42,19 @@ public:
 	~b2BlockAllocator();
 
 	/// Allocate memory. This will use b2Alloc if the size is larger than b2_maxBlockSize.
-	void* Allocate(std::int32_t size);
+	template <typename T>
+	[[nodiscard]] void* Allocate(std::size_t count = 1);
+
 
 	/// Free memory. This will use b2Free if the size is larger than b2_maxBlockSize.
-	void Free(void* p, std::int32_t size);
+	template <typename T>
+	void Free(T* ptr, std::size_t count = 1);
 
 	void Clear();
 
 private:
+	void* HandleAllocate(std::size_t size);
+	void HandleFree(void* p, std::size_t size);
 
 	b2Chunk* m_chunks;
 	std::int32_t m_chunkCount;
@@ -57,3 +62,17 @@ private:
 
 	std::array<b2Block*, b2_blockSizeCount> m_freeLists;
 };
+
+template <typename T>
+void* b2BlockAllocator::Allocate(std::size_t count)
+{
+	assert(count > 0);
+	return HandleAllocate(sizeof(T) * count);
+}
+
+template <typename T>
+void b2BlockAllocator::Free(T* ptr, std::size_t count)
+{
+	assert(count > 0);
+	HandleFree(static_cast<void*>(ptr), sizeof(T) * count);
+}

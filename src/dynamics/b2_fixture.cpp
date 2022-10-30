@@ -59,7 +59,7 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
 
 	// Reserve proxy space
 	std::int32_t childCount = m_shape->GetChildCount();
-	m_proxies = (b2FixtureProxy*)allocator->Allocate(childCount * sizeof(b2FixtureProxy));
+	m_proxies = (b2FixtureProxy*)allocator->Allocate<b2FixtureProxy>(childCount);
 	for (std::int32_t i = 0; i < childCount; ++i)
 	{
 		m_proxies[i].fixture = nullptr;
@@ -77,7 +77,7 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator)
 
 	// Free the proxy array.
 	std::int32_t childCount = m_shape->GetChildCount();
-	allocator->Free(m_proxies, childCount * sizeof(b2FixtureProxy));
+	allocator->Free(m_proxies, childCount);
 	m_proxies = nullptr;
 
 	// Free the child shape.
@@ -87,7 +87,7 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator)
 		{
 			b2CircleShape* s = (b2CircleShape*)m_shape;
 			s->~b2CircleShape();
-			allocator->Free(s, sizeof(b2CircleShape));
+			allocator->Free(s);
 		}
 		break;
 
@@ -95,7 +95,7 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator)
 		{
 			b2EdgeShape* s = (b2EdgeShape*)m_shape;
 			s->~b2EdgeShape();
-			allocator->Free(s, sizeof(b2EdgeShape));
+			allocator->Free(s);
 		}
 		break;
 
@@ -103,7 +103,7 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator)
 		{
 			b2PolygonShape* s = (b2PolygonShape*)m_shape;
 			s->~b2PolygonShape();
-			allocator->Free(s, sizeof(b2PolygonShape));
+			allocator->Free(s);
 		}
 		break;
 
@@ -111,7 +111,7 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator)
 		{
 			b2ChainShape* s = (b2ChainShape*)m_shape;
 			s->~b2ChainShape();
-			allocator->Free(s, sizeof(b2ChainShape));
+			allocator->Free(s);
 		}
 		break;
 

@@ -29,14 +29,14 @@
 
 b2Contact* b2EdgeAndPolygonContact::Create(b2Fixture* fixtureA, std::int32_t, b2Fixture* fixtureB, std::int32_t, b2BlockAllocator* allocator)
 {
-	void* mem = allocator->Allocate(sizeof(b2EdgeAndPolygonContact));
+	void* mem = allocator->Allocate<b2EdgeAndPolygonContact>();
 	return new (mem) b2EdgeAndPolygonContact(fixtureA, fixtureB);
 }
 
 void b2EdgeAndPolygonContact::Destroy(b2Contact* contact, b2BlockAllocator* allocator)
 {
 	((b2EdgeAndPolygonContact*)contact)->~b2EdgeAndPolygonContact();
-	allocator->Free(contact, sizeof(b2EdgeAndPolygonContact));
+	allocator->Free(contact);
 }
 
 b2EdgeAndPolygonContact::b2EdgeAndPolygonContact(b2Fixture* fixtureA, b2Fixture* fixtureB)
