@@ -27,133 +27,133 @@
 class Tiles : public Test
 {
 public:
-	enum
-	{
-		e_count = 20
-	};
+    enum
+    {
+        e_count = 20
+    };
 
-	Tiles()
-	{
-		m_fixtureCount = 0;
-		b2Timer timer;
+    Tiles()
+    {
+        m_fixtureCount = 0;
+        b2Timer timer;
 
-		{
-			float a = 0.5f;
-			b2BodyDef bd;
-			bd.position.y = -a;
-			b2Body* ground = m_world->CreateBody(&bd);
+        {
+            float a = 0.5f;
+            b2BodyDef bd;
+            bd.position.y = -a;
+            b2Body* ground = m_world->CreateBody(&bd);
 
 #if 1
-			std::int32_t N = 200;
-			std::int32_t M = 10;
-			b2Vec2 position;
-			position.y = 0.0f;
-			for (std::int32_t j = 0; j < M; ++j)
-			{
-				position.x = -N * a;
-				for (std::int32_t i = 0; i < N; ++i)
-				{
-					b2PolygonShape shape;
-					shape.SetAsBox(a, a, position, 0.0f);
-					ground->CreateFixture(&shape, 0.0f);
-					++m_fixtureCount;
-					position.x += 2.0f * a;
-				}
-				position.y -= 2.0f * a;
-			}
+            std::int32_t N = 200;
+            std::int32_t M = 10;
+            b2Vec2 position;
+            position.y = 0.0f;
+            for (std::int32_t j = 0; j < M; ++j)
+            {
+                position.x = -N * a;
+                for (std::int32_t i = 0; i < N; ++i)
+                {
+                    b2PolygonShape shape;
+                    shape.SetAsBox(a, a, position, 0.0f);
+                    ground->CreateFixture(&shape, 0.0f);
+                    ++m_fixtureCount;
+                    position.x += 2.0f * a;
+                }
+                position.y -= 2.0f * a;
+            }
 #else
-			std::int32_t N = 200;
-			std::int32_t M = 10;
-			b2Vec2 position;
-			position.x = -N * a;
-			for (std::int32_t i = 0; i < N; ++i)
-			{
-				position.y = 0.0f;
-				for (std::int32_t j = 0; j < M; ++j)
-				{
-					b2PolygonShape shape;
-					shape.SetAsBox(a, a, position, 0.0f);
-					ground->CreateFixture(&shape, 0.0f);
-					position.y -= 2.0f * a;
-				}
-				position.x += 2.0f * a;
-			}
+            std::int32_t N = 200;
+            std::int32_t M = 10;
+            b2Vec2 position;
+            position.x = -N * a;
+            for (std::int32_t i = 0; i < N; ++i)
+            {
+                position.y = 0.0f;
+                for (std::int32_t j = 0; j < M; ++j)
+                {
+                    b2PolygonShape shape;
+                    shape.SetAsBox(a, a, position, 0.0f);
+                    ground->CreateFixture(&shape, 0.0f);
+                    position.y -= 2.0f * a;
+                }
+                position.x += 2.0f * a;
+            }
 #endif
-		}
+        }
 
-		{
-			float a = 0.5f;
-			b2PolygonShape shape;
-			shape.SetAsBox(a, a);
+        {
+            float a = 0.5f;
+            b2PolygonShape shape;
+            shape.SetAsBox(a, a);
 
-			b2Vec2 x(-7.0f, 0.75f);
-			b2Vec2 y;
-			b2Vec2 deltaX(0.5625f, 1.25f);
-			b2Vec2 deltaY(1.125f, 0.0f);
+            b2Vec2 x(-7.0f, 0.75f);
+            b2Vec2 y;
+            b2Vec2 deltaX(0.5625f, 1.25f);
+            b2Vec2 deltaY(1.125f, 0.0f);
 
-			for (std::int32_t i = 0; i < e_count; ++i)
-			{
-				y = x;
+            for (std::int32_t i = 0; i < e_count; ++i)
+            {
+                y = x;
 
-				for (std::int32_t j = i; j < e_count; ++j)
-				{
-					b2BodyDef bd;
-					bd.type = b2_dynamicBody;
-					bd.position = y;
+                for (std::int32_t j = i; j < e_count; ++j)
+                {
+                    b2BodyDef bd;
+                    bd.type = b2_dynamicBody;
+                    bd.position = y;
 
-					//if (i == 0 && j == 0)
-					//{
-					//	bd.allowSleep = false;
-					//}
-					//else
-					//{
-					//	bd.allowSleep = true;
-					//}
+                    //if (i == 0 && j == 0)
+                    //{
+                    //  bd.allowSleep = false;
+                    //}
+                    //else
+                    //{
+                    //  bd.allowSleep = true;
+                    //}
 
-					b2Body* body = m_world->CreateBody(&bd);
-					body->CreateFixture(&shape, 5.0f);
-					++m_fixtureCount;
-					y += deltaY;
-				}
+                    b2Body* body = m_world->CreateBody(&bd);
+                    body->CreateFixture(&shape, 5.0f);
+                    ++m_fixtureCount;
+                    y += deltaY;
+                }
 
-				x += deltaX;
-			}
-		}
+                x += deltaX;
+            }
+        }
 
-		m_createTime = timer.GetMilliseconds();
-	}
+        m_createTime = timer.GetMilliseconds();
+    }
 
-	void Step(Settings& settings) override
-	{
-		const b2ContactManager& cm = m_world->GetContactManager();
-		std::int32_t height = cm.m_broadPhase.GetTreeHeight();
-		std::int32_t leafCount = cm.m_broadPhase.GetProxyCount();
-		std::int32_t minimumNodeCount = 2 * leafCount - 1;
-		float minimumHeight = ceilf(logf(float(minimumNodeCount)) / logf(2.0f));
-		g_debugDraw.DrawString(5, m_textLine, "dynamic tree height = %d, min = %d", height, std::int32_t(minimumHeight));
-		m_textLine += m_textIncrement;
+    void Step(Settings& settings) override
+    {
+        const b2ContactManager& cm = m_world->GetContactManager();
+        std::int32_t height = cm.m_broadPhase.GetTreeHeight();
+        std::int32_t leafCount = cm.m_broadPhase.GetProxyCount();
+        std::int32_t minimumNodeCount = 2 * leafCount - 1;
+        float minimumHeight = ceilf(logf(float(minimumNodeCount)) / logf(2.0f));
+        g_debugDraw.DrawString(5, m_textLine, "dynamic tree height = %d, min = %d", height, std::int32_t(minimumHeight));
+        m_textLine += m_textIncrement;
 
-		Test::Step(settings);
+        Test::Step(settings);
 
-		g_debugDraw.DrawString(5, m_textLine, "create time = %6.2f ms, fixture count = %d",
-			m_createTime, m_fixtureCount);
-		m_textLine += m_textIncrement;
+        g_debugDraw.DrawString(5, m_textLine, "create time = %6.2f ms, fixture count = %d",
+            m_createTime, m_fixtureCount);
+        m_textLine += m_textIncrement;
 
-		//b2DynamicTree* tree = &m_world->m_contactManager.m_broadPhase.m_tree;
+        //b2DynamicTree* tree = &m_world->m_contactManager.m_broadPhase.m_tree;
 
-		//if (m_stepCount == 400)
-		//{
-		//	tree->RebuildBottomUp();
-		//}
-	}
+        //if (m_stepCount == 400)
+        //{
+        //  tree->RebuildBottomUp();
+        //}
+    }
 
-	static Test* Create()
-	{
-		return new Tiles;
-	}
+    static Test* Create()
+    {
+        return new Tiles;
+    }
 
-	std::int32_t m_fixtureCount;
-	float m_createTime;
+    std::int32_t m_fixtureCount;
+    float m_createTime;
 };
 
 static int testIndex = RegisterTest("Benchmark", "Tiles", Tiles::Create);

@@ -30,156 +30,156 @@
 
 b2ChainShape::~b2ChainShape()
 {
-	Clear();
+    Clear();
 }
 
 void b2ChainShape::Clear()
 {
-	b2Free(m_vertices);
-	m_vertices = nullptr;
-	m_count = 0;
+    b2Free(m_vertices);
+    m_vertices = nullptr;
+    m_count = 0;
 }
 
 void b2ChainShape::CreateLoop(const b2Vec2* vertices, std::int32_t count)
 {
-	assert(m_vertices == nullptr && m_count == 0);
-	assert(count >= 3);
-	if (count < 3)
-	{
-		return;
-	}
+    assert(m_vertices == nullptr && m_count == 0);
+    assert(count >= 3);
+    if (count < 3)
+    {
+        return;
+    }
 
-	for (std::int32_t i = 1; i < count; ++i)
-	{
-		b2Vec2 v1 = vertices[i-1];
-		b2Vec2 v2 = vertices[i];
-		// If the code crashes here, it means your vertices are too close together.
-		assert(b2DistanceSquared(v1, v2) > b2_linearSlop * b2_linearSlop);
-	}
+    for (std::int32_t i = 1; i < count; ++i)
+    {
+        b2Vec2 v1 = vertices[i-1];
+        b2Vec2 v2 = vertices[i];
+        // If the code crashes here, it means your vertices are too close together.
+        assert(b2DistanceSquared(v1, v2) > b2_linearSlop * b2_linearSlop);
+    }
 
-	m_count = count + 1;
-	m_vertices = (b2Vec2*)b2Alloc(m_count * sizeof(b2Vec2));
-	memcpy(m_vertices, vertices, count * sizeof(b2Vec2));
-	m_vertices[count] = m_vertices[0];
-	m_prevVertex = m_vertices[m_count - 2];
-	m_nextVertex = m_vertices[1];
+    m_count = count + 1;
+    m_vertices = (b2Vec2*)b2Alloc(m_count * sizeof(b2Vec2));
+    memcpy(m_vertices, vertices, count * sizeof(b2Vec2));
+    m_vertices[count] = m_vertices[0];
+    m_prevVertex = m_vertices[m_count - 2];
+    m_nextVertex = m_vertices[1];
 }
 
-void b2ChainShape::CreateChain(const b2Vec2* vertices, std::int32_t count,	const b2Vec2& prevVertex, const b2Vec2& nextVertex)
+void b2ChainShape::CreateChain(const b2Vec2* vertices, std::int32_t count, const b2Vec2& prevVertex, const b2Vec2& nextVertex)
 {
-	assert(m_vertices == nullptr && m_count == 0);
-	assert(count >= 2);
-	for (std::int32_t i = 1; i < count; ++i)
-	{
-		// If the code crashes here, it means your vertices are too close together.
-		assert(b2DistanceSquared(vertices[i-1], vertices[i]) > b2_linearSlop * b2_linearSlop);
-	}
+    assert(m_vertices == nullptr && m_count == 0);
+    assert(count >= 2);
+    for (std::int32_t i = 1; i < count; ++i)
+    {
+        // If the code crashes here, it means your vertices are too close together.
+        assert(b2DistanceSquared(vertices[i-1], vertices[i]) > b2_linearSlop * b2_linearSlop);
+    }
 
-	m_count = count;
-	m_vertices = (b2Vec2*)b2Alloc(count * sizeof(b2Vec2));
-	memcpy(m_vertices, vertices, m_count * sizeof(b2Vec2));
+    m_count = count;
+    m_vertices = (b2Vec2*)b2Alloc(count * sizeof(b2Vec2));
+    memcpy(m_vertices, vertices, m_count * sizeof(b2Vec2));
 
-	m_prevVertex = prevVertex;
-	m_nextVertex = nextVertex;
+    m_prevVertex = prevVertex;
+    m_nextVertex = nextVertex;
 }
 
 b2Shape* b2ChainShape::Clone(b2BlockAllocator* allocator) const
 {
-	void* mem = allocator->Allocate<b2ChainShape>();
-	b2ChainShape* clone = new (mem) b2ChainShape;
-	clone->CreateChain(m_vertices, m_count, m_prevVertex, m_nextVertex);
-	return clone;
+    void* mem = allocator->Allocate<b2ChainShape>();
+    b2ChainShape* clone = new (mem) b2ChainShape;
+    clone->CreateChain(m_vertices, m_count, m_prevVertex, m_nextVertex);
+    return clone;
 }
 
 std::int32_t b2ChainShape::GetChildCount() const
 {
-	// edge count = vertex count - 1
-	return m_count - 1;
+    // edge count = vertex count - 1
+    return m_count - 1;
 }
 
 void b2ChainShape::GetChildEdge(b2EdgeShape* edge, std::int32_t index) const
 {
-	assert(0 <= index && index < m_count - 1);
-	edge->m_type = b2Shape::e_edge;
-	edge->m_radius = m_radius;
+    assert(0 <= index && index < m_count - 1);
+    edge->m_type = b2Shape::e_edge;
+    edge->m_radius = m_radius;
 
-	edge->m_vertex1 = m_vertices[index + 0];
-	edge->m_vertex2 = m_vertices[index + 1];
-	edge->m_oneSided = true;
+    edge->m_vertex1 = m_vertices[index + 0];
+    edge->m_vertex2 = m_vertices[index + 1];
+    edge->m_oneSided = true;
 
-	if (index > 0)
-	{
-		edge->m_vertex0 = m_vertices[index - 1];
-	}
-	else
-	{
-		edge->m_vertex0 = m_prevVertex;
-	}
+    if (index > 0)
+    {
+        edge->m_vertex0 = m_vertices[index - 1];
+    }
+    else
+    {
+        edge->m_vertex0 = m_prevVertex;
+    }
 
-	if (index < m_count - 2)
-	{
-		edge->m_vertex3 = m_vertices[index + 2];
-	}
-	else
-	{
-		edge->m_vertex3 = m_nextVertex;
-	}
+    if (index < m_count - 2)
+    {
+        edge->m_vertex3 = m_vertices[index + 2];
+    }
+    else
+    {
+        edge->m_vertex3 = m_nextVertex;
+    }
 }
 
 bool b2ChainShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 {
-	(void)xf;
-	(void)p;
-	return false;
+    (void)xf;
+    (void)p;
+    return false;
 }
 
 bool b2ChainShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
-							const b2Transform& xf, std::int32_t childIndex) const
+                            const b2Transform& xf, std::int32_t childIndex) const
 {
-	assert(childIndex < m_count);
+    assert(childIndex < m_count);
 
-	b2EdgeShape edgeShape;
+    b2EdgeShape edgeShape;
 
-	std::int32_t i1 = childIndex;
-	std::int32_t i2 = childIndex + 1;
-	if (i2 == m_count)
-	{
-		i2 = 0;
-	}
+    std::int32_t i1 = childIndex;
+    std::int32_t i2 = childIndex + 1;
+    if (i2 == m_count)
+    {
+        i2 = 0;
+    }
 
-	edgeShape.m_vertex1 = m_vertices[i1];
-	edgeShape.m_vertex2 = m_vertices[i2];
+    edgeShape.m_vertex1 = m_vertices[i1];
+    edgeShape.m_vertex2 = m_vertices[i2];
 
-	return edgeShape.RayCast(output, input, xf, 0);
+    return edgeShape.RayCast(output, input, xf, 0);
 }
 
 void b2ChainShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, std::int32_t childIndex) const
 {
-	assert(childIndex < m_count);
+    assert(childIndex < m_count);
 
-	std::int32_t i1 = childIndex;
-	std::int32_t i2 = childIndex + 1;
-	if (i2 == m_count)
-	{
-		i2 = 0;
-	}
+    std::int32_t i1 = childIndex;
+    std::int32_t i2 = childIndex + 1;
+    if (i2 == m_count)
+    {
+        i2 = 0;
+    }
 
-	b2Vec2 v1 = b2Mul(xf, m_vertices[i1]);
-	b2Vec2 v2 = b2Mul(xf, m_vertices[i2]);
+    b2Vec2 v1 = b2Mul(xf, m_vertices[i1]);
+    b2Vec2 v2 = b2Mul(xf, m_vertices[i2]);
 
-	b2Vec2 lower = b2Min(v1, v2);
-	b2Vec2 upper = b2Max(v1, v2);
+    b2Vec2 lower = b2Min(v1, v2);
+    b2Vec2 upper = b2Max(v1, v2);
 
-	b2Vec2 r(m_radius, m_radius);
-	aabb->lowerBound = lower - r;
-	aabb->upperBound = upper + r;
+    b2Vec2 r(m_radius, m_radius);
+    aabb->lowerBound = lower - r;
+    aabb->upperBound = upper + r;
 }
 
 void b2ChainShape::ComputeMass(b2MassData* massData, float density) const
 {
-	(void)density;
+    (void)density;
 
-	massData->mass = 0.0f;
-	massData->center.SetZero();
-	massData->I = 0.0f;
+    massData->mass = 0.0f;
+    massData->center.SetZero();
+    massData->I = 0.0f;
 }

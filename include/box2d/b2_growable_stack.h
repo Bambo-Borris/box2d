@@ -34,55 +34,55 @@ template <typename T, std::int32_t N>
 class b2GrowableStack
 {
 public:
-	b2GrowableStack()
-	{
-		m_stack = m_array.data();
-		m_count = 0;
-		m_capacity = N;
-	}
+    b2GrowableStack()
+    {
+        m_stack = m_array.data();
+        m_count = 0;
+        m_capacity = N;
+    }
 
-	~b2GrowableStack()
-	{
-		if (m_stack != m_array.data())
-		{
-			b2Free(m_stack);
-			m_stack = nullptr;
-		}
-	}
+    ~b2GrowableStack()
+    {
+        if (m_stack != m_array.data())
+        {
+            b2Free(m_stack);
+            m_stack = nullptr;
+        }
+    }
 
-	void Push(const T& element)
-	{
-		if (m_count == m_capacity)
-		{
-			T* old = m_stack;
-			m_capacity *= 2;
-			m_stack = (T*)b2Alloc(m_capacity * sizeof(T));
-			memcpy(m_stack, old, m_count * sizeof(T));
-			if (old != m_array.data())
-			{
-				b2Free(old);
-			}
-		}
+    void Push(const T& element)
+    {
+        if (m_count == m_capacity)
+        {
+            T* old = m_stack;
+            m_capacity *= 2;
+            m_stack = (T*)b2Alloc(m_capacity * sizeof(T));
+            memcpy(m_stack, old, m_count * sizeof(T));
+            if (old != m_array.data())
+            {
+                b2Free(old);
+            }
+        }
 
-		m_stack[m_count] = element;
-		++m_count;
-	}
+        m_stack[m_count] = element;
+        ++m_count;
+    }
 
-	T Pop()
-	{
-		assert(m_count > 0);
-		--m_count;
-		return m_stack[m_count];
-	}
+    T Pop()
+    {
+        assert(m_count > 0);
+        --m_count;
+        return m_stack[m_count];
+    }
 
-	std::int32_t GetCount()
-	{
-		return m_count;
-	}
+    std::int32_t GetCount()
+    {
+        return m_count;
+    }
 
 private:
-	T* m_stack;
-	std::array<T,N> m_array;
-	std::int32_t m_count;
-	std::int32_t m_capacity;
+    T* m_stack;
+    std::array<T,N> m_array;
+    std::int32_t m_count;
+    std::int32_t m_capacity;
 };

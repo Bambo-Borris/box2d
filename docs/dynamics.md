@@ -759,8 +759,8 @@ since they have units in terms on Newtons. Box2D provides and API to compute
 these values in terms of frequency and damping ratio.
 ```cpp
 void b2LinearStiffness(float& stiffness, float& damping,
-	float frequencyHertz, float dampingRatio,
-	const b2Body* bodyA, const b2Body* bodyB);
+    float frequencyHertz, float dampingRatio,
+    const b2Body* bodyA, const b2Body* bodyB);
 ```
 
 Think of the frequency as the frequency of a harmonic oscillator (like a

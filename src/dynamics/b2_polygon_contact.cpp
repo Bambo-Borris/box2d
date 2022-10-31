@@ -32,26 +32,26 @@
 
 b2Contact* b2PolygonContact::Create(b2Fixture* fixtureA, std::int32_t, b2Fixture* fixtureB, std::int32_t, b2BlockAllocator* allocator)
 {
-	void* mem = allocator->Allocate<b2PolygonContact>();
-	return new (mem) b2PolygonContact(fixtureA, fixtureB);
+    void* mem = allocator->Allocate<b2PolygonContact>();
+    return new (mem) b2PolygonContact(fixtureA, fixtureB);
 }
 
 void b2PolygonContact::Destroy(b2Contact* contact, b2BlockAllocator* allocator)
 {
-	((b2PolygonContact*)contact)->~b2PolygonContact();
-	allocator->Free(contact);
+    ((b2PolygonContact*)contact)->~b2PolygonContact();
+    allocator->Free(contact);
 }
 
 b2PolygonContact::b2PolygonContact(b2Fixture* fixtureA, b2Fixture* fixtureB)
-	: b2Contact(fixtureA, 0, fixtureB, 0)
+    : b2Contact(fixtureA, 0, fixtureB, 0)
 {
-	assert(m_fixtureA->GetType() == b2Shape::e_polygon);
-	assert(m_fixtureB->GetType() == b2Shape::e_polygon);
+    assert(m_fixtureA->GetType() == b2Shape::e_polygon);
+    assert(m_fixtureB->GetType() == b2Shape::e_polygon);
 }
 
 void b2PolygonContact::Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB)
 {
-	b2CollidePolygons(	manifold,
-						(b2PolygonShape*)m_fixtureA->GetShape(), xfA,
-						(b2PolygonShape*)m_fixtureB->GetShape(), xfB);
+    b2CollidePolygons(  manifold,
+                        (b2PolygonShape*)m_fixtureA->GetShape(), xfA,
+                        (b2PolygonShape*)m_fixtureB->GetShape(), xfB);
 }

@@ -30,28 +30,28 @@
 
 b2Contact* b2ChainAndPolygonContact::Create(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture* fixtureB, std::int32_t indexB, b2BlockAllocator* allocator)
 {
-	void* mem = allocator->Allocate<b2ChainAndPolygonContact>();
-	return new (mem) b2ChainAndPolygonContact(fixtureA, indexA, fixtureB, indexB);
+    void* mem = allocator->Allocate<b2ChainAndPolygonContact>();
+    return new (mem) b2ChainAndPolygonContact(fixtureA, indexA, fixtureB, indexB);
 }
 
 void b2ChainAndPolygonContact::Destroy(b2Contact* contact, b2BlockAllocator* allocator)
 {
-	((b2ChainAndPolygonContact*)contact)->~b2ChainAndPolygonContact();
-	allocator->Free(contact);
+    ((b2ChainAndPolygonContact*)contact)->~b2ChainAndPolygonContact();
+    allocator->Free(contact);
 }
 
 b2ChainAndPolygonContact::b2ChainAndPolygonContact(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture* fixtureB, std::int32_t indexB)
 : b2Contact(fixtureA, indexA, fixtureB, indexB)
 {
-	assert(m_fixtureA->GetType() == b2Shape::e_chain);
-	assert(m_fixtureB->GetType() == b2Shape::e_polygon);
+    assert(m_fixtureA->GetType() == b2Shape::e_chain);
+    assert(m_fixtureB->GetType() == b2Shape::e_polygon);
 }
 
 void b2ChainAndPolygonContact::Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB)
 {
-	b2ChainShape* chain = (b2ChainShape*)m_fixtureA->GetShape();
-	b2EdgeShape edge;
-	chain->GetChildEdge(&edge, m_indexA);
-	b2CollideEdgeAndPolygon(	manifold, &edge, xfA,
-								(b2PolygonShape*)m_fixtureB->GetShape(), xfB);
+    b2ChainShape* chain = (b2ChainShape*)m_fixtureA->GetShape();
+    b2EdgeShape edge;
+    chain->GetChildEdge(&edge, m_indexA);
+    b2CollideEdgeAndPolygon(    manifold, &edge, xfA,
+                                (b2PolygonShape*)m_fixtureB->GetShape(), xfB);
 }
