@@ -25,63 +25,63 @@
 
 b2StackAllocator::b2StackAllocator()
 {
-	m_index = 0;
-	m_allocation = 0;
-	m_maxAllocation = 0;
-	m_entryCount = 0;
+    m_index = 0;
+    m_allocation = 0;
+    m_maxAllocation = 0;
+    m_entryCount = 0;
 }
 
 b2StackAllocator::~b2StackAllocator()
 {
-	assert(m_index == 0);
-	assert(m_entryCount == 0);
+    assert(m_index == 0);
+    assert(m_entryCount == 0);
 }
 
 void* b2StackAllocator::HandleAllocate(std::size_t size)
 {
-	assert(m_entryCount < b2_maxStackEntries);
+    assert(m_entryCount < b2_maxStackEntries);
 
-	b2StackEntry* entry = m_entries.data() + m_entryCount;
-	entry->size = size;
-	if (m_index + size > b2_stackSize)
-	{
-		entry->data = (char*)b2Alloc(size);
-		entry->usedMalloc = true;
-	}
-	else
-	{
-		entry->data = m_data.data() + m_index;
-		entry->usedMalloc = false;
-		m_index += size;
-	}
+    b2StackEntry* entry = m_entries.data() + m_entryCount;
+    entry->size = size;
+    if (m_index + size > b2_stackSize)
+    {
+        entry->data = (char*)b2Alloc(size);
+        entry->usedMalloc = true;
+    }
+    else
+    {
+        entry->data = m_data.data() + m_index;
+        entry->usedMalloc = false;
+        m_index += size;
+    }
 
-	m_allocation += size;
-	m_maxAllocation = b2Max(m_maxAllocation, m_allocation);
-	++m_entryCount;
+    m_allocation += size;
+    m_maxAllocation = b2Max(m_maxAllocation, m_allocation);
+    ++m_entryCount;
 
-	return entry->data;
+    return entry->data;
 }
 
 void b2StackAllocator::HandleFree(void* p)
 {
-	assert(m_entryCount > 0);
-	b2StackEntry* entry = m_entries.data() + m_entryCount - 1;
-	assert(p == entry->data);
-	if (entry->usedMalloc)
-	{
-		b2Free(p);
-	}
-	else
-	{
-		m_index -= entry->size;
-	}
-	m_allocation -= entry->size;
-	--m_entryCount;
+    assert(m_entryCount > 0);
+    b2StackEntry* entry = m_entries.data() + m_entryCount - 1;
+    assert(p == entry->data);
+    if (entry->usedMalloc)
+    {
+        b2Free(p);
+    }
+    else
+    {
+        m_index -= entry->size;
+    }
+    m_allocation -= entry->size;
+    --m_entryCount;
 
-	p = nullptr;
+    p = nullptr;
 }
 
 std::size_t b2StackAllocator::GetMaxAllocation() const
 {
-	return m_maxAllocation;
+    return m_maxAllocation;
 }

@@ -204,7 +204,7 @@ You can connect chains together using ghost vertices, like we did with b2EdgeSha
 
 ```cpp
 b2ChainShape::CreateChain(const b2Vec2* vertices, int32 count,
-		const b2Vec2& prevVertex, const b2Vec2& nextVertex);
+        const b2Vec2& prevVertex, const b2Vec2& nextVertex);
 ```
 
 Self-intersection of chain shapes is not supported. It might work, it

@@ -37,17 +37,17 @@ struct GLFWwindow;
 //
 struct Camera
 {
-	Camera();
+    Camera();
 
-	void ResetView();
-	b2Vec2 ConvertScreenToWorld(const b2Vec2& screenPoint);
-	b2Vec2 ConvertWorldToScreen(const b2Vec2& worldPoint);
-	void BuildProjectionMatrix(float* m, float zBias);
+    void ResetView();
+    b2Vec2 ConvertScreenToWorld(const b2Vec2& screenPoint);
+    b2Vec2 ConvertWorldToScreen(const b2Vec2& worldPoint);
+    void BuildProjectionMatrix(float* m, float zBias);
 
-	b2Vec2 m_center;
-	float m_zoom;
-	std::int32_t m_width;
-	std::int32_t m_height;
+    b2Vec2 m_center;
+    float m_zoom;
+    std::int32_t m_width;
+    std::int32_t m_height;
 };
 
 // This class implements debug drawing callbacks that are invoked
@@ -55,38 +55,38 @@ struct Camera
 class DebugDraw : public b2Draw
 {
 public:
-	DebugDraw();
-	~DebugDraw();
+    DebugDraw();
+    ~DebugDraw();
 
-	void Create();
-	void Destroy();
+    void Create();
+    void Destroy();
 
-	void DrawPolygon(const b2Vec2* vertices, std::int32_t vertexCount, const b2Color& color) override;
+    void DrawPolygon(const b2Vec2* vertices, std::int32_t vertexCount, const b2Color& color) override;
 
-	void DrawSolidPolygon(const b2Vec2* vertices, std::int32_t vertexCount, const b2Color& color) override;
+    void DrawSolidPolygon(const b2Vec2* vertices, std::int32_t vertexCount, const b2Color& color) override;
 
-	void DrawCircle(const b2Vec2& center, float radius, const b2Color& color) override;
+    void DrawCircle(const b2Vec2& center, float radius, const b2Color& color) override;
 
-	void DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2& axis, const b2Color& color) override;
+    void DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2& axis, const b2Color& color) override;
 
-	void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) override;
+    void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) override;
 
-	void DrawTransform(const b2Transform& xf) override;
+    void DrawTransform(const b2Transform& xf) override;
 
-	void DrawPoint(const b2Vec2& p, float size, const b2Color& color) override;
+    void DrawPoint(const b2Vec2& p, float size, const b2Color& color) override;
 
-	void DrawString(int x, int y, const char* string, ...);
+    void DrawString(int x, int y, const char* string, ...);
 
-	void DrawString(const b2Vec2& p, const char* string, ...);
+    void DrawString(const b2Vec2& p, const char* string, ...);
 
-	void DrawAABB(b2AABB* aabb, const b2Color& color);
+    void DrawAABB(b2AABB* aabb, const b2Color& color);
 
-	void Flush();
+    void Flush();
 
-	bool m_showUI;
-	GLRenderPoints* m_points;
-	GLRenderLines* m_lines;
-	GLRenderTriangles* m_triangles;
+    bool m_showUI;
+    GLRenderPoints* m_points;
+    GLRenderLines* m_lines;
+    GLRenderTriangles* m_triangles;
 };
 
 extern DebugDraw g_debugDraw;

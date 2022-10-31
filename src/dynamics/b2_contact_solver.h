@@ -33,64 +33,64 @@ struct b2ContactPositionConstraint;
 
 struct b2VelocityConstraintPoint
 {
-	b2Vec2 rA;
-	b2Vec2 rB;
-	float normalImpulse;
-	float tangentImpulse;
-	float normalMass;
-	float tangentMass;
-	float velocityBias;
+    b2Vec2 rA;
+    b2Vec2 rB;
+    float normalImpulse;
+    float tangentImpulse;
+    float normalMass;
+    float tangentMass;
+    float velocityBias;
 };
 
 struct b2ContactVelocityConstraint
 {
-	b2VelocityConstraintPoint points[b2_maxManifoldPoints];
-	b2Vec2 normal;
-	b2Mat22 normalMass;
-	b2Mat22 K;
-	std::int32_t indexA;
-	std::int32_t indexB;
-	float invMassA, invMassB;
-	float invIA, invIB;
-	float friction;
-	float restitution;
-	float threshold;
-	float tangentSpeed;
-	std::int32_t pointCount;
-	std::int32_t contactIndex;
+    b2VelocityConstraintPoint points[b2_maxManifoldPoints];
+    b2Vec2 normal;
+    b2Mat22 normalMass;
+    b2Mat22 K;
+    std::int32_t indexA;
+    std::int32_t indexB;
+    float invMassA, invMassB;
+    float invIA, invIB;
+    float friction;
+    float restitution;
+    float threshold;
+    float tangentSpeed;
+    std::int32_t pointCount;
+    std::int32_t contactIndex;
 };
 
 struct b2ContactSolverDef
 {
-	b2TimeStep step;
-	b2Contact** contacts;
-	std::int32_t count;
-	b2Position* positions;
-	b2Velocity* velocities;
-	b2StackAllocator* allocator;
+    b2TimeStep step;
+    b2Contact** contacts;
+    std::int32_t count;
+    b2Position* positions;
+    b2Velocity* velocities;
+    b2StackAllocator* allocator;
 };
 
 class b2ContactSolver
 {
 public:
-	b2ContactSolver(b2ContactSolverDef* def);
-	~b2ContactSolver();
+    b2ContactSolver(b2ContactSolverDef* def);
+    ~b2ContactSolver();
 
-	void InitializeVelocityConstraints();
+    void InitializeVelocityConstraints();
 
-	void WarmStart();
-	void SolveVelocityConstraints();
-	void StoreImpulses();
+    void WarmStart();
+    void SolveVelocityConstraints();
+    void StoreImpulses();
 
-	bool SolvePositionConstraints();
-	bool SolveTOIPositionConstraints(std::int32_t toiIndexA, std::int32_t toiIndexB);
+    bool SolvePositionConstraints();
+    bool SolveTOIPositionConstraints(std::int32_t toiIndexA, std::int32_t toiIndexB);
 
-	b2TimeStep m_step;
-	b2Position* m_positions;
-	b2Velocity* m_velocities;
-	b2StackAllocator* m_allocator;
-	b2ContactPositionConstraint* m_positionConstraints;
-	b2ContactVelocityConstraint* m_velocityConstraints;
-	b2Contact** m_contacts;
-	int m_count;
+    b2TimeStep m_step;
+    b2Position* m_positions;
+    b2Velocity* m_velocities;
+    b2StackAllocator* m_allocator;
+    b2ContactPositionConstraint* m_positionConstraints;
+    b2ContactVelocityConstraint* m_velocityConstraints;
+    b2Contact** m_contacts;
+    int m_count;
 };

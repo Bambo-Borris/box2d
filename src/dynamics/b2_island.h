@@ -37,58 +37,58 @@ struct b2Profile;
 class b2Island
 {
 public:
-	b2Island(std::int32_t bodyCapacity, std::int32_t contactCapacity, std::int32_t jointCapacity,
-			b2StackAllocator* allocator, b2ContactListener* listener);
-	~b2Island();
+    b2Island(std::int32_t bodyCapacity, std::int32_t contactCapacity, std::int32_t jointCapacity,
+            b2StackAllocator* allocator, b2ContactListener* listener);
+    ~b2Island();
 
-	void Clear()
-	{
-		m_bodyCount = 0;
-		m_contactCount = 0;
-		m_jointCount = 0;
-	}
+    void Clear()
+    {
+        m_bodyCount = 0;
+        m_contactCount = 0;
+        m_jointCount = 0;
+    }
 
-	void Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep);
+    void Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep);
 
-	void SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::int32_t toiIndexB);
+    void SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::int32_t toiIndexB);
 
-	void Add(b2Body* body)
-	{
-		assert(m_bodyCount < m_bodyCapacity);
-		body->m_islandIndex = m_bodyCount;
-		m_bodies[m_bodyCount] = body;
-		++m_bodyCount;
-	}
+    void Add(b2Body* body)
+    {
+        assert(m_bodyCount < m_bodyCapacity);
+        body->m_islandIndex = m_bodyCount;
+        m_bodies[m_bodyCount] = body;
+        ++m_bodyCount;
+    }
 
-	void Add(b2Contact* contact)
-	{
-		assert(m_contactCount < m_contactCapacity);
-		m_contacts[m_contactCount++] = contact;
-	}
+    void Add(b2Contact* contact)
+    {
+        assert(m_contactCount < m_contactCapacity);
+        m_contacts[m_contactCount++] = contact;
+    }
 
-	void Add(b2Joint* joint)
-	{
-		assert(m_jointCount < m_jointCapacity);
-		m_joints[m_jointCount++] = joint;
-	}
+    void Add(b2Joint* joint)
+    {
+        assert(m_jointCount < m_jointCapacity);
+        m_joints[m_jointCount++] = joint;
+    }
 
-	void Report(const b2ContactVelocityConstraint* constraints);
+    void Report(const b2ContactVelocityConstraint* constraints);
 
-	b2StackAllocator* m_allocator;
-	b2ContactListener* m_listener;
+    b2StackAllocator* m_allocator;
+    b2ContactListener* m_listener;
 
-	b2Body** m_bodies;
-	b2Contact** m_contacts;
-	b2Joint** m_joints;
+    b2Body** m_bodies;
+    b2Contact** m_contacts;
+    b2Joint** m_joints;
 
-	b2Position* m_positions;
-	b2Velocity* m_velocities;
+    b2Position* m_positions;
+    b2Velocity* m_velocities;
 
-	std::int32_t m_bodyCount;
-	std::int32_t m_jointCount;
-	std::int32_t m_contactCount;
+    std::int32_t m_bodyCount;
+    std::int32_t m_jointCount;
+    std::int32_t m_contactCount;
 
-	std::int32_t m_bodyCapacity;
-	std::int32_t m_contactCapacity;
-	std::int32_t m_jointCapacity;
+    std::int32_t m_bodyCapacity;
+    std::int32_t m_contactCapacity;
+    std::int32_t m_jointCapacity;
 };

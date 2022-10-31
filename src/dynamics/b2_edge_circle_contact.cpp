@@ -29,26 +29,26 @@
 
 b2Contact* b2EdgeAndCircleContact::Create(b2Fixture* fixtureA, std::int32_t, b2Fixture* fixtureB, std::int32_t, b2BlockAllocator* allocator)
 {
-	void* mem = allocator->Allocate<b2EdgeAndCircleContact>();
-	return new (mem) b2EdgeAndCircleContact(fixtureA, fixtureB);
+    void* mem = allocator->Allocate<b2EdgeAndCircleContact>();
+    return new (mem) b2EdgeAndCircleContact(fixtureA, fixtureB);
 }
 
 void b2EdgeAndCircleContact::Destroy(b2Contact* contact, b2BlockAllocator* allocator)
 {
-	((b2EdgeAndCircleContact*)contact)->~b2EdgeAndCircleContact();
-	allocator->Free(contact);
+    ((b2EdgeAndCircleContact*)contact)->~b2EdgeAndCircleContact();
+    allocator->Free(contact);
 }
 
 b2EdgeAndCircleContact::b2EdgeAndCircleContact(b2Fixture* fixtureA, b2Fixture* fixtureB)
 : b2Contact(fixtureA, 0, fixtureB, 0)
 {
-	assert(m_fixtureA->GetType() == b2Shape::e_edge);
-	assert(m_fixtureB->GetType() == b2Shape::e_circle);
+    assert(m_fixtureA->GetType() == b2Shape::e_edge);
+    assert(m_fixtureB->GetType() == b2Shape::e_circle);
 }
 
 void b2EdgeAndCircleContact::Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB)
 {
-	b2CollideEdgeAndCircle(	manifold,
-								(b2EdgeShape*)m_fixtureA->GetShape(), xfA,
-								(b2CircleShape*)m_fixtureB->GetShape(), xfB);
+    b2CollideEdgeAndCircle( manifold,
+                                (b2EdgeShape*)m_fixtureA->GetShape(), xfA,
+                                (b2CircleShape*)m_fixtureB->GetShape(), xfB);
 }
