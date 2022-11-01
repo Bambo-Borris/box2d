@@ -27,7 +27,7 @@
 
 b2Shape* b2CircleShape::Clone(b2BlockAllocator* allocator) const
 {
-    void* mem = allocator->Allocate<b2CircleShape>();
+    auto* mem = allocator->Allocate<b2CircleShape>();
     b2CircleShape* clone = new (mem) b2CircleShape;
     *clone = *this;
     return clone;

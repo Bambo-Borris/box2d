@@ -47,7 +47,7 @@ public:
     ~b2StackAllocator();
 
     template<typename T> 
-    [[nodiscard]] void* Allocate(std::size_t count = 1); 
+    [[nodiscard]] T* Allocate(std::size_t count = 1); 
 
     template<typename T>
     void Free(T* ptr);
@@ -70,9 +70,9 @@ private:
 };
 
 template<typename T>
-void* b2StackAllocator::Allocate(std::size_t count)
+T* b2StackAllocator::Allocate(std::size_t count)
 {
-    return HandleAllocate(sizeof(T) * count);
+    return (T*)HandleAllocate(sizeof(T) * count);
 }
 
 template<typename T>

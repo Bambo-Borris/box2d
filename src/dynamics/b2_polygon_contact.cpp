@@ -32,7 +32,7 @@
 
 b2Contact* b2PolygonContact::Create(b2Fixture* fixtureA, std::int32_t, b2Fixture* fixtureB, std::int32_t, b2BlockAllocator* allocator)
 {
-    void* mem = allocator->Allocate<b2PolygonContact>();
+    auto* mem = allocator->Allocate<b2PolygonContact>();
     return new (mem) b2PolygonContact(fixtureA, fixtureB);
 }
 
