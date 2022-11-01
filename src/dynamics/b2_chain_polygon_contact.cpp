@@ -30,7 +30,7 @@
 
 b2Contact* b2ChainAndPolygonContact::Create(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture* fixtureB, std::int32_t indexB, b2BlockAllocator* allocator)
 {
-    void* mem = allocator->Allocate<b2ChainAndPolygonContact>();
+    auto* mem = allocator->Allocate<b2ChainAndPolygonContact>();
     return new (mem) b2ChainAndPolygonContact(fixtureA, indexA, fixtureB, indexB);
 }
 

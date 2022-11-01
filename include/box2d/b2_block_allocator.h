@@ -43,7 +43,7 @@ public:
 
     /// Allocate memory. This will use b2Alloc if the size is larger than b2_maxBlockSize.
     template <typename T>
-    [[nodiscard]] void* Allocate(std::size_t count = 1);
+    [[nodiscard]] T* Allocate(std::size_t count = 1);
 
 
     /// Free memory. This will use b2Free if the size is larger than b2_maxBlockSize.
@@ -64,10 +64,10 @@ private:
 };
 
 template <typename T>
-void* b2BlockAllocator::Allocate(std::size_t count)
+T* b2BlockAllocator::Allocate(std::size_t count)
 {
     assert(count > 0);
-    return HandleAllocate(sizeof(T) * count);
+    return (T*)HandleAllocate(sizeof(T) * count);
 }
 
 template <typename T>

@@ -172,7 +172,7 @@ b2Fixture* b2Body::CreateFixture(const b2FixtureDef* def)
 
     b2BlockAllocator* allocator = &m_world->m_blockAllocator;
 
-    void* memory = allocator->Allocate<b2Fixture>();
+    auto* memory = allocator->Allocate<b2Fixture>();
     b2Fixture* fixture = new (memory) b2Fixture;
     fixture->Create(allocator, this, def);
 

@@ -59,7 +59,7 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
 
     // Reserve proxy space
     std::int32_t childCount = m_shape->GetChildCount();
-    m_proxies = (b2FixtureProxy*)allocator->Allocate<b2FixtureProxy>(childCount);
+    m_proxies = allocator->Allocate<b2FixtureProxy>(childCount);
     for (std::int32_t i = 0; i < childCount; ++i)
     {
         m_proxies[i].fixture = nullptr;
