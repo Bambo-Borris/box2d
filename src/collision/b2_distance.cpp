@@ -127,34 +127,34 @@ struct b2Simplex
 			v->a = 0.0f;
 		}
 
-		// Compute the new simplex metric, if it is substantially different than
-		// old metric then flush the simplex.
-		if (m_count > 1)
-		{
-			float metric1 = cache->metric;
-			float metric2 = GetMetric();
-			if (metric2 < 0.5f * metric1 || 2.0f * metric1 < metric2 || metric2 < b2_epsilon)
-			{
-				// Reset the simplex.
-				m_count = 0;
-			}
-		}
+        // Compute the new simplex metric, if it is substantially different than
+        // old metric then flush the simplex.
+        if (m_count > 1)
+        {
+	        const float metric1 = cache->metric;
+	        const float metric2 = GetMetric();
+            if (metric2 < 0.5f * metric1 || 2.0f * metric1 < metric2 || metric2 < FLT_EPSILON)
+            {
+                // Reset the simplex.
+                m_count = 0;
+            }
+        }
 
-		// If the cache is empty or invalid ...
-		if (m_count == 0)
-		{
-			b2SimplexVertex* v = vertices + 0;
-			v->indexA = 0;
-			v->indexB = 0;
-			b2Vec2 wALocal = proxyA->GetVertex(0);
-			b2Vec2 wBLocal = proxyB->GetVertex(0);
-			v->wA = b2Mul(transformA, wALocal);
-			v->wB = b2Mul(transformB, wBLocal);
-			v->w = v->wB - v->wA;
-			v->a = 1.0f;
-			m_count = 1;
-		}
-	}
+        // If the cache is empty or invalid ...
+        if (m_count == 0)
+        {
+            b2SimplexVertex* v   = vertices + 0;
+            v->indexA            = 0;
+            v->indexB            = 0;
+            const b2Vec2 wALocal = proxyA->GetVertex(0);
+            const b2Vec2 wBLocal = proxyB->GetVertex(0);
+            v->wA                = b2Mul(transformA, wALocal);
+            v->wB                = b2Mul(transformB, wBLocal);
+            v->w                 = v->wB - v->wA;
+            v->a                 = 1.0f;
+            m_count              = 1;
+        }
+    }
 
 	void WriteCache(b2SimplexCache* cache) const
 	{
@@ -175,21 +175,21 @@ struct b2Simplex
 		case 1:
 			return -m_v1.w;
 
-		case 2:
-			{
-				b2Vec2 e12 = m_v2.w - m_v1.w;
-				float sgn = b2Cross(e12, -m_v1.w);
-				if (sgn > 0.0f)
-				{
-					// Origin is left of e12.
-					return b2Cross(1.0f, e12);
-				}
-				else
-				{
-					// Origin is right of e12.
-					return b2Cross(e12, 1.0f);
-				}
-			}
+        case 2:
+            {
+	            const b2Vec2 e12 = m_v2.w - m_v1.w;
+	            const float  sgn = b2Cross(e12, -m_v1.w);
+                if (sgn > 0.0f)
+                {
+                    // Origin is left of e12.
+                    return b2Cross(1.0f, e12);
+                }
+                else
+                {
+                    // Origin is right of e12.
+                    return b2Cross(e12, 1.0f);
+                }
+            }
 
 		default:
 			b2Assert(false);
@@ -305,36 +305,36 @@ struct b2Simplex
 // a2 = d12_2 / d12
 void b2Simplex::Solve2()
 {
-	b2Vec2 w1 = m_v1.w;
-	b2Vec2 w2 = m_v2.w;
-	b2Vec2 e12 = w2 - w1;
+	const b2Vec2 w1  = m_v1.w;
+	const b2Vec2 w2  = m_v2.w;
+	const b2Vec2 e12 = w2 - w1;
 
-	// w1 region
-	float d12_2 = -b2Dot(w1, e12);
-	if (d12_2 <= 0.0f)
-	{
-		// a2 <= 0, so we clamp it to 0
-		m_v1.a = 1.0f;
-		m_count = 1;
-		return;
-	}
+    // w1 region
+	const float d12_2 = -b2Dot(w1, e12);
+    if (d12_2 <= 0.0f)
+    {
+        // a2 <= 0, so we clamp it to 0
+        m_v1.a = 1.0f;
+        m_count = 1;
+        return;
+    }
 
-	// w2 region
-	float d12_1 = b2Dot(w2, e12);
-	if (d12_1 <= 0.0f)
-	{
-		// a1 <= 0, so we clamp it to 0
-		m_v2.a = 1.0f;
-		m_count = 1;
-		m_v1 = m_v2;
-		return;
-	}
+    // w2 region
+	const float d12_1 = b2Dot(w2, e12);
+    if (d12_1 <= 0.0f)
+    {
+        // a1 <= 0, so we clamp it to 0
+        m_v2.a = 1.0f;
+        m_count = 1;
+        m_v1 = m_v2;
+        return;
+    }
 
-	// Must be in e12 region.
-	float inv_d12 = 1.0f / (d12_1 + d12_2);
-	m_v1.a = d12_1 * inv_d12;
-	m_v2.a = d12_2 * inv_d12;
-	m_count = 2;
+    // Must be in e12 region.
+	const float inv_d12 = 1.0f / (d12_1 + d12_2);
+    m_v1.a = d12_1 * inv_d12;
+    m_v2.a = d12_2 * inv_d12;
+    m_count = 2;
 }
 
 // Possible regions:
@@ -344,46 +344,46 @@ void b2Simplex::Solve2()
 // - inside the triangle
 void b2Simplex::Solve3()
 {
-	b2Vec2 w1 = m_v1.w;
-	b2Vec2 w2 = m_v2.w;
-	b2Vec2 w3 = m_v3.w;
+	const b2Vec2 w1 = m_v1.w;
+	const b2Vec2 w2 = m_v2.w;
+	const b2Vec2 w3 = m_v3.w;
 
-	// Edge12
-	// [1      1     ][a1] = [1]
-	// [w1.e12 w2.e12][a2] = [0]
-	// a3 = 0
-	b2Vec2 e12 = w2 - w1;
-	float w1e12 = b2Dot(w1, e12);
-	float w2e12 = b2Dot(w2, e12);
-	float d12_1 = w2e12;
-	float d12_2 = -w1e12;
+    // Edge12
+    // [1      1     ][a1] = [1]
+    // [w1.e12 w2.e12][a2] = [0]
+    // a3 = 0
+	const b2Vec2 e12   = w2 - w1;
+	const float  w1e12 = b2Dot(w1, e12);
+	const float  w2e12 = b2Dot(w2, e12);
+	const float  d12_1 = w2e12;
+	const float  d12_2 = -w1e12;
 
-	// Edge13
-	// [1      1     ][a1] = [1]
-	// [w1.e13 w3.e13][a3] = [0]
-	// a2 = 0
-	b2Vec2 e13 = w3 - w1;
-	float w1e13 = b2Dot(w1, e13);
-	float w3e13 = b2Dot(w3, e13);
-	float d13_1 = w3e13;
-	float d13_2 = -w1e13;
+    // Edge13
+    // [1      1     ][a1] = [1]
+    // [w1.e13 w3.e13][a3] = [0]
+    // a2 = 0
+	const b2Vec2 e13   = w3 - w1;
+	const float  w1e13 = b2Dot(w1, e13);
+	const float  w3e13 = b2Dot(w3, e13);
+	const float  d13_1 = w3e13;
+	const float  d13_2 = -w1e13;
 
-	// Edge23
-	// [1      1     ][a2] = [1]
-	// [w2.e23 w3.e23][a3] = [0]
-	// a1 = 0
-	b2Vec2 e23 = w3 - w2;
-	float w2e23 = b2Dot(w2, e23);
-	float w3e23 = b2Dot(w3, e23);
-	float d23_1 = w3e23;
-	float d23_2 = -w2e23;
-	
-	// Triangle123
-	float n123 = b2Cross(e12, e13);
+    // Edge23
+    // [1      1     ][a2] = [1]
+    // [w2.e23 w3.e23][a3] = [0]
+    // a1 = 0
+	const b2Vec2 e23   = w3 - w2;
+	const float  w2e23 = b2Dot(w2, e23);
+	const float  w3e23 = b2Dot(w3, e23);
+	const float  d23_1 = w3e23;
+	const float  d23_2 = -w2e23;
 
-	float d123_1 = n123 * b2Cross(w2, w3);
-	float d123_2 = n123 * b2Cross(w3, w1);
-	float d123_3 = n123 * b2Cross(w1, w2);
+    // Triangle123
+	const float n123 = b2Cross(e12, e13);
+
+	const float d123_1 = n123 * b2Cross(w2, w3);
+	const float d123_2 = n123 * b2Cross(w3, w1);
+	const float d123_3 = n123 * b2Cross(w1, w2);
 
 	// w1 region
 	if (d12_2 <= 0.0f && d13_2 <= 0.0f)
@@ -393,26 +393,26 @@ void b2Simplex::Solve3()
 		return;
 	}
 
-	// e12
-	if (d12_1 > 0.0f && d12_2 > 0.0f && d123_3 <= 0.0f)
-	{
-		float inv_d12 = 1.0f / (d12_1 + d12_2);
-		m_v1.a = d12_1 * inv_d12;
-		m_v2.a = d12_2 * inv_d12;
-		m_count = 2;
-		return;
-	}
+    // e12
+    if (d12_1 > 0.0f && d12_2 > 0.0f && d123_3 <= 0.0f)
+    {
+	    const float inv_d12 = 1.0f / (d12_1 + d12_2);
+        m_v1.a = d12_1 * inv_d12;
+        m_v2.a = d12_2 * inv_d12;
+        m_count = 2;
+        return;
+    }
 
-	// e13
-	if (d13_1 > 0.0f && d13_2 > 0.0f && d123_2 <= 0.0f)
-	{
-		float inv_d13 = 1.0f / (d13_1 + d13_2);
-		m_v1.a = d13_1 * inv_d13;
-		m_v3.a = d13_2 * inv_d13;
-		m_count = 2;
-		m_v2 = m_v3;
-		return;
-	}
+    // e13
+    if (d13_1 > 0.0f && d13_2 > 0.0f && d123_2 <= 0.0f)
+    {
+	    const float inv_d13 = 1.0f / (d13_1 + d13_2);
+        m_v1.a = d13_1 * inv_d13;
+        m_v3.a = d13_2 * inv_d13;
+        m_count = 2;
+        m_v2 = m_v3;
+        return;
+    }
 
 	// w2 region
 	if (d12_1 <= 0.0f && d23_2 <= 0.0f)
@@ -432,23 +432,23 @@ void b2Simplex::Solve3()
 		return;
 	}
 
-	// e23
-	if (d23_1 > 0.0f && d23_2 > 0.0f && d123_1 <= 0.0f)
-	{
-		float inv_d23 = 1.0f / (d23_1 + d23_2);
-		m_v2.a = d23_1 * inv_d23;
-		m_v3.a = d23_2 * inv_d23;
-		m_count = 2;
-		m_v1 = m_v3;
-		return;
-	}
+    // e23
+    if (d23_1 > 0.0f && d23_2 > 0.0f && d123_1 <= 0.0f)
+    {
+	    const float inv_d23 = 1.0f / (d23_1 + d23_2);
+        m_v2.a = d23_1 * inv_d23;
+        m_v3.a = d23_2 * inv_d23;
+        m_count = 2;
+        m_v1 = m_v3;
+        return;
+    }
 
-	// Must be in triangle123
-	float inv_d123 = 1.0f / (d123_1 + d123_2 + d123_3);
-	m_v1.a = d123_1 * inv_d123;
-	m_v2.a = d123_2 * inv_d123;
-	m_v3.a = d123_3 * inv_d123;
-	m_count = 3;
+    // Must be in triangle123
+	const float inv_d123 = 1.0f / (d123_1 + d123_2 + d123_3);
+    m_v1.a = d123_1 * inv_d123;
+    m_v2.a = d123_2 * inv_d123;
+    m_v3.a = d123_3 * inv_d123;
+    m_count = 3;
 }
 
 void b2Distance(b2DistanceOutput* output,
@@ -460,8 +460,8 @@ void b2Distance(b2DistanceOutput* output,
 	const b2DistanceProxy* proxyA = &input->proxyA;
 	const b2DistanceProxy* proxyB = &input->proxyB;
 
-	b2Transform transformA = input->transformA;
-	b2Transform transformB = input->transformB;
+    const b2Transform transformA = input->transformA;
+    const b2Transform transformB = input->transformB;
 
 	// Initialize the simplex.
 	b2Simplex simplex;
@@ -569,30 +569,30 @@ void b2Distance(b2DistanceOutput* output,
 	// Cache the simplex.
 	simplex.WriteCache(cache);
 
-	// Apply radii if requested
-	if (input->useRadii)
-	{
-		if (output->distance < b2_epsilon)
-		{
-			// Shapes are too close to safely compute normal
-			b2Vec2 p = 0.5f * (output->pointA + output->pointB);
-			output->pointA = p;
-			output->pointB = p;
-			output->distance = 0.0f;
-		}
-		else
-		{
-			// Keep closest points on perimeter even if overlapped, this way
-			// the points move smoothly.
-			float rA = proxyA->m_radius;
-			float rB = proxyB->m_radius;
-			b2Vec2 normal = output->pointB - output->pointA;
-			normal.Normalize();
-			output->distance = b2Max(0.0f, output->distance - rA - rB);
-			output->pointA += rA * normal;
-			output->pointB -= rB * normal;
-		}
-	}
+    // Apply radii if requested
+    if (input->useRadii)
+    {
+        if (output->distance < FLT_EPSILON)
+        {
+            // Shapes are too close to safely compute normal
+            const b2Vec2 p = 0.5f * (output->pointA + output->pointB);
+            output->pointA = p;
+            output->pointB = p;
+            output->distance = 0.0f;
+        }
+        else
+        {
+            // Keep closest points on perimeter even if overlapped, this way
+            // the points move smoothly.
+            const float rA     = proxyA->m_radius;
+            const float rB     = proxyB->m_radius;
+            b2Vec2      normal = output->pointB - output->pointA;
+            normal.Normalize();
+            output->distance = b2Max(0.0f, output->distance - rA - rB);
+            output->pointA += rA * normal;
+            output->pointB -= rB * normal;
+        }
+    }
 }
 
 // GJK-raycast

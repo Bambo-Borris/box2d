@@ -49,9 +49,9 @@ b2ChainAndCircleContact::b2ChainAndCircleContact(b2Fixture* fixtureA, int32 inde
 
 void b2ChainAndCircleContact::Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB)
 {
-	b2ChainShape* chain = (b2ChainShape*)m_fixtureA->GetShape();
-	b2EdgeShape edge;
-	chain->GetChildEdge(&edge, m_indexA);
-	b2CollideEdgeAndCircle(	manifold, &edge, xfA,
-							(b2CircleShape*)m_fixtureB->GetShape(), xfB);
+	const b2ChainShape* chain = (b2ChainShape*)m_fixtureA->GetShape();
+    b2EdgeShape edge;
+    chain->GetChildEdge(&edge, m_indexA);
+    b2CollideEdgeAndCircle( manifold, &edge, xfA,
+                            (b2CircleShape*)m_fixtureB->GetShape(), xfB);
 }

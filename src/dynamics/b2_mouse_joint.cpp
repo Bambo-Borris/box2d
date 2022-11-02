@@ -77,26 +77,26 @@ void b2MouseJoint::InitVelocityConstraints(const b2SolverData& data)
 	m_invMassB = m_bodyB->m_invMass;
 	m_invIB = m_bodyB->m_invI;
 
-	b2Vec2 cB = data.positions[m_indexB].c;
-	float aB = data.positions[m_indexB].a;
-	b2Vec2 vB = data.velocities[m_indexB].v;
-	float wB = data.velocities[m_indexB].w;
+    const b2Vec2 cB = data.positions[m_indexB].c;
+    const float  aB = data.positions[m_indexB].a;
+    b2Vec2       vB = data.velocities[m_indexB].v;
+    float        wB = data.velocities[m_indexB].w;
 
-	b2Rot qB(aB);
+    const b2Rot qB(aB);
 
-	float d = m_damping;
-	float k = m_stiffness;
+    const float d = m_damping;
+    const float k = m_stiffness;
 
-	// magic formulas
-	// gamma has units of inverse mass.
-	// beta has units of inverse time.
-	float h = data.step.dt;
-	m_gamma = h * (d + h * k);
-	if (m_gamma != 0.0f)
-	{
-		m_gamma = 1.0f / m_gamma;
-	}
-	m_beta = h * k * m_gamma;
+    // magic formulas
+    // gamma has units of inverse mass.
+    // beta has units of inverse time.
+    const float h = data.step.dt;
+    m_gamma = h * (d + h * k);
+    if (m_gamma != 0.0f)
+    {
+        m_gamma = 1.0f / m_gamma;
+    }
+    m_beta = h * k * m_gamma;
 
 	// Compute the effective mass matrix.
 	m_rB = b2Mul(qB, m_localAnchorB - m_localCenterB);
@@ -138,18 +138,18 @@ void b2MouseJoint::SolveVelocityConstraints(const b2SolverData& data)
 	b2Vec2 vB = data.velocities[m_indexB].v;
 	float wB = data.velocities[m_indexB].w;
 
-	// Cdot = v + cross(w, r)
-	b2Vec2 Cdot = vB + b2Cross(wB, m_rB);
-	b2Vec2 impulse = b2Mul(m_mass, -(Cdot + m_C + m_gamma * m_impulse));
+    // Cdot = v + cross(w, r)
+    const b2Vec2 Cdot = vB + b2Cross(wB, m_rB);
+    b2Vec2 impulse = b2Mul(m_mass, -(Cdot + m_C + m_gamma * m_impulse));
 
-	b2Vec2 oldImpulse = m_impulse;
-	m_impulse += impulse;
-	float maxImpulse = data.step.dt * m_maxForce;
-	if (m_impulse.LengthSquared() > maxImpulse * maxImpulse)
-	{
-		m_impulse *= maxImpulse / m_impulse.Length();
-	}
-	impulse = m_impulse - oldImpulse;
+    const b2Vec2 oldImpulse = m_impulse;
+    m_impulse += impulse;
+    const float maxImpulse = data.step.dt * m_maxForce;
+    if (m_impulse.LengthSquared() > maxImpulse * maxImpulse)
+    {
+        m_impulse *= maxImpulse / m_impulse.Length();
+    }
+    impulse = m_impulse - oldImpulse;
 
 	vB += m_invMassB * impulse;
 	wB += m_invIB * b2Cross(m_rB, impulse);

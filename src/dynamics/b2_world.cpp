@@ -73,11 +73,11 @@ b2World::b2World(const b2Vec2& gravity)
 
 b2World::~b2World()
 {
-	// Some shapes allocate using b2Alloc.
-	b2Body* b = m_bodyList;
-	while (b)
-	{
-		b2Body* bNext = b->m_next;
+    // Some shapes allocate using b2Alloc.
+    const b2Body* b = m_bodyList;
+    while (b)
+    {
+	    const b2Body* bNext = b->m_next;
 
 		b2Fixture* f = b->m_fixtureList;
 		while (f)
@@ -145,12 +145,12 @@ void b2World::DestroyBody(b2Body* b)
 		return;
 	}
 
-	// Delete the attached joints.
-	b2JointEdge* je = b->m_jointList;
-	while (je)
-	{
-		b2JointEdge* je0 = je;
-		je = je->next;
+    // Delete the attached joints.
+    b2JointEdge* je = b->m_jointList;
+    while (je)
+    {
+	    const b2JointEdge* je0 = je;
+        je = je->next;
 
 		if (m_destructionListener)
 		{
@@ -163,15 +163,15 @@ void b2World::DestroyBody(b2Body* b)
 	}
 	b->m_jointList = nullptr;
 
-	// Delete the attached contacts.
-	b2ContactEdge* ce = b->m_contactList;
-	while (ce)
-	{
-		b2ContactEdge* ce0 = ce;
-		ce = ce->next;
-		m_contactManager.Destroy(ce0->contact);
-	}
-	b->m_contactList = nullptr;
+    // Delete the attached contacts.
+    const b2ContactEdge* ce = b->m_contactList;
+    while (ce)
+    {
+	    const b2ContactEdge* ce0 = ce;
+        ce = ce->next;
+        m_contactManager.Destroy(ce0->contact);
+    }
+    b->m_contactList = nullptr;
 
 	// Delete the attached fixtures. This destroys broad-phase proxies.
 	b2Fixture* f = b->m_fixtureList;
@@ -252,21 +252,21 @@ b2Joint* b2World::CreateJoint(const b2JointDef* def)
 	if (j->m_bodyB->m_jointList) j->m_bodyB->m_jointList->prev = &j->m_edgeB;
 	j->m_bodyB->m_jointList = &j->m_edgeB;
 
-	b2Body* bodyA = def->bodyA;
-	b2Body* bodyB = def->bodyB;
+    const b2Body* bodyA = def->bodyA;
+    b2Body* bodyB = def->bodyB;
 
-	// If the joint prevents collisions, then flag any contacts for filtering.
-	if (def->collideConnected == false)
-	{
-		b2ContactEdge* edge = bodyB->GetContactList();
-		while (edge)
-		{
-			if (edge->other == bodyA)
-			{
-				// Flag the contact for filtering at the next time step (where either
-				// body is awake).
-				edge->contact->FlagForFiltering();
-			}
+    // If the joint prevents collisions, then flag any contacts for filtering.
+    if (def->collideConnected == false)
+    {
+	    const b2ContactEdge* edge = bodyB->GetContactList();
+        while (edge)
+        {
+            if (edge->other == bodyA)
+            {
+                // Flag the contact for filtering at the next time step (where either
+                // body is awake).
+                edge->contact->FlagForFiltering();
+            }
 
 			edge = edge->next;
 		}
@@ -285,7 +285,7 @@ void b2World::DestroyJoint(b2Joint* j)
 		return;
 	}
 
-	bool collideConnected = j->m_collideConnected;
+    const bool collideConnected = j->m_collideConnected;
 
 	// Remove from the doubly linked list.
 	if (j->m_prev)
@@ -354,18 +354,18 @@ void b2World::DestroyJoint(b2Joint* j)
 	b2Assert(m_jointCount > 0);
 	--m_jointCount;
 
-	// If the joint prevents collisions, then flag any contacts for filtering.
-	if (collideConnected == false)
-	{
-		b2ContactEdge* edge = bodyB->GetContactList();
-		while (edge)
-		{
-			if (edge->other == bodyA)
-			{
-				// Flag the contact for filtering at the next time step (where either
-				// body is awake).
-				edge->contact->FlagForFiltering();
-			}
+    // If the joint prevents collisions, then flag any contacts for filtering.
+    if (collideConnected == false)
+    {
+	    const b2ContactEdge* edge = bodyB->GetContactList();
+        while (edge)
+        {
+            if (edge->other == bodyA)
+            {
+                // Flag the contact for filtering at the next time step (where either
+                // body is awake).
+                edge->contact->FlagForFiltering();
+            }
 
 			edge = edge->next;
 		}
@@ -418,15 +418,15 @@ void b2World::Solve(const b2TimeStep& step)
 		j->m_islandFlag = false;
 	}
 
-	// Build and simulate all awake islands.
-	int32 stackSize = m_bodyCount;
-	b2Body** stack = (b2Body**)m_stackAllocator.Allocate(stackSize * sizeof(b2Body*));
-	for (b2Body* seed = m_bodyList; seed; seed = seed->m_next)
-	{
-		if (seed->m_flags & b2Body::e_islandFlag)
-		{
-			continue;
-		}
+    // Build and simulate all awake islands.
+    const std::int32_t stackSize = m_bodyCount;
+    b2Body** stack = m_stackAllocator.Allocate<b2Body*>(stackSize);
+    for (b2Body* seed = m_bodyList; seed; seed = seed->m_next)
+    {
+        if (seed->m_flags & b2Body::e_islandFlag)
+        {
+            continue;
+        }
 
 		if (seed->IsAwake() == false || seed->IsEnabled() == false)
 		{
@@ -463,10 +463,10 @@ void b2World::Solve(const b2TimeStep& step)
 			// Make sure the body is awake (without resetting sleep timer).
 			b->m_flags |= b2Body::e_awakeFlag;
 
-			// Search all contacts connected to this body.
-			for (b2ContactEdge* ce = b->m_contactList; ce; ce = ce->next)
-			{
-				b2Contact* contact = ce->contact;
+            // Search all contacts connected to this body.
+            for ( const b2ContactEdge* ce = b->m_contactList; ce; ce = ce->next)
+            {
+                b2Contact* contact = ce->contact;
 
 				// Has this contact already been added to an island?
 				if (contact->m_flags & b2Contact::e_islandFlag)
@@ -481,13 +481,13 @@ void b2World::Solve(const b2TimeStep& step)
 					continue;
 				}
 
-				// Skip sensors.
-				bool sensorA = contact->m_fixtureA->m_isSensor;
-				bool sensorB = contact->m_fixtureB->m_isSensor;
-				if (sensorA || sensorB)
-				{
-					continue;
-				}
+                // Skip sensors.
+                const bool sensorA = contact->m_fixtureA->m_isSensor;
+                const bool sensorB = contact->m_fixtureB->m_isSensor;
+                if (sensorA || sensorB)
+                {
+                    continue;
+                }
 
 				island.Add(contact);
 				contact->m_flags |= b2Contact::e_islandFlag;
@@ -505,13 +505,13 @@ void b2World::Solve(const b2TimeStep& step)
 				other->m_flags |= b2Body::e_islandFlag;
 			}
 
-			// Search all joints connect to this body.
-			for (b2JointEdge* je = b->m_jointList; je; je = je->next)
-			{
-				if (je->joint->m_islandFlag == true)
-				{
-					continue;
-				}
+            // Search all joints connect to this body.
+            for ( const b2JointEdge* je = b->m_jointList; je; je = je->next)
+            {
+                if (je->joint->m_islandFlag == true)
+                {
+                    continue;
+                }
 
 				b2Body* other = je->other;
 
@@ -555,16 +555,16 @@ void b2World::Solve(const b2TimeStep& step)
 
 	m_stackAllocator.Free(stack);
 
-	{
-		b2Timer timer;
-		// Synchronize fixtures, check for out of range bodies.
-		for (b2Body* b = m_bodyList; b; b = b->GetNext())
-		{
-			// If a body was not in an island then it did not move.
-			if ((b->m_flags & b2Body::e_islandFlag) == 0)
-			{
-				continue;
-			}
+    {
+	    const b2Timer timer;
+        // Synchronize fixtures, check for out of range bodies.
+        for (b2Body* b = m_bodyList; b; b = b->GetNext())
+        {
+            // If a body was not in an island then it did not move.
+            if ((b->m_flags & b2Body::e_islandFlag) == 0)
+            {
+                continue;
+            }
 
 			if (b->GetType() == b2_staticBody)
 			{
@@ -904,7 +904,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 
 void b2World::Step(float dt, int32 velocityIterations, int32 positionIterations)
 {
-	b2Timer stepTimer;
+	const b2Timer stepTimer;
 
 	// If new fixtures were added, we need to find the new contacts.
 	if (m_newContacts)
@@ -930,30 +930,30 @@ void b2World::Step(float dt, int32 velocityIterations, int32 positionIterations)
 
 	step.dtRatio = m_inv_dt0 * dt;
 
-	step.warmStarting = m_warmStarting;
-	
-	// Update contacts. This is where some contacts are destroyed.
-	{
-		b2Timer timer;
-		m_contactManager.Collide();
-		m_profile.collide = timer.GetMilliseconds();
-	}
+    step.warmStarting = m_warmStarting;
 
-	// Integrate velocities, solve velocity constraints, and integrate positions.
-	if (m_stepComplete && step.dt > 0.0f)
-	{
-		b2Timer timer;
-		Solve(step);
-		m_profile.solve = timer.GetMilliseconds();
-	}
+    // Update contacts. This is where some contacts are destroyed.
+    {
+	    const b2Timer timer;
+        m_contactManager.Collide();
+        m_profile.collide = timer.GetMilliseconds();
+    }
 
-	// Handle TOI events.
-	if (m_continuousPhysics && step.dt > 0.0f)
-	{
-		b2Timer timer;
-		SolveTOI(step);
-		m_profile.solveTOI = timer.GetMilliseconds();
-	}
+    // Integrate velocities, solve velocity constraints, and integrate positions.
+    if (m_stepComplete && step.dt > 0.0f)
+    {
+	    const b2Timer timer;
+        Solve(step);
+        m_profile.solve = timer.GetMilliseconds();
+    }
+
+    // Handle TOI events.
+    if (m_continuousPhysics && step.dt > 0.0f)
+    {
+	    const b2Timer timer;
+        SolveTOI(step);
+        m_profile.solveTOI = timer.GetMilliseconds();
+    }
 
 	if (step.dt > 0.0f)
 	{
@@ -981,11 +981,11 @@ void b2World::ClearForces()
 
 struct b2WorldQueryWrapper
 {
-	bool QueryCallback(int32 proxyId)
-	{
-		b2FixtureProxy* proxy = (b2FixtureProxy*)broadPhase->GetUserData(proxyId);
-		return callback->ReportFixture(proxy->fixture);
-	}
+    bool QueryCallback(std::int32_t proxyId) const
+    {
+	    const b2FixtureProxy* proxy = (b2FixtureProxy*)broadPhase->GetUserData(proxyId);
+        return callback->ReportFixture(proxy->fixture);
+    }
 
 	const b2BroadPhase* broadPhase;
 	b2QueryCallback* callback;
@@ -1001,21 +1001,21 @@ void b2World::QueryAABB(b2QueryCallback* callback, const b2AABB& aabb) const
 
 struct b2WorldRayCastWrapper
 {
-	float RayCastCallback(const b2RayCastInput& input, int32 proxyId)
-	{
-		void* userData = broadPhase->GetUserData(proxyId);
-		b2FixtureProxy* proxy = (b2FixtureProxy*)userData;
-		b2Fixture* fixture = proxy->fixture;
-		int32 index = proxy->childIndex;
-		b2RayCastOutput output;
-		bool hit = fixture->RayCast(&output, input, index);
+    float RayCastCallback(const b2RayCastInput& input, std::int32_t proxyId) const
+    {
+        void*                 userData = broadPhase->GetUserData(proxyId);
+        const b2FixtureProxy* proxy    = (b2FixtureProxy*)userData;
+        b2Fixture*            fixture  = proxy->fixture;
+        const std::int32_t    index    = proxy->childIndex;
+        b2RayCastOutput       output;
+        const bool            hit = fixture->RayCast(&output, input, index);
 
-		if (hit)
-		{
-			float fraction = output.fraction;
-			b2Vec2 point = (1.0f - fraction) * input.p1 + fraction * input.p2;
-			return callback->ReportFixture(fixture, point, output.normal, fraction);
-		}
+        if (hit)
+        {
+	        const float  fraction = output.fraction;
+	        const b2Vec2 point    = (1.0f - fraction) * input.p1 + fraction * input.p2;
+            return callback->ReportFixture(fixture, point, output.normal, fraction);
+        }
 
 		return input.maxFraction;
 	}
@@ -1038,26 +1038,26 @@ void b2World::RayCast(b2RayCastCallback* callback, const b2Vec2& point1, const b
 
 void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color& color)
 {
-	switch (fixture->GetType())
-	{
-	case b2Shape::e_circle:
-		{
-			b2CircleShape* circle = (b2CircleShape*)fixture->GetShape();
+    switch (fixture->GetType())
+    {
+    case b2Shape::e_circle:
+        {
+	        const b2CircleShape* circle = (b2CircleShape*)fixture->GetShape();
 
-			b2Vec2 center = b2Mul(xf, circle->m_p);
-			float radius = circle->m_radius;
-			b2Vec2 axis = b2Mul(xf.q, b2Vec2(1.0f, 0.0f));
+	        const b2Vec2 center = b2Mul(xf, circle->m_p);
+	        const float  radius = circle->m_radius;
+	        const b2Vec2 axis   = b2Mul(xf.q, b2Vec2(1.0f, 0.0f));
 
 			m_debugDraw->DrawSolidCircle(center, radius, axis, color);
 		}
 		break;
 
-	case b2Shape::e_edge:
-		{
-			b2EdgeShape* edge = (b2EdgeShape*)fixture->GetShape();
-			b2Vec2 v1 = b2Mul(xf, edge->m_vertex1);
-			b2Vec2 v2 = b2Mul(xf, edge->m_vertex2);
-			m_debugDraw->DrawSegment(v1, v2, color);
+    case b2Shape::e_edge:
+        {
+	        const b2EdgeShape* edge = (b2EdgeShape*)fixture->GetShape();
+	        const b2Vec2       v1   = b2Mul(xf, edge->m_vertex1);
+	        const b2Vec2       v2   = b2Mul(xf, edge->m_vertex2);
+            m_debugDraw->DrawSegment(v1, v2, color);
 
 			if (edge->m_oneSided == false)
 			{
@@ -1067,11 +1067,11 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 		}
 		break;
 
-	case b2Shape::e_chain:
-		{
-			b2ChainShape* chain = (b2ChainShape*)fixture->GetShape();
-			int32 count = chain->m_count;
-			const b2Vec2* vertices = chain->m_vertices;
+    case b2Shape::e_chain:
+        {
+	        const b2ChainShape* chain    = (b2ChainShape*)fixture->GetShape();
+	        const std::int32_t  count    = chain->m_count;
+            const b2Vec2*       vertices = chain->m_vertices;
 
 			b2Vec2 v1 = b2Mul(xf, vertices[0]);
 			for (int32 i = 1; i < count; ++i)
@@ -1083,12 +1083,12 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 		}
 		break;
 
-	case b2Shape::e_polygon:
-		{
-			b2PolygonShape* poly = (b2PolygonShape*)fixture->GetShape();
-			int32 vertexCount = poly->m_count;
-			b2Assert(vertexCount <= b2_maxPolygonVertices);
-			b2Vec2 vertices[b2_maxPolygonVertices];
+    case b2Shape::e_polygon:
+        {
+	        const b2PolygonShape* poly        = (b2PolygonShape*)fixture->GetShape();
+	        const std::int32_t    vertexCount = poly->m_count;
+            assert(vertexCount <= b2_maxPolygonVertices);
+            b2Vec2 vertices[b2_maxPolygonVertices];
 
 			for (int32 i = 0; i < vertexCount; ++i)
 			{
@@ -1111,7 +1111,7 @@ void b2World::DebugDraw()
 		return;
 	}
 
-	uint32 flags = m_debugDraw->GetFlags();
+    const std::uint32_t flags = m_debugDraw->GetFlags();
 
 	if (flags & b2Draw::e_shapeBit)
 	{
@@ -1157,26 +1157,26 @@ void b2World::DebugDraw()
 		}
 	}
 
-	if (flags & b2Draw::e_pairBit)
-	{
-		b2Color color(0.3f, 0.9f, 0.9f);
-		for (b2Contact* c = m_contactManager.m_contactList; c; c = c->GetNext())
-		{
-			b2Fixture* fixtureA = c->GetFixtureA();
-			b2Fixture* fixtureB = c->GetFixtureB();
-			int32 indexA = c->GetChildIndexA();
-			int32 indexB = c->GetChildIndexB();
-			b2Vec2 cA = fixtureA->GetAABB(indexA).GetCenter();
-			b2Vec2 cB = fixtureB->GetAABB(indexB).GetCenter();
+    if (flags & b2Draw::e_pairBit)
+    {
+	    const b2Color color(0.3f, 0.9f, 0.9f);
+        for (b2Contact* c = m_contactManager.m_contactList; c; c = c->GetNext())
+        {
+	        const b2Fixture*   fixtureA = c->GetFixtureA();
+	        const b2Fixture*   fixtureB = c->GetFixtureB();
+            const std::int32_t indexA   = c->GetChildIndexA();
+            const std::int32_t indexB   = c->GetChildIndexB();
+            b2Vec2             cA       = fixtureA->GetAABB(indexA).GetCenter();
+            b2Vec2             cB       = fixtureB->GetAABB(indexB).GetCenter();
 
 			m_debugDraw->DrawSegment(cA, cB, color);
 		}
 	}
 
-	if (flags & b2Draw::e_aabbBit)
-	{
-		b2Color color(0.9f, 0.3f, 0.9f);
-		b2BroadPhase* bp = &m_contactManager.m_broadPhase;
+    if (flags & b2Draw::e_aabbBit)
+    {
+	    const b2Color       color(0.9f, 0.3f, 0.9f);
+	    const b2BroadPhase* bp = &m_contactManager.m_broadPhase;
 
 		for (b2Body* b = m_bodyList; b; b = b->GetNext())
 		{
@@ -1185,17 +1185,17 @@ void b2World::DebugDraw()
 				continue;
 			}
 
-			for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
-			{
-				for (int32 i = 0; i < f->m_proxyCount; ++i)
-				{
-					b2FixtureProxy* proxy = f->m_proxies + i;
-					b2AABB aabb = bp->GetFatAABB(proxy->proxyId);
-					b2Vec2 vs[4];
-					vs[0].Set(aabb.lowerBound.x, aabb.lowerBound.y);
-					vs[1].Set(aabb.upperBound.x, aabb.lowerBound.y);
-					vs[2].Set(aabb.upperBound.x, aabb.upperBound.y);
-					vs[3].Set(aabb.lowerBound.x, aabb.upperBound.y);
+            for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
+            {
+                for (std::int32_t i = 0; i < f->m_proxyCount; ++i)
+                {
+	                const b2FixtureProxy* proxy = f->m_proxies + i;
+                    const b2AABB    aabb  = bp->GetFatAABB(proxy->proxyId);
+                    b2Vec2          vs[4];
+                    vs[0].Set(aabb.lowerBound.x, aabb.lowerBound.y);
+                    vs[1].Set(aabb.upperBound.x, aabb.lowerBound.y);
+                    vs[2].Set(aabb.upperBound.x, aabb.upperBound.y);
+                    vs[3].Set(aabb.lowerBound.x, aabb.upperBound.y);
 
 					m_debugDraw->DrawPolygon(vs, 4, color);
 				}

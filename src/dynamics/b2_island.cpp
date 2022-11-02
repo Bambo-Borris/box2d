@@ -391,15 +391,15 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 	b2Assert(toiIndexA < m_bodyCount);
 	b2Assert(toiIndexB < m_bodyCount);
 
-	// Initialize the body state.
-	for (int32 i = 0; i < m_bodyCount; ++i)
-	{
-		b2Body* b = m_bodies[i];
-		m_positions[i].c = b->m_sweep.c;
-		m_positions[i].a = b->m_sweep.a;
-		m_velocities[i].v = b->m_linearVelocity;
-		m_velocities[i].w = b->m_angularVelocity;
-	}
+    // Initialize the body state.
+    for (std::int32_t i = 0; i < m_bodyCount; ++i)
+    {
+	    const b2Body* b = m_bodies[i];
+        m_positions[i].c = b->m_sweep.c;
+        m_positions[i].a = b->m_sweep.a;
+        m_velocities[i].v = b->m_linearVelocity;
+        m_velocities[i].w = b->m_angularVelocity;
+    }
 
 	b2ContactSolverDef contactSolverDef;
 	contactSolverDef.contacts = m_contacts;
@@ -410,15 +410,15 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 	contactSolverDef.velocities = m_velocities;
 	b2ContactSolver contactSolver(&contactSolverDef);
 
-	// Solve position constraints.
-	for (int32 i = 0; i < subStep.positionIterations; ++i)
-	{
-		bool contactsOkay = contactSolver.SolveTOIPositionConstraints(toiIndexA, toiIndexB);
-		if (contactsOkay)
-		{
-			break;
-		}
-	}
+    // Solve position constraints.
+    for (std::int32_t i = 0; i < subStep.positionIterations; ++i)
+    {
+	    const bool contactsOkay = contactSolver.SolveTOIPositionConstraints(toiIndexA, toiIndexB);
+        if (contactsOkay)
+        {
+            break;
+        }
+    }
 
 #if 0
 	// Is the new position really safe?
@@ -472,7 +472,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 	// Don't store the TOI contact forces for warm starting
 	// because they can be quite large.
 
-	float h = subStep.dt;
+    const float h = subStep.dt;
 
 	// Integrate positions
 	for (int32 i = 0; i < m_bodyCount; ++i)
@@ -482,20 +482,20 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 		b2Vec2 v = m_velocities[i].v;
 		float w = m_velocities[i].w;
 
-		// Check for large velocities
-		b2Vec2 translation = h * v;
-		if (b2Dot(translation, translation) > b2_maxTranslationSquared)
-		{
-			float ratio = b2_maxTranslation / translation.Length();
-			v *= ratio;
-		}
+        // Check for large velocities
+        b2Vec2 translation = h * v;
+        if (b2Dot(translation, translation) > b2_maxTranslationSquared)
+        {
+	        const float ratio = b2_maxTranslation / translation.Length();
+            v *= ratio;
+        }
 
-		float rotation = h * w;
-		if (rotation * rotation > b2_maxRotationSquared)
-		{
-			float ratio = b2_maxRotation / b2Abs(rotation);
-			w *= ratio;
-		}
+        const float rotation = h * w;
+        if (rotation * rotation > b2_maxRotationSquared)
+        {
+	        const float ratio = b2_maxRotation / b2Abs(rotation);
+            w *= ratio;
+        }
 
 		// Integrate
 		c += h * v;
@@ -518,7 +518,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32 toiIndexA, int32 toiInd
 	Report(contactSolver.m_velocityConstraints);
 }
 
-void b2Island::Report(const b2ContactVelocityConstraint* constraints)
+void b2Island::Report(const b2ContactVelocityConstraint* constraints) const
 {
 	if (m_listener == nullptr)
 	{

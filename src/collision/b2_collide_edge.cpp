@@ -32,136 +32,136 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 							const b2EdgeShape* edgeA, const b2Transform& xfA,
 							const b2CircleShape* circleB, const b2Transform& xfB)
 {
-	manifold->pointCount = 0;
-	
-	// Compute circle in frame of edge
-	b2Vec2 Q = b2MulT(xfA, b2Mul(xfB, circleB->m_p));
-	
-	b2Vec2 A = edgeA->m_vertex1, B = edgeA->m_vertex2;
-	b2Vec2 e = B - A;
-	
-	// Normal points to the right for a CCW winding
-	b2Vec2 n(e.y, -e.x);
-	float offset = b2Dot(n, Q - A);
+    manifold->pointCount = 0;
 
-	bool oneSided = edgeA->m_oneSided;
-	if (oneSided && offset < 0.0f)
-	{
-		return;
-	}
+    // Compute circle in frame of edge
+    const b2Vec2 Q = b2MulT(xfA, b2Mul(xfB, circleB->m_p));
 
-	// Barycentric coordinates
-	float u = b2Dot(e, B - Q);
-	float v = b2Dot(e, Q - A);
-	
-	float radius = edgeA->m_radius + circleB->m_radius;
-	
-	b2ContactFeature cf;
-	cf.indexB = 0;
-	cf.typeB = b2ContactFeature::e_vertex;
-	
-	// Region A
-	if (v <= 0.0f)
-	{
-		b2Vec2 P = A;
-		b2Vec2 d = Q - P;
-		float dd = b2Dot(d, d);
-		if (dd > radius * radius)
-		{
-			return;
-		}
-		
-		// Is there an edge connected to A?
-		if (edgeA->m_oneSided)
-		{
-			b2Vec2 A1 = edgeA->m_vertex0;
-			b2Vec2 B1 = A;
-			b2Vec2 e1 = B1 - A1;
-			float u1 = b2Dot(e1, B1 - Q);
-			
-			// Is the circle in Region AB of the previous edge?
-			if (u1 > 0.0f)
-			{
-				return;
-			}
-		}
-		
-		cf.indexA = 0;
-		cf.typeA = b2ContactFeature::e_vertex;
-		manifold->pointCount = 1;
-		manifold->type = b2Manifold::e_circles;
-		manifold->localNormal.SetZero();
-		manifold->localPoint = P;
-		manifold->points[0].id.key = 0;
-		manifold->points[0].id.cf = cf;
-		manifold->points[0].localPoint = circleB->m_p;
-		return;
-	}
-	
-	// Region B
-	if (u <= 0.0f)
-	{
-		b2Vec2 P = B;
-		b2Vec2 d = Q - P;
-		float dd = b2Dot(d, d);
-		if (dd > radius * radius)
-		{
-			return;
-		}
-		
-		// Is there an edge connected to B?
-		if (edgeA->m_oneSided)
-		{
-			b2Vec2 B2 = edgeA->m_vertex3;
-			b2Vec2 A2 = B;
-			b2Vec2 e2 = B2 - A2;
-			float v2 = b2Dot(e2, Q - A2);
-			
-			// Is the circle in Region AB of the next edge?
-			if (v2 > 0.0f)
-			{
-				return;
-			}
-		}
-		
-		cf.indexA = 1;
-		cf.typeA = b2ContactFeature::e_vertex;
-		manifold->pointCount = 1;
-		manifold->type = b2Manifold::e_circles;
-		manifold->localNormal.SetZero();
-		manifold->localPoint = P;
-		manifold->points[0].id.key = 0;
-		manifold->points[0].id.cf = cf;
-		manifold->points[0].localPoint = circleB->m_p;
-		return;
-	}
-	
-	// Region AB
-	float den = b2Dot(e, e);
-	b2Assert(den > 0.0f);
-	b2Vec2 P = (1.0f / den) * (u * A + v * B);
-	b2Vec2 d = Q - P;
-	float dd = b2Dot(d, d);
-	if (dd > radius * radius)
-	{
-		return;
-	}
-	
-	if (offset < 0.0f)
-	{
-		n.Set(-n.x, -n.y);
-	}
-	n.Normalize();
-	
-	cf.indexA = 0;
-	cf.typeA = b2ContactFeature::e_face;
-	manifold->pointCount = 1;
-	manifold->type = b2Manifold::e_faceA;
-	manifold->localNormal = n;
-	manifold->localPoint = A;
-	manifold->points[0].id.key = 0;
-	manifold->points[0].id.cf = cf;
-	manifold->points[0].localPoint = circleB->m_p;
+    const b2Vec2       A = edgeA->m_vertex1, B = edgeA->m_vertex2;
+    const b2Vec2 e = B - A;
+
+    // Normal points to the right for a CCW winding
+    b2Vec2      n(e.y, -e.x);
+    const float offset = b2Dot(n, Q - A);
+
+    const bool oneSided = edgeA->m_oneSided;
+    if (oneSided && offset < 0.0f)
+    {
+        return;
+    }
+
+    // Barycentric coordinates
+    const float u = b2Dot(e, B - Q);
+    const float v = b2Dot(e, Q - A);
+
+    const float radius = edgeA->m_radius + circleB->m_radius;
+
+    b2ContactFeature cf;
+    cf.indexB = 0;
+    cf.typeB = b2ContactFeature::e_vertex;
+
+    // Region A
+    if (v <= 0.0f)
+    {
+	    const b2Vec2 P  = A;
+	    const b2Vec2 d  = Q - P;
+	    const float  dd = b2Dot(d, d);
+        if (dd > radius * radius)
+        {
+            return;
+        }
+
+        // Is there an edge connected to A?
+        if (edgeA->m_oneSided)
+        {
+	        const b2Vec2 A1 = edgeA->m_vertex0;
+	        const b2Vec2 B1 = A;
+	        const b2Vec2 e1 = B1 - A1;
+	        const float  u1 = b2Dot(e1, B1 - Q);
+
+            // Is the circle in Region AB of the previous edge?
+            if (u1 > 0.0f)
+            {
+                return;
+            }
+        }
+
+        cf.indexA = 0;
+        cf.typeA = b2ContactFeature::e_vertex;
+        manifold->pointCount = 1;
+        manifold->type = b2Manifold::e_circles;
+        manifold->localNormal.SetZero();
+        manifold->localPoint = P;
+        manifold->points[0].id.key = 0;
+        manifold->points[0].id.cf = cf;
+        manifold->points[0].localPoint = circleB->m_p;
+        return;
+    }
+
+    // Region B
+    if (u <= 0.0f)
+    {
+	    const b2Vec2 P  = B;
+	    const b2Vec2 d  = Q - P;
+	    const float  dd = b2Dot(d, d);
+        if (dd > radius * radius)
+        {
+            return;
+        }
+
+        // Is there an edge connected to B?
+        if (edgeA->m_oneSided)
+        {
+	        const b2Vec2 B2 = edgeA->m_vertex3;
+	        const b2Vec2 A2 = B;
+	        const b2Vec2 e2 = B2 - A2;
+	        const float  v2 = b2Dot(e2, Q - A2);
+
+            // Is the circle in Region AB of the next edge?
+            if (v2 > 0.0f)
+            {
+                return;
+            }
+        }
+
+        cf.indexA = 1;
+        cf.typeA = b2ContactFeature::e_vertex;
+        manifold->pointCount = 1;
+        manifold->type = b2Manifold::e_circles;
+        manifold->localNormal.SetZero();
+        manifold->localPoint = P;
+        manifold->points[0].id.key = 0;
+        manifold->points[0].id.cf = cf;
+        manifold->points[0].localPoint = circleB->m_p;
+        return;
+    }
+
+    // Region AB
+    const float den = b2Dot(e, e);
+    assert(den > 0.0f);
+    const b2Vec2 P  = (1.0f / den) * (u * A + v * B);
+    const b2Vec2 d  = Q - P;
+    const float  dd = b2Dot(d, d);
+    if (dd > radius * radius)
+    {
+        return;
+    }
+
+    if (offset < 0.0f)
+    {
+        n.Set(-n.x, -n.y);
+    }
+    n.Normalize();
+
+    cf.indexA = 0;
+    cf.typeA = b2ContactFeature::e_face;
+    manifold->pointCount = 1;
+    manifold->type = b2Manifold::e_faceA;
+    manifold->localNormal = n;
+    manifold->localPoint = A;
+    manifold->points[0].id.key = 0;
+    manifold->points[0].id.cf = cf;
+    manifold->points[0].localPoint = circleB->m_p;
 }
 
 // This structure is used to keep track of the best separating axis.
@@ -210,22 +210,22 @@ static b2EPAxis b2ComputeEdgeSeparation(const b2TempPolygon& polygonB, const b2V
 	axis.separation = -FLT_MAX;
 	axis.normal.SetZero();
 
-	b2Vec2 axes[2] = { normal1, -normal1 };
+    const b2Vec2 axes[2] = { normal1, -normal1 };
 
 	// Find axis with least overlap (min-max problem)
 	for (int32 j = 0; j < 2; ++j)
 	{
 		float sj = FLT_MAX;
 
-		// Find deepest polygon vertex along axis j
-		for (int32 i = 0; i < polygonB.count; ++i)
-		{
-			float si = b2Dot(axes[j], polygonB.vertices[i] - v1);
-			if (si < sj)
-			{
-				sj = si;
-			}
-		}
+        // Find deepest polygon vertex along axis j
+        for (std::int32_t i = 0; i < polygonB.count; ++i)
+        {
+	        const float si = b2Dot(axes[j], polygonB.vertices[i] - v1);
+            if (si < sj)
+            {
+                sj = si;
+            }
+        }
 
 		if (sj > axis.separation)
 		{
@@ -250,9 +250,9 @@ static b2EPAxis b2ComputePolygonSeparation(const b2TempPolygon& polygonB, const 
 	{
 		b2Vec2 n = -polygonB.normals[i];
 
-		float s1 = b2Dot(n, polygonB.vertices[i] - v1);
-		float s2 = b2Dot(n, polygonB.vertices[i] - v2);
-		float s = b2Min(s1, s2);
+        const float s1 = b2Dot(n, polygonB.vertices[i] - v1);
+        const float s2 = b2Dot(n, polygonB.vertices[i] - v2);
+        const float s  = b2Min(s1, s2);
 
 		if (s > axis.separation)
 		{

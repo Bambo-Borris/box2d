@@ -122,25 +122,25 @@ void b2PrismaticJoint::InitVelocityConstraints(const b2SolverData& data)
 	m_invIA = m_bodyA->m_invI;
 	m_invIB = m_bodyB->m_invI;
 
-	b2Vec2 cA = data.positions[m_indexA].c;
-	float aA = data.positions[m_indexA].a;
-	b2Vec2 vA = data.velocities[m_indexA].v;
-	float wA = data.velocities[m_indexA].w;
+    const b2Vec2 cA = data.positions[m_indexA].c;
+    const float  aA = data.positions[m_indexA].a;
+    b2Vec2       vA = data.velocities[m_indexA].v;
+    float        wA = data.velocities[m_indexA].w;
 
-	b2Vec2 cB = data.positions[m_indexB].c;
-	float aB = data.positions[m_indexB].a;
-	b2Vec2 vB = data.velocities[m_indexB].v;
-	float wB = data.velocities[m_indexB].w;
+    const b2Vec2 cB = data.positions[m_indexB].c;
+    const float  aB = data.positions[m_indexB].a;
+    b2Vec2       vB = data.velocities[m_indexB].v;
+    float        wB = data.velocities[m_indexB].w;
 
-	b2Rot qA(aA), qB(aB);
+    const b2Rot qA(aA), qB(aB);
 
-	// Compute the effective masses.
-	b2Vec2 rA = b2Mul(qA, m_localAnchorA - m_localCenterA);
-	b2Vec2 rB = b2Mul(qB, m_localAnchorB - m_localCenterB);
-	b2Vec2 d = (cB - cA) + rB - rA;
+    // Compute the effective masses.
+    const b2Vec2 rA = b2Mul(qA, m_localAnchorA - m_localCenterA);
+    const b2Vec2 rB = b2Mul(qB, m_localAnchorB - m_localCenterB);
+    const b2Vec2 d  = (cB - cA) + rB - rA;
 
-	float mA = m_invMassA, mB = m_invMassB;
-	float iA = m_invIA, iB = m_invIB;
+    const float mA = m_invMassA, mB = m_invMassB;
+    const float iA = m_invIA,    iB = m_invIB;
 
 	// Compute motor Jacobian and effective mass.
 	{
@@ -162,14 +162,14 @@ void b2PrismaticJoint::InitVelocityConstraints(const b2SolverData& data)
 		m_s1 = b2Cross(d + rA, m_perp);
 		m_s2 = b2Cross(rB, m_perp);
 
-		float k11 = mA + mB + iA * m_s1 * m_s1 + iB * m_s2 * m_s2;
-		float k12 = iA * m_s1 + iB * m_s2;
-		float k22 = iA + iB;
-		if (k22 == 0.0f)
-		{
-			// For bodies with fixed rotation.
-			k22 = 1.0f;
-		}
+        const float k11 = mA + mB + iA * m_s1 * m_s1 + iB * m_s2 * m_s2;
+        const float k12 = iA * m_s1 + iB * m_s2;
+        float       k22 = iA + iB;
+        if (k22 == 0.0f)
+        {
+            // For bodies with fixed rotation.
+            k22 = 1.0f;
+        }
 
 		m_K.ex.Set(k11, k12);
 		m_K.ey.Set(k12, k22);
@@ -198,10 +198,10 @@ void b2PrismaticJoint::InitVelocityConstraints(const b2SolverData& data)
 		m_lowerImpulse *= data.step.dtRatio;
 		m_upperImpulse *= data.step.dtRatio;
 
-		float axialImpulse = m_motorImpulse + m_lowerImpulse - m_upperImpulse;
-		b2Vec2 P = m_impulse.x * m_perp + axialImpulse * m_axis;
-		float LA = m_impulse.x * m_s1 + m_impulse.y + axialImpulse * m_a1;
-		float LB = m_impulse.x * m_s2 + m_impulse.y + axialImpulse * m_a2;
+        const float  axialImpulse = m_motorImpulse + m_lowerImpulse - m_upperImpulse;
+        const b2Vec2 P            = m_impulse.x * m_perp + axialImpulse * m_axis;
+        const float  LA           = m_impulse.x * m_s1 + m_impulse.y + axialImpulse * m_a1;
+        const float  LB           = m_impulse.x * m_s2 + m_impulse.y + axialImpulse * m_a2;
 
 		vA -= mA * P;
 		wA -= iA * LA;
@@ -230,22 +230,22 @@ void b2PrismaticJoint::SolveVelocityConstraints(const b2SolverData& data)
 	b2Vec2 vB = data.velocities[m_indexB].v;
 	float wB = data.velocities[m_indexB].w;
 
-	float mA = m_invMassA, mB = m_invMassB;
-	float iA = m_invIA, iB = m_invIB;
+    const float mA = m_invMassA, mB = m_invMassB;
+    const float iA = m_invIA,    iB = m_invIB;
 
-	// Solve linear motor constraint
-	if (m_enableMotor)
-	{
-		float Cdot = b2Dot(m_axis, vB - vA) + m_a2 * wB - m_a1 * wA;
-		float impulse = m_axialMass * (m_motorSpeed - Cdot);
-		float oldImpulse = m_motorImpulse;
-		float maxImpulse = data.step.dt * m_maxMotorForce;
-		m_motorImpulse = b2Clamp(m_motorImpulse + impulse, -maxImpulse, maxImpulse);
-		impulse = m_motorImpulse - oldImpulse;
+    // Solve linear motor constraint
+    if (m_enableMotor)
+    {
+	    const float Cdot       = b2Dot(m_axis, vB - vA) + m_a2 * wB - m_a1 * wA;
+        float       impulse    = m_axialMass * (m_motorSpeed - Cdot);
+	    const float oldImpulse = m_motorImpulse;
+	    const float maxImpulse = data.step.dt * m_maxMotorForce;
+        m_motorImpulse         = b2Clamp(m_motorImpulse + impulse, -maxImpulse, maxImpulse);
+        impulse                = m_motorImpulse - oldImpulse;
 
-		b2Vec2 P = impulse * m_axis;
-		float LA = impulse * m_a1;
-		float LB = impulse * m_a2;
+	    const b2Vec2 P  = impulse * m_axis;
+	    const float  LA = impulse * m_a1;
+	    const float  LB = impulse * m_a2;
 
 		vA -= mA * P;
 		wA -= iA * LA;
@@ -253,20 +253,20 @@ void b2PrismaticJoint::SolveVelocityConstraints(const b2SolverData& data)
 		wB += iB * LB;
 	}
 
-	if (m_enableLimit)
-	{
-		// Lower limit
-		{
-			float C = m_translation - m_lowerTranslation;
-			float Cdot = b2Dot(m_axis, vB - vA) + m_a2 * wB - m_a1 * wA;
-			float impulse = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
-			float oldImpulse = m_lowerImpulse;
-			m_lowerImpulse = b2Max(m_lowerImpulse + impulse, 0.0f);
-			impulse = m_lowerImpulse - oldImpulse;
+    if (m_enableLimit)
+    {
+        // Lower limit
+        {
+	        const float C          = m_translation - m_lowerTranslation;
+	        const float Cdot       = b2Dot(m_axis, vB - vA) + m_a2 * wB - m_a1 * wA;
+            float       impulse    = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
+	        const float oldImpulse = m_lowerImpulse;
+            m_lowerImpulse         = b2Max(m_lowerImpulse + impulse, 0.0f);
+            impulse                = m_lowerImpulse - oldImpulse;
 
-			b2Vec2 P = impulse * m_axis;
-			float LA = impulse * m_a1;
-			float LB = impulse * m_a2;
+	        const b2Vec2 P  = impulse * m_axis;
+	        const float  LA = impulse * m_a1;
+	        const float  LB = impulse * m_a2;
 
 			vA -= mA * P;
 			wA -= iA * LA;
@@ -274,20 +274,20 @@ void b2PrismaticJoint::SolveVelocityConstraints(const b2SolverData& data)
 			wB += iB * LB;
 		}
 
-		// Upper limit
-		// Note: signs are flipped to keep C positive when the constraint is satisfied.
-		// This also keeps the impulse positive when the limit is active.
-		{
-			float C = m_upperTranslation - m_translation;
-			float Cdot = b2Dot(m_axis, vA - vB) + m_a1 * wA - m_a2 * wB;
-			float impulse = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
-			float oldImpulse = m_upperImpulse;
-			m_upperImpulse = b2Max(m_upperImpulse + impulse, 0.0f);
-			impulse = m_upperImpulse - oldImpulse;
+        // Upper limit
+        // Note: signs are flipped to keep C positive when the constraint is satisfied.
+        // This also keeps the impulse positive when the limit is active.
+        {
+	        const float C          = m_upperTranslation - m_translation;
+	        const float Cdot       = b2Dot(m_axis, vA - vB) + m_a1 * wA - m_a2 * wB;
+            float       impulse    = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
+	        const float oldImpulse = m_upperImpulse;
+            m_upperImpulse         = b2Max(m_upperImpulse + impulse, 0.0f);
+            impulse                = m_upperImpulse - oldImpulse;
 
-			b2Vec2 P = impulse * m_axis;
-			float LA = impulse * m_a1;
-			float LB = impulse * m_a2;
+	        const b2Vec2 P  = impulse * m_axis;
+	        const float  LA = impulse * m_a1;
+	        const float  LB = impulse * m_a2;
 
 			vA += mA * P;
 			wA += iA * LA;
@@ -302,12 +302,12 @@ void b2PrismaticJoint::SolveVelocityConstraints(const b2SolverData& data)
 		Cdot.x = b2Dot(m_perp, vB - vA) + m_s2 * wB - m_s1 * wA;
 		Cdot.y = wB - wA;
 
-		b2Vec2 df = m_K.Solve(-Cdot);
-		m_impulse += df;
+        const b2Vec2 df = m_K.Solve(-Cdot);
+        m_impulse += df;
 
-		b2Vec2 P = df.x * m_perp;
-		float LA = df.x * m_s1 + df.y;
-		float LB = df.x * m_s2 + df.y;
+        const b2Vec2 P  = df.x * m_perp;
+        const float  LA = df.x * m_s1 + df.y;
+        const float  LB = df.x * m_s2 + df.y;
 
 		vA -= mA * P;
 		wA -= iA * LA;
@@ -472,34 +472,34 @@ float b2PrismaticJoint::GetReactionTorque(float inv_dt) const
 
 float b2PrismaticJoint::GetJointTranslation() const
 {
-	b2Vec2 pA = m_bodyA->GetWorldPoint(m_localAnchorA);
-	b2Vec2 pB = m_bodyB->GetWorldPoint(m_localAnchorB);
-	b2Vec2 d = pB - pA;
-	b2Vec2 axis = m_bodyA->GetWorldVector(m_localXAxisA);
+	const b2Vec2 pA   = m_bodyA->GetWorldPoint(m_localAnchorA);
+	const b2Vec2 pB   = m_bodyB->GetWorldPoint(m_localAnchorB);
+	const b2Vec2 d    = pB - pA;
+	const b2Vec2 axis = m_bodyA->GetWorldVector(m_localXAxisA);
 
-	float translation = b2Dot(d, axis);
-	return translation;
+	const float translation = b2Dot(d, axis);
+    return translation;
 }
 
 float b2PrismaticJoint::GetJointSpeed() const
 {
-	b2Body* bA = m_bodyA;
-	b2Body* bB = m_bodyB;
+	const b2Body* bA = m_bodyA;
+	const b2Body* bB = m_bodyB;
 
-	b2Vec2 rA = b2Mul(bA->m_xf.q, m_localAnchorA - bA->m_sweep.localCenter);
-	b2Vec2 rB = b2Mul(bB->m_xf.q, m_localAnchorB - bB->m_sweep.localCenter);
-	b2Vec2 p1 = bA->m_sweep.c + rA;
-	b2Vec2 p2 = bB->m_sweep.c + rB;
-	b2Vec2 d = p2 - p1;
-	b2Vec2 axis = b2Mul(bA->m_xf.q, m_localXAxisA);
+	const b2Vec2 rA   = b2Mul(bA->m_xf.q, m_localAnchorA - bA->m_sweep.localCenter);
+	const b2Vec2 rB   = b2Mul(bB->m_xf.q, m_localAnchorB - bB->m_sweep.localCenter);
+	const b2Vec2 p1   = bA->m_sweep.c + rA;
+	const b2Vec2 p2   = bB->m_sweep.c + rB;
+	const b2Vec2 d    = p2 - p1;
+	const b2Vec2 axis = b2Mul(bA->m_xf.q, m_localXAxisA);
 
-	b2Vec2 vA = bA->m_linearVelocity;
-	b2Vec2 vB = bB->m_linearVelocity;
-	float wA = bA->m_angularVelocity;
-	float wB = bB->m_angularVelocity;
+	const b2Vec2 vA = bA->m_linearVelocity;
+	const b2Vec2 vB = bB->m_linearVelocity;
+	const float  wA = bA->m_angularVelocity;
+	const float  wB = bB->m_angularVelocity;
 
-	float speed = b2Dot(d, b2Cross(wA, axis)) + b2Dot(axis, vB + b2Cross(wB, rB) - vA - b2Cross(wA, rA));
-	return speed;
+	const float speed = b2Dot(d, b2Cross(wA, axis)) + b2Dot(axis, vB + b2Cross(wB, rB) - vA - b2Cross(wA, rA));
+    return speed;
 }
 
 bool b2PrismaticJoint::IsLimitEnabled() const
@@ -587,8 +587,8 @@ void b2PrismaticJoint::Dump()
 {
 	// FLT_DECIMAL_DIG == 9
 
-	int32 indexA = m_bodyA->m_islandIndex;
-	int32 indexB = m_bodyB->m_islandIndex;
+    const std::int32_t indexA = m_bodyA->m_islandIndex;
+    const std::int32_t indexB = m_bodyB->m_islandIndex;
 
 	b2Dump("  b2PrismaticJointDef jd;\n");
 	b2Dump("  jd.bodyA = bodies[%d];\n", indexA);
@@ -609,34 +609,34 @@ void b2PrismaticJoint::Dump()
 
 void b2PrismaticJoint::Draw(b2Draw* draw) const
 {
-	const b2Transform& xfA = m_bodyA->GetTransform();
-	const b2Transform& xfB = m_bodyB->GetTransform();
-	b2Vec2 pA = b2Mul(xfA, m_localAnchorA);
-	b2Vec2 pB = b2Mul(xfB, m_localAnchorB);
+    const b2Transform& xfA = m_bodyA->GetTransform();
+    const b2Transform& xfB = m_bodyB->GetTransform();
+    const b2Vec2       pA  = b2Mul(xfA, m_localAnchorA);
+    const b2Vec2       pB  = b2Mul(xfB, m_localAnchorB);
 
-	b2Vec2 axis = b2Mul(xfA.q, m_localXAxisA);
+    const b2Vec2 axis = b2Mul(xfA.q, m_localXAxisA);
 
-	b2Color c1(0.7f, 0.7f, 0.7f);
-	b2Color c2(0.3f, 0.9f, 0.3f);
-	b2Color c3(0.9f, 0.3f, 0.3f);
-	b2Color c4(0.3f, 0.3f, 0.9f);
-	b2Color c5(0.4f, 0.4f, 0.4f);
+    const b2Color c1(0.7f, 0.7f, 0.7f);
+    const b2Color c2(0.3f, 0.9f, 0.3f);
+    const b2Color c3(0.9f, 0.3f, 0.3f);
+    const b2Color c4(0.3f, 0.3f, 0.9f);
+    const b2Color c5(0.4f, 0.4f, 0.4f);
 
 	draw->DrawSegment(pA, pB, c5);
 
-	if (m_enableLimit)
-	{
-		b2Vec2 lower = pA + m_lowerTranslation * axis;
-		b2Vec2 upper = pA + m_upperTranslation * axis;
-		b2Vec2 perp = b2Mul(xfA.q, m_localYAxisA);
-		draw->DrawSegment(lower, upper, c1);
-		draw->DrawSegment(lower - 0.5f * perp, lower + 0.5f * perp, c2);
-		draw->DrawSegment(upper - 0.5f * perp, upper + 0.5f * perp, c3);
-	}
-	else
-	{
-		draw->DrawSegment(pA - 1.0f * axis, pA + 1.0f * axis, c1);
-	}
+    if (m_enableLimit)
+    {
+	    const b2Vec2 lower = pA + m_lowerTranslation * axis;
+	    const b2Vec2 upper = pA + m_upperTranslation * axis;
+	    const b2Vec2 perp  = b2Mul(xfA.q, m_localYAxisA);
+        draw->DrawSegment(lower, upper, c1);
+        draw->DrawSegment(lower - 0.5f * perp, lower + 0.5f * perp, c2);
+        draw->DrawSegment(upper - 0.5f * perp, upper + 0.5f * perp, c3);
+    }
+    else
+    {
+        draw->DrawSegment(pA - 1.0f * axis, pA + 1.0f * axis, c1);
+    }
 
 	draw->DrawPoint(pA, 5.0f, c1);
 	draw->DrawPoint(pB, 5.0f, c4);

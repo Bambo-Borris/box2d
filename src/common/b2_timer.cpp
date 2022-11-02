@@ -59,11 +59,11 @@ void b2Timer::Reset()
 
 float b2Timer::GetMilliseconds() const
 {
-	LARGE_INTEGER largeInteger;
-	QueryPerformanceCounter(&largeInteger);
-	double count = double(largeInteger.QuadPart);
-	float ms = float(s_invFrequency * (count - m_start));
-	return ms;
+    LARGE_INTEGER largeInteger;
+    QueryPerformanceCounter(&largeInteger);
+    const double count = double(largeInteger.QuadPart);
+    const float  ms    = float(s_invFrequency * (count - m_start));
+    return ms;
 }
 
 #elif defined(__linux__) || defined (__APPLE__)
