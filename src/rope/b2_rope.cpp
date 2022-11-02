@@ -351,7 +351,7 @@ void b2Rope::Reset(const b2Vec2& position)
 	}
 }
 
-void b2Rope::SolveStretch_PBD()
+void b2Rope::SolveStretch_PBD() const
 {
 	const float stiffness = m_tuning.stretchStiffness;
 
@@ -382,7 +382,7 @@ void b2Rope::SolveStretch_PBD()
 	}
 }
 
-void b2Rope::SolveStretch_XPBD(float dt)
+void b2Rope::SolveStretch_XPBD(float dt) const
 {
 	b2Assert(dt > 0.0f);
 
@@ -430,7 +430,7 @@ void b2Rope::SolveStretch_XPBD(float dt)
 	}
 }
 
-void b2Rope::SolveBend_PBD_Angle()
+void b2Rope::SolveBend_PBD_Angle() const
 {
 	const float stiffness = m_tuning.bendStiffness;
 
@@ -501,7 +501,7 @@ void b2Rope::SolveBend_PBD_Angle()
 	}
 }
 
-void b2Rope::SolveBend_XPBD_Angle(float dt)
+void b2Rope::SolveBend_XPBD_Angle(float dt) const
 {
 	b2Assert(dt > 0.0f);
 
@@ -589,7 +589,7 @@ void b2Rope::SolveBend_XPBD_Angle(float dt)
 	}
 }
 
-void b2Rope::ApplyBendForces(float dt)
+void b2Rope::ApplyBendForces(float dt) const
 {
 	// omega = 2 * pi * hz
 	const float omega = 2.0f * b2_pi * m_tuning.bendHertz;
@@ -670,7 +670,7 @@ void b2Rope::ApplyBendForces(float dt)
 	}
 }
 
-void b2Rope::SolveBend_PBD_Distance()
+void b2Rope::SolveBend_PBD_Distance() const
 {
 	const float stiffness = m_tuning.bendStiffness;
 
@@ -706,7 +706,7 @@ void b2Rope::SolveBend_PBD_Distance()
 
 // Constraint based implementation of:
 // P. Volino: Simple Linear Bending Stiffness in Particle Systems
-void b2Rope::SolveBend_PBD_Height()
+void b2Rope::SolveBend_PBD_Height() const
 {
 	const float stiffness = m_tuning.bendStiffness;
 
@@ -755,7 +755,7 @@ void b2Rope::SolveBend_PBD_Height()
 }
 
 // M. Kelager: A Triangle Bending Constraint Model for PBD
-void b2Rope::SolveBend_PBD_Triangle()
+void b2Rope::SolveBend_PBD_Triangle() const
 {
 	const float stiffness = m_tuning.bendStiffness;
 

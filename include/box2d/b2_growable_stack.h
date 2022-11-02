@@ -75,7 +75,7 @@ public:
 		return m_stack[m_count];
 	}
 
-	int32 GetCount()
+	int32 GetCount() const
 	{
 		return m_count;
 	}

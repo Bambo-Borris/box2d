@@ -142,7 +142,7 @@ public:
 	const b2Filter& GetFilterData() const;
 
 	/// Call this if you want to establish collision that was previously disabled by b2ContactFilter::ShouldCollide.
-	void Refilter();
+	void Refilter() const;
 
 	/// Get the parent body of this fixture. This is nullptr if the fixture is not attached.
 	/// @return the parent body.
@@ -208,7 +208,7 @@ public:
 	const b2AABB& GetAABB(int32 childIndex) const;
 
 	/// Dump this fixture to the log file.
-	void Dump(int32 bodyIndex);
+	void Dump(int32 bodyIndex) const;
 
 protected:
 
@@ -228,7 +228,7 @@ protected:
 	void CreateProxies(b2BroadPhase* broadPhase, const b2Transform& xf);
 	void DestroyProxies(b2BroadPhase* broadPhase);
 
-	void Synchronize(b2BroadPhase* broadPhase, const b2Transform& xf1, const b2Transform& xf2);
+	void Synchronize(b2BroadPhase* broadPhase, const b2Transform& xf1, const b2Transform& xf2) const;
 
 	float m_density;
 

@@ -86,7 +86,7 @@ void b2BroadPhase::BufferMove(int32 proxyId)
 	++m_moveCount;
 }
 
-void b2BroadPhase::UnBufferMove(int32 proxyId)
+void b2BroadPhase::UnBufferMove(int32 proxyId) const
 {
 	for (int32 i = 0; i < m_moveCount; ++i)
 	{

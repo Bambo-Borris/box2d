@@ -106,14 +106,14 @@ public:
 	/// Shift the world origin. Useful for large worlds.
 	/// The shift formula is: position -= newOrigin
 	/// @param newOrigin the new origin with respect to the old origin
-	void ShiftOrigin(const b2Vec2& newOrigin);
+	void ShiftOrigin(const b2Vec2& newOrigin) const;
 
 private:
 
 	friend class b2DynamicTree;
 
 	void BufferMove(int32 proxyId);
-	void UnBufferMove(int32 proxyId);
+	void UnBufferMove(int32 proxyId) const;
 
 	bool QueryCallback(int32 proxyId);
 
@@ -230,7 +230,7 @@ inline void b2BroadPhase::RayCast(T* callback, const b2RayCastInput& input) cons
 	m_tree.RayCast(callback, input);
 }
 
-inline void b2BroadPhase::ShiftOrigin(const b2Vec2& newOrigin)
+inline void b2BroadPhase::ShiftOrigin(const b2Vec2& newOrigin) const
 {
 	m_tree.ShiftOrigin(newOrigin);
 }

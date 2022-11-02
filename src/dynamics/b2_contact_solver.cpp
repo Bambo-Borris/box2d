@@ -143,7 +143,7 @@ b2ContactSolver::~b2ContactSolver()
 }
 
 // Initialize position dependent portions of the velocity constraints.
-void b2ContactSolver::InitializeVelocityConstraints()
+void b2ContactSolver::InitializeVelocityConstraints() const
 {
 	for (int32 i = 0; i < m_count; ++i)
 	{
@@ -254,7 +254,7 @@ void b2ContactSolver::InitializeVelocityConstraints()
 	}
 }
 
-void b2ContactSolver::WarmStart()
+void b2ContactSolver::WarmStart() const
 {
 	// Warm start.
 	for (int32 i = 0; i < m_count; ++i)
@@ -294,7 +294,7 @@ void b2ContactSolver::WarmStart()
 	}
 }
 
-void b2ContactSolver::SolveVelocityConstraints()
+void b2ContactSolver::SolveVelocityConstraints() const
 {
 	for (int32 i = 0; i < m_count; ++i)
 	{
@@ -606,7 +606,7 @@ void b2ContactSolver::SolveVelocityConstraints()
 	}
 }
 
-void b2ContactSolver::StoreImpulses()
+void b2ContactSolver::StoreImpulses() const
 {
 	for (int32 i = 0; i < m_count; ++i)
 	{
@@ -673,7 +673,7 @@ struct b2PositionSolverManifold
 };
 
 // Sequential solver.
-bool b2ContactSolver::SolvePositionConstraints()
+bool b2ContactSolver::SolvePositionConstraints() const
 {
 	float minSeparation = 0.0f;
 
@@ -752,7 +752,7 @@ bool b2ContactSolver::SolvePositionConstraints()
 }
 
 // Sequential position solver for position constraints.
-bool b2ContactSolver::SolveTOIPositionConstraints(int32 toiIndexA, int32 toiIndexB)
+bool b2ContactSolver::SolveTOIPositionConstraints(int32 toiIndexA, int32 toiIndexB) const
 {
 	float minSeparation = 0.0f;
 

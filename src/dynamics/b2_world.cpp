@@ -970,7 +970,7 @@ void b2World::Step(float dt, int32 velocityIterations, int32 positionIterations)
 	m_profile.step = stepTimer.GetMilliseconds();
 }
 
-void b2World::ClearForces()
+void b2World::ClearForces() const
 {
 	for (b2Body* body = m_bodyList; body; body = body->GetNext())
 	{
@@ -981,7 +981,7 @@ void b2World::ClearForces()
 
 struct b2WorldQueryWrapper
 {
-	bool QueryCallback(int32 proxyId)
+	bool QueryCallback(int32 proxyId) const
 	{
 		const b2FixtureProxy* proxy = (b2FixtureProxy*)broadPhase->GetUserData(proxyId);
 		return callback->ReportFixture(proxy->fixture);
@@ -1001,7 +1001,7 @@ void b2World::QueryAABB(b2QueryCallback* callback, const b2AABB& aabb) const
 
 struct b2WorldRayCastWrapper
 {
-	float RayCastCallback(const b2RayCastInput& input, int32 proxyId)
+	float RayCastCallback(const b2RayCastInput& input, int32 proxyId) const
 	{
 		void*                 userData = broadPhase->GetUserData(proxyId);
 		const b2FixtureProxy* proxy    = (b2FixtureProxy*)userData;
@@ -1036,7 +1036,7 @@ void b2World::RayCast(b2RayCastCallback* callback, const b2Vec2& point1, const b
 	m_contactManager.m_broadPhase.RayCast(&wrapper, input);
 }
 
-void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color& color)
+void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color& color) const
 {
 	switch (fixture->GetType())
 	{
@@ -1104,7 +1104,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 	}
 }
 
-void b2World::DebugDraw()
+void b2World::DebugDraw() const
 {
 	if (m_debugDraw == nullptr)
 	{
@@ -1257,7 +1257,7 @@ void b2World::ShiftOrigin(const b2Vec2& newOrigin)
 	m_contactManager.m_broadPhase.ShiftOrigin(newOrigin);
 }
 
-void b2World::Dump()
+void b2World::Dump() const
 {
 	if (m_locked)
 	{

@@ -107,10 +107,10 @@ public:
 	/// When you perform sub-stepping you will disable auto clearing of forces and instead call
 	/// ClearForces after all sub-steps are complete in one pass of your game loop.
 	/// @see SetAutoClearForces
-	void ClearForces();
+	void ClearForces() const;
 
 	/// Call this to draw shapes and other debug draw data. This is intentionally non-const.
-	void DebugDraw();
+	void DebugDraw() const;
 
 	/// Query the world for all fixtures that potentially overlap the
 	/// provided AABB.
@@ -212,7 +212,7 @@ public:
 
 	/// Dump the world into the log file.
 	/// @warning this should be called outside of a time step.
-	void Dump();
+	void Dump() const;
 
 private:
 
@@ -224,7 +224,7 @@ private:
 	void Solve(const b2TimeStep& step);
 	void SolveTOI(const b2TimeStep& step);
 
-	void DrawShape(b2Fixture* shape, const b2Transform& xf, const b2Color& color);
+	void DrawShape(b2Fixture* shape, const b2Transform& xf, const b2Color& color) const;
 
 	b2BlockAllocator m_blockAllocator;
 	b2StackAllocator m_stackAllocator;

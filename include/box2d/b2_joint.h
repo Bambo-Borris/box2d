@@ -114,10 +114,10 @@ public:
 	b2JointType GetType() const;
 
 	/// Get the first body attached to this joint.
-	b2Body* GetBodyA();
+	b2Body* GetBodyA() const;
 
 	/// Get the second body attached to this joint.
-	b2Body* GetBodyB();
+	b2Body* GetBodyB() const;
 
 	/// Get the anchor point on bodyA in world coordinates.
 	virtual b2Vec2 GetAnchorA() const = 0;
@@ -195,12 +195,12 @@ inline b2JointType b2Joint::GetType() const
 	return m_type;
 }
 
-inline b2Body* b2Joint::GetBodyA()
+inline b2Body* b2Joint::GetBodyA() const
 {
 	return m_bodyA;
 }
 
-inline b2Body* b2Joint::GetBodyB()
+inline b2Body* b2Joint::GetBodyB() const
 {
 	return m_bodyB;
 }

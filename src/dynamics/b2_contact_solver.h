@@ -77,14 +77,14 @@ public:
 	b2ContactSolver(b2ContactSolverDef* def);
 	~b2ContactSolver();
 
-	void InitializeVelocityConstraints();
+	void InitializeVelocityConstraints() const;
 
-	void WarmStart();
-	void SolveVelocityConstraints();
-	void StoreImpulses();
+	void WarmStart() const;
+	void SolveVelocityConstraints() const;
+	void StoreImpulses() const;
 
-	bool SolvePositionConstraints();
-	bool SolveTOIPositionConstraints(int32 toiIndexA, int32 toiIndexB);
+	bool SolvePositionConstraints() const;
+	bool SolveTOIPositionConstraints(int32 toiIndexA, int32 toiIndexB) const;
 
 	b2TimeStep m_step;
 	b2Position* m_positions;

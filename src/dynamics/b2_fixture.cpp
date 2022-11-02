@@ -153,7 +153,7 @@ void b2Fixture::DestroyProxies(b2BroadPhase* broadPhase)
 	m_proxyCount = 0;
 }
 
-void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transform1, const b2Transform& transform2)
+void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transform1, const b2Transform& transform2) const
 {
 	if (m_proxyCount == 0)
 	{	
@@ -184,7 +184,7 @@ void b2Fixture::SetFilterData(const b2Filter& filter)
 	Refilter();
 }
 
-void b2Fixture::Refilter()
+void b2Fixture::Refilter() const
 {
 	if (m_body == nullptr)
 	{
@@ -230,7 +230,7 @@ void b2Fixture::SetSensor(bool sensor)
 	}
 }
 
-void b2Fixture::Dump(int32 bodyIndex)
+void b2Fixture::Dump(int32 bodyIndex) const
 {
 	b2Dump("    b2FixtureDef fd;\n");
 	b2Dump("    fd.friction = %.9g;\n", m_friction);

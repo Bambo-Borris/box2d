@@ -384,7 +384,7 @@ public:
 	const b2World* GetWorld() const;
 
 	/// Dump this body to a file
-	void Dump();
+	void Dump() const;
 
 private:
 
@@ -420,7 +420,7 @@ private:
 	b2Body(const b2BodyDef* bd, b2World* world);
 	~b2Body();
 
-	void SynchronizeFixtures();
+	void SynchronizeFixtures() const;
 	void SynchronizeTransform();
 
 	// This is used to prevent connected bodies from colliding.

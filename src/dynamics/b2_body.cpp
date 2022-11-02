@@ -444,7 +444,7 @@ void b2Body::SetTransform(const b2Vec2& position, float angle)
 	m_world->m_newContacts = true;
 }
 
-void b2Body::SynchronizeFixtures()
+void b2Body::SynchronizeFixtures() const
 {
 	b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
 
@@ -536,7 +536,7 @@ void b2Body::SetFixedRotation(bool flag)
 	ResetMassData();
 }
 
-void b2Body::Dump()
+void b2Body::Dump() const
 {
 	const int32 bodyIndex = m_islandIndex;
 

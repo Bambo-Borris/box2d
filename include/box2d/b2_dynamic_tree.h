@@ -91,7 +91,7 @@ public:
 	void* GetUserData(int32 proxyId) const;
 
 	bool WasMoved(int32 proxyId) const;
-	void ClearMoved(int32 proxyId);
+	void ClearMoved(int32 proxyId) const;
 
 	/// Get the fat AABB for a proxy.
 	const b2AABB& GetFatAABB(int32 proxyId) const;
@@ -131,7 +131,7 @@ public:
 	/// Shift the world origin. Useful for large worlds.
 	/// The shift formula is: position -= newOrigin
 	/// @param newOrigin the new origin with respect to the old origin
-	void ShiftOrigin(const b2Vec2& newOrigin);
+	void ShiftOrigin(const b2Vec2& newOrigin) const;
 
 private:
 
@@ -172,7 +172,7 @@ inline bool b2DynamicTree::WasMoved(int32 proxyId) const
 	return m_nodes[proxyId].moved;
 }
 
-inline void b2DynamicTree::ClearMoved(int32 proxyId)
+inline void b2DynamicTree::ClearMoved(int32 proxyId) const
 {
 	b2Assert(0 <= proxyId && proxyId < m_nodeCapacity);
 	m_nodes[proxyId].moved = false;
