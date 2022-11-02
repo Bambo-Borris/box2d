@@ -70,13 +70,13 @@ bool b2EdgeShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 	B2_NOT_USED(childIndex);
 
 	// Put the ray into the edge's frame of reference.
-	b2Vec2 p1 = b2MulT(xf.q, input.p1 - xf.p);
-	b2Vec2 p2 = b2MulT(xf.q, input.p2 - xf.p);
-	b2Vec2 d = p2 - p1;
+	const b2Vec2 p1 = b2MulT(xf.q, input.p1 - xf.p);
+	const b2Vec2 p2 = b2MulT(xf.q, input.p2 - xf.p);
+	const b2Vec2 d  = p2 - p1;
 
-	b2Vec2 v1 = m_vertex1;
-	b2Vec2 v2 = m_vertex2;
-	b2Vec2 e = v2 - v1;
+	const b2Vec2 v1 = m_vertex1;
+	const b2Vec2 v2 = m_vertex2;
+	const b2Vec2 e  = v2 - v1;
 
 	// Normal points to the right, looking from v1 at v2
 	b2Vec2 normal(e.y, -e.x);
@@ -85,37 +85,37 @@ bool b2EdgeShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 	// q = p1 + t * d
 	// dot(normal, q - v1) = 0
 	// dot(normal, p1 - v1) + t * dot(normal, d) = 0
-	float numerator = b2Dot(normal, v1 - p1);
+	const float numerator = b2Dot(normal, v1 - p1);
 	if (m_oneSided && numerator > 0.0f)
 	{
 		return false;
 	}
 
-	float denominator = b2Dot(normal, d);
+	const float denominator = b2Dot(normal, d);
 
 	if (denominator == 0.0f)
 	{
 		return false;
 	}
 
-	float t = numerator / denominator;
+	const float t = numerator / denominator;
 	if (t < 0.0f || input.maxFraction < t)
 	{
 		return false;
 	}
 
-	b2Vec2 q = p1 + t * d;
+	const b2Vec2 q = p1 + t * d;
 
 	// q = v1 + s * r
 	// s = dot(q - v1, r) / dot(r, r)
-	b2Vec2 r = v2 - v1;
-	float rr = b2Dot(r, r);
+	const b2Vec2 r  = v2 - v1;
+	const float  rr = b2Dot(r, r);
 	if (rr == 0.0f)
 	{
 		return false;
 	}
 
-	float s = b2Dot(q - v1, r) / rr;
+	const float s = b2Dot(q - v1, r) / rr;
 	if (s < 0.0f || 1.0f < s)
 	{
 		return false;
@@ -137,13 +137,13 @@ void b2EdgeShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, int32 childIn
 {
 	B2_NOT_USED(childIndex);
 
-	b2Vec2 v1 = b2Mul(xf, m_vertex1);
-	b2Vec2 v2 = b2Mul(xf, m_vertex2);
+	const b2Vec2 v1 = b2Mul(xf, m_vertex1);
+	const b2Vec2 v2 = b2Mul(xf, m_vertex2);
 
-	b2Vec2 lower = b2Min(v1, v2);
-	b2Vec2 upper = b2Max(v1, v2);
+	const b2Vec2 lower = b2Min(v1, v2);
+	const b2Vec2 upper = b2Max(v1, v2);
 
-	b2Vec2 r(m_radius, m_radius);
+	const b2Vec2 r(m_radius, m_radius);
 	aabb->lowerBound = lower - r;
 	aabb->upperBound = upper + r;
 }

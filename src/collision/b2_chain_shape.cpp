@@ -140,7 +140,7 @@ bool b2ChainShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 
 	b2EdgeShape edgeShape;
 
-	int32 i1 = childIndex;
+	const int32 i1 = childIndex;
 	int32 i2 = childIndex + 1;
 	if (i2 == m_count)
 	{
@@ -157,20 +157,20 @@ void b2ChainShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, int32 childI
 {
 	b2Assert(childIndex < m_count);
 
-	int32 i1 = childIndex;
+	const int32 i1 = childIndex;
 	int32 i2 = childIndex + 1;
 	if (i2 == m_count)
 	{
 		i2 = 0;
 	}
 
-	b2Vec2 v1 = b2Mul(xf, m_vertices[i1]);
-	b2Vec2 v2 = b2Mul(xf, m_vertices[i2]);
+	const b2Vec2 v1 = b2Mul(xf, m_vertices[i1]);
+	const b2Vec2 v2 = b2Mul(xf, m_vertices[i2]);
 
-	b2Vec2 lower = b2Min(v1, v2);
-	b2Vec2 upper = b2Max(v1, v2);
+	const b2Vec2 lower = b2Min(v1, v2);
+	const b2Vec2 upper = b2Max(v1, v2);
 
-	b2Vec2 r(m_radius, m_radius);
+	const b2Vec2 r(m_radius, m_radius);
 	aabb->lowerBound = lower - r;
 	aabb->upperBound = upper + r;
 }

@@ -65,7 +65,7 @@ void* b2StackAllocator::Allocate(int32 size)
 void b2StackAllocator::Free(void* p)
 {
 	b2Assert(m_entryCount > 0);
-	b2StackEntry* entry = m_entries + m_entryCount - 1;
+	const b2StackEntry* entry = m_entries + m_entryCount - 1;
 	b2Assert(p == entry->data);
 	if (entry->usedMalloc)
 	{

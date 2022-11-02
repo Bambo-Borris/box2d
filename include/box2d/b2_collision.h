@@ -185,8 +185,8 @@ struct B2_API b2AABB
 	/// Get the perimeter length
 	float GetPerimeter() const
 	{
-		float wx = upperBound.x - lowerBound.x;
-		float wy = upperBound.y - lowerBound.y;
+		const float wx = upperBound.x - lowerBound.x;
+		const float wy = upperBound.y - lowerBound.y;
 		return 2.0f * (wx + wy);
 	}
 
@@ -259,7 +259,7 @@ B2_API bool b2TestOverlap(	const b2Shape* shapeA, int32 indexA,
 
 inline bool b2AABB::IsValid() const
 {
-	b2Vec2 d = upperBound - lowerBound;
+	const b2Vec2 d = upperBound - lowerBound;
 	bool valid = d.x >= 0.0f && d.y >= 0.0f;
 	valid = valid && lowerBound.IsValid() && upperBound.IsValid();
 	return valid;

@@ -61,8 +61,8 @@ float b2Timer::GetMilliseconds() const
 {
 	LARGE_INTEGER largeInteger;
 	QueryPerformanceCounter(&largeInteger);
-	double count = double(largeInteger.QuadPart);
-	float ms = float(s_invFrequency * (count - m_start));
+	const double count = double(largeInteger.QuadPart);
+	const float  ms    = float(s_invFrequency * (count - m_start));
 	return ms;
 }
 
