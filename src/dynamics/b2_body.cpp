@@ -140,26 +140,26 @@ void b2Body::SetType(b2BodyType type)
 	m_force.SetZero();
 	m_torque = 0.0f;
 
-    // Delete the attached contacts.
-    const b2ContactEdge* ce = m_contactList;
-    while (ce)
-    {
-	    const b2ContactEdge* ce0 = ce;
-        ce = ce->next;
-        m_world->m_contactManager.Destroy(ce0->contact);
-    }
-    m_contactList = nullptr;
+	// Delete the attached contacts.
+	b2ContactEdge* ce = m_contactList;
+	while (ce)
+	{
+		b2ContactEdge* ce0 = ce;
+		ce = ce->next;
+		m_world->m_contactManager.Destroy(ce0->contact);
+	}
+	m_contactList = nullptr;
 
-    // Touch the proxies so that new contacts will be created (when appropriate)
-    b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
-    for ( const b2Fixture* f = m_fixtureList; f; f = f->m_next)
-    {
-	    const std::int32_t proxyCount = f->m_proxyCount;
-        for (std::int32_t i = 0; i < proxyCount; ++i)
-        {
-            broadPhase->TouchProxy(f->m_proxies[i].proxyId);
-        }
-    }
+	// Touch the proxies so that new contacts will be created (when appropriate)
+	b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
+	for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
+	{
+		int32 proxyCount = f->m_proxyCount;
+		for (int32 i = 0; i < proxyCount; ++i)
+		{
+			broadPhase->TouchProxy(f->m_proxies[i].proxyId);
+		}
+	}
 }
 
 b2Fixture* b2Body::CreateFixture(const b2FixtureDef* def)
@@ -246,15 +246,15 @@ void b2Body::DestroyFixture(b2Fixture* fixture)
 
 	const float density = fixture->m_density;
 
-    // Destroy any contacts associated with the fixture.
-    const b2ContactEdge* edge = m_contactList;
-    while (edge)
-    {
-        b2Contact* c = edge->contact;
-        edge = edge->next;
+	// Destroy any contacts associated with the fixture.
+	b2ContactEdge* edge = m_contactList;
+	while (edge)
+	{
+		b2Contact* c = edge->contact;
+		edge = edge->next;
 
-        const b2Fixture* fixtureA = c->GetFixtureA();
-        const b2Fixture* fixtureB = c->GetFixtureB();
+		b2Fixture* fixtureA = c->GetFixtureA();
+		b2Fixture* fixtureB = c->GetFixtureB();
 
 		if (fixture == fixtureA || fixture == fixtureB)
 		{
@@ -307,14 +307,14 @@ void b2Body::ResetMassData()
 
 	b2Assert(m_type == b2_dynamicBody);
 
-    // Accumulate mass over all fixtures.
-    b2Vec2 localCenter = b2Vec2_zero;
-    for ( const b2Fixture* f = m_fixtureList; f; f = f->m_next)
-    {
-        if (f->m_density == 0.0f)
-        {
-            continue;
-        }
+	// Accumulate mass over all fixtures.
+	b2Vec2 localCenter = b2Vec2_zero;
+	for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
+	{
+		if (f->m_density == 0.0f)
+		{
+			continue;
+		}
 
 		b2MassData massData;
 		f->GetMassData(&massData);
@@ -344,10 +344,10 @@ void b2Body::ResetMassData()
 		m_invI = 0.0f;
 	}
 
-    // Move center of mass.
-    const b2Vec2 oldCenter = m_sweep.c;
-    m_sweep.localCenter = localCenter;
-    m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
+	// Move center of mass.
+	b2Vec2 oldCenter = m_sweep.c;
+	m_sweep.localCenter = localCenter;
+	m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
 
 	// Update center of mass velocity.
 	m_linearVelocity += b2Cross(m_angularVelocity, m_sweep.c - oldCenter);
@@ -385,10 +385,10 @@ void b2Body::SetMassData(const b2MassData* massData)
 		m_invI = 1.0f / m_I;
 	}
 
-    // Move center of mass.
-    const b2Vec2 oldCenter = m_sweep.c;
-    m_sweep.localCenter =  massData->center;
-    m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
+	// Move center of mass.
+	b2Vec2 oldCenter = m_sweep.c;
+	m_sweep.localCenter =  massData->center;
+	m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
 
 	// Update center of mass velocity.
 	m_linearVelocity += b2Cross(m_angularVelocity, m_sweep.c - oldCenter);
@@ -402,17 +402,17 @@ bool b2Body::ShouldCollide(const b2Body* other) const
 		return false;
 	}
 
-    // Does a joint prevent collision?
-    for ( const b2JointEdge* jn = m_jointList; jn; jn = jn->next)
-    {
-        if (jn->other == other)
-        {
-            if (jn->joint->m_collideConnected == false)
-            {
-                return false;
-            }
-        }
-    }
+	// Does a joint prevent collision?
+	for (b2JointEdge* jn = m_jointList; jn; jn = jn->next)
+	{
+		if (jn->other == other)
+		{
+			if (jn->joint->m_collideConnected == false)
+			{
+				return false;
+			}
+		}
+	}
 
 	return true;
 }
@@ -502,25 +502,25 @@ void b2Body::SetEnabled(bool flag)
 			f->DestroyProxies(broadPhase);
 		}
 
-        // Destroy the attached contacts.
-        const b2ContactEdge* ce = m_contactList;
-        while (ce)
-        {
-	        const b2ContactEdge* ce0 = ce;
-            ce = ce->next;
-            m_world->m_contactManager.Destroy(ce0->contact);
-        }
-        m_contactList = nullptr;
-    }
+		// Destroy the attached contacts.
+		b2ContactEdge* ce = m_contactList;
+		while (ce)
+		{
+			b2ContactEdge* ce0 = ce;
+			ce = ce->next;
+			m_world->m_contactManager.Destroy(ce0->contact);
+		}
+		m_contactList = nullptr;
+	}
 }
 
 void b2Body::SetFixedRotation(bool flag)
 {
-	const bool status = (m_flags & e_fixedRotationFlag) == e_fixedRotationFlag;
-    if (status == flag)
-    {
-        return;
-    }
+	bool status = (m_flags & e_fixedRotationFlag) == e_fixedRotationFlag;
+	if (status == flag)
+	{
+		return;
+	}
 
 	if (flag)
 	{
@@ -538,7 +538,7 @@ void b2Body::SetFixedRotation(bool flag)
 
 void b2Body::Dump()
 {
-	const std::int32_t bodyIndex = m_islandIndex;
+	int32 bodyIndex = m_islandIndex;
 
 	// %.9g is sufficient to save and load the same value using text
 	// FLT_DECIMAL_DIG == 9

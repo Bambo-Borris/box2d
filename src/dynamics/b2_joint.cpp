@@ -41,50 +41,50 @@ void b2LinearStiffness(float& stiffness, float& damping,
 	float frequencyHertz, float dampingRatio,
 	const b2Body* bodyA, const b2Body* bodyB)
 {
-	const float massA = bodyA->GetMass();
-	const float massB = bodyB->GetMass();
-    float       mass;
-    if (massA > 0.0f && massB > 0.0f)
-    {
-        mass = massA * massB / (massA + massB);
-    }
-    else if (massA > 0.0f)
-    {
-        mass = massA;
-    }
-    else
-    {
-        mass = massB;
-    }
+	float massA = bodyA->GetMass();
+	float massB = bodyB->GetMass();
+	float mass;
+	if (massA > 0.0f && massB > 0.0f)
+	{
+		mass = massA * massB / (massA + massB);
+	}
+	else if (massA > 0.0f)
+	{
+		mass = massA;
+	}
+	else
+	{
+		mass = massB;
+	}
 
-	const float omega = 2.0f * b2_pi * frequencyHertz;
-    stiffness = mass * omega * omega;
-    damping = 2.0f * mass * dampingRatio * omega;
+	float omega = 2.0f * b2_pi * frequencyHertz;
+	stiffness = mass * omega * omega;
+	damping = 2.0f * mass * dampingRatio * omega;
 }
 
 void b2AngularStiffness(float& stiffness, float& damping,
 	float frequencyHertz, float dampingRatio,
 	const b2Body* bodyA, const b2Body* bodyB)
 {
-	const float IA = bodyA->GetInertia();
-	const float IB = bodyB->GetInertia();
-    float       I;
-    if (IA > 0.0f && IB > 0.0f)
-    {
-        I = IA * IB / (IA + IB);
-    }
-    else if (IA > 0.0f)
-    {
-        I = IA;
-    }
-    else
-    {
-        I = IB;
-    }
+	float IA = bodyA->GetInertia();
+	float IB = bodyB->GetInertia();
+	float I;
+	if (IA > 0.0f && IB > 0.0f)
+	{
+		I = IA * IB / (IA + IB);
+	}
+	else if (IA > 0.0f)
+	{
+		I = IA;
+	}
+	else
+	{
+		I = IB;
+	}
 
-	const float omega = 2.0f * b2_pi * frequencyHertz;
-    stiffness = I * omega * omega;
-    damping = 2.0f * I * dampingRatio * omega;
+	float omega = 2.0f * b2_pi * frequencyHertz;
+	stiffness = I * omega * omega;
+	damping = 2.0f * I * dampingRatio * omega;
 }
 
 b2Joint* b2Joint::Create(const b2JointDef* def, b2BlockAllocator* allocator)
@@ -254,14 +254,14 @@ bool b2Joint::IsEnabled() const
 
 void b2Joint::Draw(b2Draw* draw) const
 {
-    const b2Transform& xf1 = m_bodyA->GetTransform();
-    const b2Transform& xf2 = m_bodyB->GetTransform();
-    const b2Vec2       x1  = xf1.p;
-    const b2Vec2       x2  = xf2.p;
-    const b2Vec2       p1  = GetAnchorA();
-    const b2Vec2       p2  = GetAnchorB();
+	const b2Transform& xf1 = m_bodyA->GetTransform();
+	const b2Transform& xf2 = m_bodyB->GetTransform();
+	b2Vec2 x1 = xf1.p;
+	b2Vec2 x2 = xf2.p;
+	b2Vec2 p1 = GetAnchorA();
+	b2Vec2 p2 = GetAnchorB();
 
-    const b2Color color(0.5f, 0.8f, 0.8f);
+	b2Color color(0.5f, 0.8f, 0.8f);
 
 	switch (m_type)
 	{
@@ -269,16 +269,16 @@ void b2Joint::Draw(b2Draw* draw) const
 		draw->DrawSegment(p1, p2, color);
 		break;
 
-    case e_pulleyJoint:
-    {
-	    const b2PulleyJoint* pulley = (b2PulleyJoint*)this;
-        const b2Vec2   s1     = pulley->GetGroundAnchorA();
-        const b2Vec2   s2     = pulley->GetGroundAnchorB();
-        draw->DrawSegment(s1, p1, color);
-        draw->DrawSegment(s2, p2, color);
-        draw->DrawSegment(s1, s2, color);
-    }
-    break;
+	case e_pulleyJoint:
+	{
+		b2PulleyJoint* pulley = (b2PulleyJoint*)this;
+		b2Vec2 s1 = pulley->GetGroundAnchorA();
+		b2Vec2 s2 = pulley->GetGroundAnchorB();
+		draw->DrawSegment(s1, p1, color);
+		draw->DrawSegment(s2, p2, color);
+		draw->DrawSegment(s1, s2, color);
+	}
+	break;
 
 	case e_mouseJoint:
 	{

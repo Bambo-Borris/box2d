@@ -140,12 +140,12 @@ bool b2ChainShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
 
 	b2EdgeShape edgeShape;
 
-    const std::int32_t i1 = childIndex;
-    std::int32_t i2 = childIndex + 1;
-    if (i2 == m_count)
-    {
-        i2 = 0;
-    }
+	int32 i1 = childIndex;
+	int32 i2 = childIndex + 1;
+	if (i2 == m_count)
+	{
+		i2 = 0;
+	}
 
 	edgeShape.m_vertex1 = m_vertices[i1];
 	edgeShape.m_vertex2 = m_vertices[i2];
@@ -157,22 +157,22 @@ void b2ChainShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, int32 childI
 {
 	b2Assert(childIndex < m_count);
 
-    const std::int32_t i1 = childIndex;
-    std::int32_t i2 = childIndex + 1;
-    if (i2 == m_count)
-    {
-        i2 = 0;
-    }
+	int32 i1 = childIndex;
+	int32 i2 = childIndex + 1;
+	if (i2 == m_count)
+	{
+		i2 = 0;
+	}
 
-    const b2Vec2 v1 = b2Mul(xf, m_vertices[i1]);
-    const b2Vec2 v2 = b2Mul(xf, m_vertices[i2]);
+	b2Vec2 v1 = b2Mul(xf, m_vertices[i1]);
+	b2Vec2 v2 = b2Mul(xf, m_vertices[i2]);
 
-    const b2Vec2 lower = b2Min(v1, v2);
-    const b2Vec2 upper = b2Max(v1, v2);
+	b2Vec2 lower = b2Min(v1, v2);
+	b2Vec2 upper = b2Max(v1, v2);
 
-    const b2Vec2 r(m_radius, m_radius);
-    aabb->lowerBound = lower - r;
-    aabb->upperBound = upper + r;
+	b2Vec2 r(m_radius, m_radius);
+	aabb->lowerBound = lower - r;
+	aabb->upperBound = upper + r;
 }
 
 void b2ChainShape::ComputeMass(b2MassData* massData, float density) const

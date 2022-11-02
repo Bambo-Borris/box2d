@@ -84,9 +84,9 @@ static b2Vec2 ComputeCentroid(const b2Vec2* vs, int32 count)
 	b2Vec2 c(0.0f, 0.0f);
 	float area = 0.0f;
 
-    // Get a reference point for forming triangles.
-    // Use the first vertex to reduce round-off errors.
-    const b2Vec2 s = vs[0];
+	// Get a reference point for forming triangles.
+	// Use the first vertex to reduce round-off errors.
+	b2Vec2 s = vs[0];
 
 	const float inv3 = 1.0f / 3.0f;
 
@@ -100,10 +100,10 @@ static b2Vec2 ComputeCentroid(const b2Vec2* vs, int32 count)
 		b2Vec2 e1 = p2 - p1;
 		b2Vec2 e2 = p3 - p1;
 
-        const float D = b2Cross(e1, e2);
+		float D = b2Cross(e1, e2);
 
-        const float triangleArea = 0.5f * D;
-        area += triangleArea;
+		float triangleArea = 0.5f * D;
+		area += triangleArea;
 
 		// Area weighted centroid
 		c += triangleArea * inv3 * (p1 + p2 + p3);
@@ -161,18 +161,18 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 	// Create the convex hull using the Gift wrapping algorithm
 	// http://en.wikipedia.org/wiki/Gift_wrapping_algorithm
 
-    // Find the right most point on the hull
-    std::int32_t i0 = 0;
-    float x0 = ps[0].x;
-    for (std::int32_t i = 1; i < n; ++i)
-    {
-	    const float x = ps[i].x;
-        if (x > x0 || (x == x0 && ps[i].y < ps[i0].y))
-        {
-            i0 = i;
-            x0 = x;
-        }
-    }
+	// Find the right most point on the hull
+	int32 i0 = 0;
+	float x0 = ps[0].x;
+	for (int32 i = 1; i < n; ++i)
+	{
+		float x = ps[i].x;
+		if (x > x0 || (x == x0 && ps[i].y < ps[i0].y))
+		{
+			i0 = i;
+			x0 = x;
+		}
+	}
 
 	int32 hull[b2_maxPolygonVertices];
 	int32 m = 0;
@@ -192,13 +192,13 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 				continue;
 			}
 
-            b2Vec2      r = ps[ie] - ps[hull[m]];
-            b2Vec2      v = ps[j] - ps[hull[m]];
-            const float c = b2Cross(r, v);
-            if (c < 0.0f)
-            {
-                ie = j;
-            }
+			b2Vec2 r = ps[ie] - ps[hull[m]];
+			b2Vec2 v = ps[j] - ps[hull[m]];
+			float c = b2Cross(r, v);
+			if (c < 0.0f)
+			{
+				ie = j;
+			}
 
 			// Collinearity check
 			if (c == 0.0f && v.LengthSquared() > r.LengthSquared())
@@ -232,16 +232,16 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 		m_vertices[i] = ps[hull[i]];
 	}
 
-    // Compute normals. Ensure the edges have non-zero length.
-    for (std::int32_t i = 0; i < m; ++i)
-    {
-	    const std::int32_t i1   = i;
-	    const std::int32_t i2   = i + 1 < m ? i + 1 : 0;
-        b2Vec2             edge = m_vertices[i2] - m_vertices[i1];
-        assert(edge.LengthSquared() > FLT_EPSILON * FLT_EPSILON);
-        m_normals[i] = b2Cross(edge, 1.0f);
-        m_normals[i].Normalize();
-    }
+	// Compute normals. Ensure the edges have non-zero length.
+	for (int32 i = 0; i < m; ++i)
+	{
+		int32 i1 = i;
+		int32 i2 = i + 1 < m ? i + 1 : 0;
+		b2Vec2 edge = m_vertices[i2] - m_vertices[i1];
+		b2Assert(edge.LengthSquared() > b2_epsilon * b2_epsilon);
+		m_normals[i] = b2Cross(edge, 1.0f);
+		m_normals[i].Normalize();
+	}
 
 	// Compute the polygon centroid.
 	m_centroid = ComputeCentroid(m_vertices, m);
@@ -249,16 +249,16 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 
 bool b2PolygonShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 {
-	const b2Vec2 pLocal = b2MulT(xf.q, p - xf.p);
+	b2Vec2 pLocal = b2MulT(xf.q, p - xf.p);
 
-    for (std::int32_t i = 0; i < m_count; ++i)
-    {
-	    const float dot = b2Dot(m_normals[i], pLocal - m_vertices[i]);
-        if (dot > 0.0f)
-        {
-            return false;
-        }
-    }
+	for (int32 i = 0; i < m_count; ++i)
+	{
+		float dot = b2Dot(m_normals[i], pLocal - m_vertices[i]);
+		if (dot > 0.0f)
+		{
+			return false;
+		}
+	}
 
 	return true;
 }
@@ -268,22 +268,22 @@ bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& inpu
 {
 	B2_NOT_USED(childIndex);
 
-    // Put the ray into the polygon's frame of reference.
-    const b2Vec2 p1 = b2MulT(xf.q, input.p1 - xf.p);
-    const b2Vec2 p2 = b2MulT(xf.q, input.p2 - xf.p);
-    const b2Vec2 d  = p2 - p1;
+	// Put the ray into the polygon's frame of reference.
+	b2Vec2 p1 = b2MulT(xf.q, input.p1 - xf.p);
+	b2Vec2 p2 = b2MulT(xf.q, input.p2 - xf.p);
+	b2Vec2 d = p2 - p1;
 
 	float lower = 0.0f, upper = input.maxFraction;
 
 	int32 index = -1;
 
-    for (std::int32_t i = 0; i < m_count; ++i)
-    {
-        // p = p1 + a * d
-        // dot(normal, p - v) = 0
-        // dot(normal, p1 - v) + a * dot(normal, d) = 0
-        const float numerator   = b2Dot(m_normals[i], m_vertices[i] - p1);
-        const float denominator = b2Dot(m_normals[i], d);
+	for (int32 i = 0; i < m_count; ++i)
+	{
+		// p = p1 + a * d
+		// dot(normal, p - v) = 0
+		// dot(normal, p1 - v) + a * dot(normal, d) = 0
+		float numerator = b2Dot(m_normals[i], m_vertices[i] - p1);
+		float denominator = b2Dot(m_normals[i], d);
 
 		if (denominator == 0.0f)
 		{	
@@ -349,9 +349,9 @@ void b2PolygonShape::ComputeAABB(b2AABB* aabb, const b2Transform& xf, int32 chil
 		upper = b2Max(upper, v);
 	}
 
-    const b2Vec2 r(m_radius, m_radius);
-    aabb->lowerBound = lower - r;
-    aabb->upperBound = upper + r;
+	b2Vec2 r(m_radius, m_radius);
+	aabb->lowerBound = lower - r;
+	aabb->upperBound = upper + r;
 }
 
 void b2PolygonShape::ComputeMass(b2MassData* massData, float density) const
@@ -386,9 +386,9 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float density) const
 	float area = 0.0f;
 	float I = 0.0f;
 
-    // Get a reference point for forming triangles.
-    // Use the first vertex to reduce round-off errors.
-    const b2Vec2 s = m_vertices[0];
+	// Get a reference point for forming triangles.
+	// Use the first vertex to reduce round-off errors.
+	b2Vec2 s = m_vertices[0];
 
 	const float k_inv3 = 1.0f / 3.0f;
 
@@ -398,19 +398,19 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float density) const
 		b2Vec2 e1 = m_vertices[i] - s;
 		b2Vec2 e2 = i + 1 < m_count ? m_vertices[i+1] - s : m_vertices[0] - s;
 
-        const float D = b2Cross(e1, e2);
+		float D = b2Cross(e1, e2);
 
-        const float triangleArea = 0.5f * D;
-        area += triangleArea;
+		float triangleArea = 0.5f * D;
+		area += triangleArea;
 
 		// Area weighted centroid
 		center += triangleArea * k_inv3 * (e1 + e2);
 
-        const float ex1 = e1.x, ey1 = e1.y;
-        const float ex2 = e2.x, ey2 = e2.y;
+		float ex1 = e1.x, ey1 = e1.y;
+		float ex2 = e2.x, ey2 = e2.y;
 
-        const float intx2 = ex1*ex1 + ex2*ex1 + ex2*ex2;
-        const float inty2 = ey1*ey1 + ey2*ey1 + ey2*ey2;
+		float intx2 = ex1*ex1 + ex2*ex1 + ex2*ex2;
+		float inty2 = ey1*ey1 + ey2*ey1 + ey2*ey2;
 
 		I += (0.25f * k_inv3 * D) * (intx2 + inty2);
 	}
@@ -432,12 +432,12 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float density) const
 
 bool b2PolygonShape::Validate() const
 {
-    for (std::int32_t i = 0; i < m_count; ++i)
-    {
-	    const std::int32_t i1 = i;
-	    const std::int32_t i2 = i < m_count - 1 ? i1 + 1 : 0;
-        b2Vec2             p  = m_vertices[i1];
-        b2Vec2             e  = m_vertices[i2] - p;
+	for (int32 i = 0; i < m_count; ++i)
+	{
+		int32 i1 = i;
+		int32 i2 = i < m_count - 1 ? i1 + 1 : 0;
+		b2Vec2 p = m_vertices[i1];
+		b2Vec2 e = m_vertices[i2] - p;
 
 		for (int32 j = 0; j < m_count; ++j)
 		{
@@ -446,14 +446,14 @@ bool b2PolygonShape::Validate() const
 				continue;
 			}
 
-            b2Vec2      v = m_vertices[j] - p;
-            const float c = b2Cross(e, v);
-            if (c < 0.0f)
-            {
-                return false;
-            }
-        }
-    }
+			b2Vec2 v = m_vertices[j] - p;
+			float c = b2Cross(e, v);
+			if (c < 0.0f)
+			{
+				return false;
+			}
+		}
+	}
 
 	return true;
 }

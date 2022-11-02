@@ -64,19 +64,19 @@ void* b2StackAllocator::Allocate(int32 size)
 
 void b2StackAllocator::Free(void* p)
 {
-    assert(m_entryCount > 0);
-    const b2StackEntry* entry = m_entries.data() + m_entryCount - 1;
-    assert(p == entry->data);
-    if (entry->usedMalloc)
-    {
-        b2Free(p);
-    }
-    else
-    {
-        m_index -= entry->size;
-    }
-    m_allocation -= entry->size;
-    --m_entryCount;
+	b2Assert(m_entryCount > 0);
+	b2StackEntry* entry = m_entries + m_entryCount - 1;
+	b2Assert(p == entry->data);
+	if (entry->usedMalloc)
+	{
+		b2Free(p);
+	}
+	else
+	{
+		m_index -= entry->size;
+	}
+	m_allocation -= entry->size;
+	--m_entryCount;
 
 	p = nullptr;
 }

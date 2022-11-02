@@ -49,9 +49,9 @@ b2ChainAndPolygonContact::b2ChainAndPolygonContact(b2Fixture* fixtureA, int32 in
 
 void b2ChainAndPolygonContact::Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB)
 {
-	const b2ChainShape* chain = (b2ChainShape*)m_fixtureA->GetShape();
-    b2EdgeShape edge;
-    chain->GetChildEdge(&edge, m_indexA);
-    b2CollideEdgeAndPolygon(    manifold, &edge, xfA,
-                                (b2PolygonShape*)m_fixtureB->GetShape(), xfB);
+	b2ChainShape* chain = (b2ChainShape*)m_fixtureA->GetShape();
+	b2EdgeShape edge;
+	chain->GetChildEdge(&edge, m_indexA);
+	b2CollideEdgeAndPolygon(	manifold, &edge, xfA,
+								(b2PolygonShape*)m_fixtureB->GetShape(), xfB);
 }

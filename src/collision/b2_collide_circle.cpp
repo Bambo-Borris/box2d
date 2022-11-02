@@ -31,17 +31,17 @@ void b2CollideCircles(
 {
 	manifold->pointCount = 0;
 
-    const b2Vec2 pA = b2Mul(xfA, circleA->m_p);
-    const b2Vec2 pB = b2Mul(xfB, circleB->m_p);
+	b2Vec2 pA = b2Mul(xfA, circleA->m_p);
+	b2Vec2 pB = b2Mul(xfB, circleB->m_p);
 
-    const b2Vec2 d       = pB - pA;
-    const float  distSqr = b2Dot(d, d);
-    const float  rA      = circleA->m_radius, rB = circleB->m_radius;
-    const float  radius  = rA + rB;
-    if (distSqr > radius * radius)
-    {
-        return;
-    }
+	b2Vec2 d = pB - pA;
+	float distSqr = b2Dot(d, d);
+	float rA = circleA->m_radius, rB = circleB->m_radius;
+	float radius = rA + rB;
+	if (distSqr > radius * radius)
+	{
+		return;
+	}
 
 	manifold->type = b2Manifold::e_circles;
 	manifold->localPoint = circleA->m_p;
@@ -59,21 +59,21 @@ void b2CollidePolygonAndCircle(
 {
 	manifold->pointCount = 0;
 
-    // Compute circle position in the frame of the polygon.
-    const b2Vec2 c      = b2Mul(xfB, circleB->m_p);
-    const b2Vec2 cLocal = b2MulT(xfA, c);
+	// Compute circle position in the frame of the polygon.
+	b2Vec2 c = b2Mul(xfB, circleB->m_p);
+	b2Vec2 cLocal = b2MulT(xfA, c);
 
-    // Find the min separating edge.
-    std::int32_t       normalIndex = 0;
-    float              separation  = -FLT_MAX;
-    const float        radius      = polygonA->m_radius + circleB->m_radius;
-    const std::int32_t vertexCount = polygonA->m_count;
-    const b2Vec2*      vertices    = polygonA->m_vertices.data();
-    const b2Vec2*      normals     = polygonA->m_normals.data();
+	// Find the min separating edge.
+	int32 normalIndex = 0;
+	float separation = -b2_maxFloat;
+	float radius = polygonA->m_radius + circleB->m_radius;
+	int32 vertexCount = polygonA->m_count;
+	const b2Vec2* vertices = polygonA->m_vertices;
+	const b2Vec2* normals = polygonA->m_normals;
 
-    for (std::int32_t i = 0; i < vertexCount; ++i)
-    {
-	    const float s = b2Dot(normals[i], cLocal - vertices[i]);
+	for (int32 i = 0; i < vertexCount; ++i)
+	{
+		float s = b2Dot(normals[i], cLocal - vertices[i]);
 
 		if (s > radius)
 		{
@@ -88,11 +88,11 @@ void b2CollidePolygonAndCircle(
 		}
 	}
 
-    // Vertices that subtend the incident face.
-    const std::int32_t vertIndex1 = normalIndex;
-    const std::int32_t vertIndex2 = vertIndex1 + 1 < vertexCount ? vertIndex1 + 1 : 0;
-    const b2Vec2       v1         = vertices[vertIndex1];
-    const b2Vec2       v2         = vertices[vertIndex2];
+	// Vertices that subtend the incident face.
+	int32 vertIndex1 = normalIndex;
+	int32 vertIndex2 = vertIndex1 + 1 < vertexCount ? vertIndex1 + 1 : 0;
+	b2Vec2 v1 = vertices[vertIndex1];
+	b2Vec2 v2 = vertices[vertIndex2];
 
 	// If the center is inside the polygon ...
 	if (separation < b2_epsilon)
@@ -106,15 +106,15 @@ void b2CollidePolygonAndCircle(
 		return;
 	}
 
-    // Compute barycentric coordinates
-    const float u1 = b2Dot(cLocal - v1, v2 - v1);
-    const float u2 = b2Dot(cLocal - v2, v1 - v2);
-    if (u1 <= 0.0f)
-    {
-        if (b2DistanceSquared(cLocal, v1) > radius * radius)
-        {
-            return;
-        }
+	// Compute barycentric coordinates
+	float u1 = b2Dot(cLocal - v1, v2 - v1);
+	float u2 = b2Dot(cLocal - v2, v1 - v2);
+	if (u1 <= 0.0f)
+	{
+		if (b2DistanceSquared(cLocal, v1) > radius * radius)
+		{
+			return;
+		}
 
 		manifold->pointCount = 1;
 		manifold->type = b2Manifold::e_faceA;
@@ -131,22 +131,22 @@ void b2CollidePolygonAndCircle(
 			return;
 		}
 
-        manifold->pointCount = 1;
-        manifold->type = b2Manifold::e_faceA;
-        manifold->localNormal = cLocal - v2;
-        manifold->localNormal.Normalize();
-        manifold->localPoint = v2;
-        manifold->points[0].localPoint = circleB->m_p;
-        manifold->points[0].id.key = 0;
-    }
-    else
-    {
-	    const b2Vec2 faceCenter = 0.5f * (v1 + v2);
-	    const float  s          = b2Dot(cLocal - faceCenter, normals[vertIndex1]);
-        if (s > radius)
-        {
-            return;
-        }
+		manifold->pointCount = 1;
+		manifold->type = b2Manifold::e_faceA;
+		manifold->localNormal = cLocal - v2;
+		manifold->localNormal.Normalize();
+		manifold->localPoint = v2;
+		manifold->points[0].localPoint = circleB->m_p;
+		manifold->points[0].id.key = 0;
+	}
+	else
+	{
+		b2Vec2 faceCenter = 0.5f * (v1 + v2);
+		float s = b2Dot(cLocal - faceCenter, normals[vertIndex1]);
+		if (s > radius)
+		{
+			return;
+		}
 
 		manifold->pointCount = 1;
 		manifold->type = b2Manifold::e_faceA;

@@ -81,15 +81,15 @@ void b2RevoluteJoint::InitVelocityConstraints(const b2SolverData& data)
 	m_invIA = m_bodyA->m_invI;
 	m_invIB = m_bodyB->m_invI;
 
-    const float aA = data.positions[m_indexA].a;
-    b2Vec2 vA = data.velocities[m_indexA].v;
-    float wA = data.velocities[m_indexA].w;
+	float aA = data.positions[m_indexA].a;
+	b2Vec2 vA = data.velocities[m_indexA].v;
+	float wA = data.velocities[m_indexA].w;
 
-    const float aB = data.positions[m_indexB].a;
-    b2Vec2 vB = data.velocities[m_indexB].v;
-    float wB = data.velocities[m_indexB].w;
+	float aB = data.positions[m_indexB].a;
+	b2Vec2 vB = data.velocities[m_indexB].v;
+	float wB = data.velocities[m_indexB].w;
 
-    const b2Rot qA(aA), qB(aB);
+	b2Rot qA(aA), qB(aB);
 
 	m_rA = b2Mul(qA, m_localAnchorA - m_localCenterA);
 	m_rB = b2Mul(qB, m_localAnchorB - m_localCenterB);
@@ -101,8 +101,8 @@ void b2RevoluteJoint::InitVelocityConstraints(const b2SolverData& data)
 	// K = [ mA+r1y^2*iA+mB+r2y^2*iB,  -r1y*iA*r1x-r2y*iB*r2x]
 	//     [  -r1y*iA*r1x-r2y*iB*r2x, mA+r1x^2*iA+mB+r2x^2*iB]
 
-    const float mA = m_invMassA, mB = m_invMassB;
-    const float iA = m_invIA,    iB = m_invIB;
+	float mA = m_invMassA, mB = m_invMassB;
+	float iA = m_invIA, iB = m_invIB;
 
 	m_K.ex.x = mA + mB + m_rA.y * m_rA.y * iA + m_rB.y * m_rB.y * iB;
 	m_K.ey.x = -m_rA.y * m_rA.x * iA - m_rB.y * m_rB.x * iB;
@@ -141,8 +141,8 @@ void b2RevoluteJoint::InitVelocityConstraints(const b2SolverData& data)
 		m_lowerImpulse *= data.step.dtRatio;
 		m_upperImpulse *= data.step.dtRatio;
 
-        const float  axialImpulse = m_motorImpulse + m_lowerImpulse - m_upperImpulse;
-        const b2Vec2 P(m_impulse.x, m_impulse.y);
+		float axialImpulse = m_motorImpulse + m_lowerImpulse - m_upperImpulse;
+		b2Vec2 P(m_impulse.x, m_impulse.y);
 
 		vA -= mA * P;
 		wA -= iA * (b2Cross(m_rA, P) + axialImpulse);
@@ -171,60 +171,60 @@ void b2RevoluteJoint::SolveVelocityConstraints(const b2SolverData& data)
 	b2Vec2 vB = data.velocities[m_indexB].v;
 	float wB = data.velocities[m_indexB].w;
 
-    const float mA = m_invMassA, mB = m_invMassB;
-    const float iA = m_invIA,    iB = m_invIB;
+	float mA = m_invMassA, mB = m_invMassB;
+	float iA = m_invIA, iB = m_invIB;
 
-    const bool fixedRotation = (iA + iB == 0.0f);
+	bool fixedRotation = (iA + iB == 0.0f);
 
-    // Solve motor constraint.
-    if (m_enableMotor && fixedRotation == false)
-    {
-	    const float Cdot       = wB - wA - m_motorSpeed;
-        float       impulse    = -m_axialMass * Cdot;
-	    const float oldImpulse = m_motorImpulse;
-	    const float maxImpulse = data.step.dt * m_maxMotorTorque;
-        m_motorImpulse         = b2Clamp(m_motorImpulse + impulse, -maxImpulse, maxImpulse);
-        impulse                = m_motorImpulse - oldImpulse;
+	// Solve motor constraint.
+	if (m_enableMotor && fixedRotation == false)
+	{
+		float Cdot = wB - wA - m_motorSpeed;
+		float impulse = -m_axialMass * Cdot;
+		float oldImpulse = m_motorImpulse;
+		float maxImpulse = data.step.dt * m_maxMotorTorque;
+		m_motorImpulse = b2Clamp(m_motorImpulse + impulse, -maxImpulse, maxImpulse);
+		impulse = m_motorImpulse - oldImpulse;
 
 		wA -= iA * impulse;
 		wB += iB * impulse;
 	}
 
-    if (m_enableLimit && fixedRotation == false)
-    {
-        // Lower limit
-        {
-	        const float C          = m_angle - m_lowerAngle;
-	        const float Cdot       = wB - wA;
-            float       impulse    = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
-	        const float oldImpulse = m_lowerImpulse;
-            m_lowerImpulse         = b2Max(m_lowerImpulse + impulse, 0.0f);
-            impulse                = m_lowerImpulse - oldImpulse;
+	if (m_enableLimit && fixedRotation == false)
+	{
+		// Lower limit
+		{
+			float C = m_angle - m_lowerAngle;
+			float Cdot = wB - wA;
+			float impulse = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
+			float oldImpulse = m_lowerImpulse;
+			m_lowerImpulse = b2Max(m_lowerImpulse + impulse, 0.0f);
+			impulse = m_lowerImpulse - oldImpulse;
 
 			wA -= iA * impulse;
 			wB += iB * impulse;
 		}
 
-        // Upper limit
-        // Note: signs are flipped to keep C positive when the constraint is satisfied.
-        // This also keeps the impulse positive when the limit is active.
-        {
-	        const float C          = m_upperAngle - m_angle;
-	        const float Cdot       = wA - wB;
-            float       impulse    = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
-	        const float oldImpulse = m_upperImpulse;
-            m_upperImpulse         = b2Max(m_upperImpulse + impulse, 0.0f);
-            impulse                = m_upperImpulse - oldImpulse;
+		// Upper limit
+		// Note: signs are flipped to keep C positive when the constraint is satisfied.
+		// This also keeps the impulse positive when the limit is active.
+		{
+			float C = m_upperAngle - m_angle;
+			float Cdot = wA - wB;
+			float impulse = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
+			float oldImpulse = m_upperImpulse;
+			m_upperImpulse = b2Max(m_upperImpulse + impulse, 0.0f);
+			impulse = m_upperImpulse - oldImpulse;
 
 			wA += iA * impulse;
 			wB -= iB * impulse;
 		}
 	}
 
-    // Solve point-to-point constraint
-    {
-	    const b2Vec2 Cdot    = vB + b2Cross(wB, m_rB) - vA - b2Cross(wA, m_rA);
-	    const b2Vec2 impulse = m_K.Solve(-Cdot);
+	// Solve point-to-point constraint
+	{
+		b2Vec2 Cdot = vB + b2Cross(wB, m_rB) - vA - b2Cross(wA, m_rA);
+		b2Vec2 impulse = m_K.Solve(-Cdot);
 
 		m_impulse.x += impulse.x;
 		m_impulse.y += impulse.y;
@@ -254,13 +254,13 @@ bool b2RevoluteJoint::SolvePositionConstraints(const b2SolverData& data)
 	float angularError = 0.0f;
 	float positionError = 0.0f;
 
-    const bool fixedRotation = (m_invIA + m_invIB == 0.0f);
+	bool fixedRotation = (m_invIA + m_invIB == 0.0f);
 
-    // Solve angular limit constraint
-    if (m_enableLimit && fixedRotation == false)
-    {
-	    const float angle = aB - aA - m_referenceAngle;
-        float C = 0.0f;
+	// Solve angular limit constraint
+	if (m_enableLimit && fixedRotation == false)
+	{
+		float angle = aB - aA - m_referenceAngle;
+		float C = 0.0f;
 
 		if (b2Abs(m_upperAngle - m_lowerAngle) < 2.0f * b2_angularSlop)
 		{
@@ -278,24 +278,24 @@ bool b2RevoluteJoint::SolvePositionConstraints(const b2SolverData& data)
 			C = b2Clamp(angle - m_upperAngle - b2_angularSlop, 0.0f, b2_maxAngularCorrection);
 		}
 
-	    const float limitImpulse = -m_axialMass * C;
-        aA -= m_invIA * limitImpulse;
-        aB += m_invIB * limitImpulse;
-        angularError = b2Abs(C);
-    }
+		float limitImpulse = -m_axialMass * C;
+		aA -= m_invIA * limitImpulse;
+		aB += m_invIB * limitImpulse;
+		angularError = b2Abs(C);
+	}
 
-    // Solve point-to-point constraint.
-    {
-        qA.Set(aA);
-        qB.Set(aB);
-        const b2Vec2 rA = b2Mul(qA, m_localAnchorA - m_localCenterA);
-        const b2Vec2 rB = b2Mul(qB, m_localAnchorB - m_localCenterB);
+	// Solve point-to-point constraint.
+	{
+		qA.Set(aA);
+		qB.Set(aB);
+		b2Vec2 rA = b2Mul(qA, m_localAnchorA - m_localCenterA);
+		b2Vec2 rB = b2Mul(qB, m_localAnchorB - m_localCenterB);
 
-        const b2Vec2 C = cB + rB - cA - rA;
-        positionError = C.Length();
+		b2Vec2 C = cB + rB - cA - rA;
+		positionError = C.Length();
 
-        const float mA = m_invMassA, mB = m_invMassB;
-        const float iA = m_invIA,    iB = m_invIB;
+		float mA = m_invMassA, mB = m_invMassB;
+		float iA = m_invIA, iB = m_invIB;
 
 		b2Mat22 K;
 		K.ex.x = mA + mB + iA * rA.y * rA.y + iB * rB.y * rB.y;
@@ -303,7 +303,7 @@ bool b2RevoluteJoint::SolvePositionConstraints(const b2SolverData& data)
 		K.ey.x = K.ex.y;
 		K.ey.y = mA + mB + iA * rA.x * rA.x + iB * rB.x * rB.x;
 
-        const b2Vec2 impulse = -K.Solve(C);
+		b2Vec2 impulse = -K.Solve(C);
 
 		cA -= mA * impulse;
 		aA -= iA * b2Cross(rA, impulse);
@@ -332,8 +332,8 @@ b2Vec2 b2RevoluteJoint::GetAnchorB() const
 
 b2Vec2 b2RevoluteJoint::GetReactionForce(float inv_dt) const
 {
-	const b2Vec2 P(m_impulse.x, m_impulse.y);
-    return inv_dt * P;
+	b2Vec2 P(m_impulse.x, m_impulse.y);
+	return inv_dt * P;
 }
 
 float b2RevoluteJoint::GetReactionTorque(float inv_dt) const
@@ -343,16 +343,16 @@ float b2RevoluteJoint::GetReactionTorque(float inv_dt) const
 
 float b2RevoluteJoint::GetJointAngle() const
 {
-	const b2Body* bA = m_bodyA;
-	const b2Body* bB = m_bodyB;
-    return bB->m_sweep.a - bA->m_sweep.a - m_referenceAngle;
+	b2Body* bA = m_bodyA;
+	b2Body* bB = m_bodyB;
+	return bB->m_sweep.a - bA->m_sweep.a - m_referenceAngle;
 }
 
 float b2RevoluteJoint::GetJointSpeed() const
 {
-	const b2Body* bA = m_bodyA;
-	const b2Body* bB = m_bodyB;
-    return bB->m_angularVelocity - bA->m_angularVelocity;
+	b2Body* bA = m_bodyA;
+	b2Body* bB = m_bodyB;
+	return bB->m_angularVelocity - bA->m_angularVelocity;
 }
 
 bool b2RevoluteJoint::IsMotorEnabled() const
@@ -439,8 +439,8 @@ void b2RevoluteJoint::SetLimits(float lower, float upper)
 
 void b2RevoluteJoint::Dump()
 {
-	const std::int32_t indexA = m_bodyA->m_islandIndex;
-	const std::int32_t indexB = m_bodyB->m_islandIndex;
+	int32 indexA = m_bodyA->m_islandIndex;
+	int32 indexB = m_bodyB->m_islandIndex;
 
 	b2Dump("  b2RevoluteJointDef jd;\n");
 	b2Dump("  jd.bodyA = bodies[%d];\n", indexA);
@@ -461,41 +461,41 @@ void b2RevoluteJoint::Dump()
 ///
 void b2RevoluteJoint::Draw(b2Draw* draw) const
 {
-    const b2Transform& xfA = m_bodyA->GetTransform();
-    const b2Transform& xfB = m_bodyB->GetTransform();
-    const b2Vec2       pA  = b2Mul(xfA, m_localAnchorA);
-    const b2Vec2       pB  = b2Mul(xfB, m_localAnchorB);
+	const b2Transform& xfA = m_bodyA->GetTransform();
+	const b2Transform& xfB = m_bodyB->GetTransform();
+	b2Vec2 pA = b2Mul(xfA, m_localAnchorA);
+	b2Vec2 pB = b2Mul(xfB, m_localAnchorB);
 
-    const b2Color c1(0.7f, 0.7f, 0.7f);
-    const b2Color c2(0.3f, 0.9f, 0.3f);
-    const b2Color c3(0.9f, 0.3f, 0.3f);
-    const b2Color c4(0.3f, 0.3f, 0.9f);
-    const b2Color c5(0.4f, 0.4f, 0.4f);
+	b2Color c1(0.7f, 0.7f, 0.7f);
+	b2Color c2(0.3f, 0.9f, 0.3f);
+	b2Color c3(0.9f, 0.3f, 0.3f);
+	b2Color c4(0.3f, 0.3f, 0.9f);
+	b2Color c5(0.4f, 0.4f, 0.4f);
 
 	draw->DrawPoint(pA, 5.0f, c4);
 	draw->DrawPoint(pB, 5.0f, c5);
 
-    const float aA    = m_bodyA->GetAngle();
-    const float aB    = m_bodyB->GetAngle();
-    const float angle = aB - aA - m_referenceAngle;
+	float aA = m_bodyA->GetAngle();
+	float aB = m_bodyB->GetAngle();
+	float angle = aB - aA - m_referenceAngle;
 
 	const float L = 0.5f;
 
-    const b2Vec2 r = L * b2Vec2(cosf(angle), sinf(angle));
-    draw->DrawSegment(pB, pB + r, c1);
-    draw->DrawCircle(pB, L, c1);
+	b2Vec2 r = L * b2Vec2(cosf(angle), sinf(angle));
+	draw->DrawSegment(pB, pB + r, c1);
+	draw->DrawCircle(pB, L, c1);
 
-    if (m_enableLimit)
-    {
-	    const b2Vec2 rlo = L * b2Vec2(cosf(m_lowerAngle), sinf(m_lowerAngle));
-	    const b2Vec2 rhi = L * b2Vec2(cosf(m_upperAngle), sinf(m_upperAngle));
+	if (m_enableLimit)
+	{
+		b2Vec2 rlo = L * b2Vec2(cosf(m_lowerAngle), sinf(m_lowerAngle));
+		b2Vec2 rhi = L * b2Vec2(cosf(m_upperAngle), sinf(m_upperAngle));
 
 		draw->DrawSegment(pB, pB + rlo, c2);
 		draw->DrawSegment(pB, pB + rhi, c3);
 	}
 
-    const b2Color color(0.5f, 0.8f, 0.8f);
-    draw->DrawSegment(xfA.p, pA, color);
-    draw->DrawSegment(pA, pB, color);
-    draw->DrawSegment(xfB.p, pB, color);
+	b2Color color(0.5f, 0.8f, 0.8f);
+	draw->DrawSegment(xfA.p, pA, color);
+	draw->DrawSegment(pA, pB, color);
+	draw->DrawSegment(xfB.p, pB, color);
 }

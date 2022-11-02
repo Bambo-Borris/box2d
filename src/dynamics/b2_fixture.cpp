@@ -57,15 +57,15 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
 
 	m_shape = def->shape->Clone(allocator);
 
-    // Reserve proxy space
-    const std::int32_t childCount = m_shape->GetChildCount();
-    m_proxies = allocator->Allocate<b2FixtureProxy>(childCount);
-    for (std::int32_t i = 0; i < childCount; ++i)
-    {
-        m_proxies[i].fixture = nullptr;
-        m_proxies[i].proxyId = b2BroadPhase::e_nullProxy;
-    }
-    m_proxyCount = 0;
+	// Reserve proxy space
+	int32 childCount = m_shape->GetChildCount();
+	m_proxies = (b2FixtureProxy*)allocator->Allocate(childCount * sizeof(b2FixtureProxy));
+	for (int32 i = 0; i < childCount; ++i)
+	{
+		m_proxies[i].fixture = nullptr;
+		m_proxies[i].proxyId = b2BroadPhase::e_nullProxy;
+	}
+	m_proxyCount = 0;
 
 	m_density = def->density;
 }
@@ -75,10 +75,10 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator)
 	// The proxies must be destroyed before calling this.
 	b2Assert(m_proxyCount == 0);
 
-    // Free the proxy array.
-    const std::int32_t childCount = m_shape->GetChildCount();
-    allocator->Free(m_proxies, childCount);
-    m_proxies = nullptr;
+	// Free the proxy array.
+	int32 childCount = m_shape->GetChildCount();
+	allocator->Free(m_proxies, childCount * sizeof(b2FixtureProxy));
+	m_proxies = nullptr;
 
 	// Free the child shape.
 	switch (m_shape->m_type)
@@ -191,17 +191,17 @@ void b2Fixture::Refilter()
 		return;
 	}
 
-    // Flag associated contacts for filtering.
-    const b2ContactEdge* edge = m_body->GetContactList();
-    while (edge)
-    {
-        b2Contact*       contact  = edge->contact;
-        const b2Fixture* fixtureA = contact->GetFixtureA();
-        const b2Fixture* fixtureB = contact->GetFixtureB();
-        if (fixtureA == this || fixtureB == this)
-        {
-            contact->FlagForFiltering();
-        }
+	// Flag associated contacts for filtering.
+	b2ContactEdge* edge = m_body->GetContactList();
+	while (edge)
+	{
+		b2Contact* contact = edge->contact;
+		b2Fixture* fixtureA = contact->GetFixtureA();
+		b2Fixture* fixtureB = contact->GetFixtureB();
+		if (fixtureA == this || fixtureB == this)
+		{
+			contact->FlagForFiltering();
+		}
 
 		edge = edge->next;
 	}
@@ -242,57 +242,57 @@ void b2Fixture::Dump(int32 bodyIndex)
 	b2Dump("    fd.filter.maskBits = uint16(%d);\n", m_filter.maskBits);
 	b2Dump("    fd.filter.groupIndex = int16(%d);\n", m_filter.groupIndex);
 
-    switch (m_shape->m_type)
-    {
-    case b2Shape::e_circle:
-        {
-	        const b2CircleShape* s = (b2CircleShape*)m_shape;
-            b2Dump("    b2CircleShape shape;\n");
-            b2Dump("    shape.m_radius = %.9g;\n", s->m_radius);
-            b2Dump("    shape.m_p.Set(%.9g, %.9g);\n", s->m_p.x, s->m_p.y);
-        }
-        break;
+	switch (m_shape->m_type)
+	{
+	case b2Shape::e_circle:
+		{
+			b2CircleShape* s = (b2CircleShape*)m_shape;
+			b2Dump("    b2CircleShape shape;\n");
+			b2Dump("    shape.m_radius = %.9g;\n", s->m_radius);
+			b2Dump("    shape.m_p.Set(%.9g, %.9g);\n", s->m_p.x, s->m_p.y);
+		}
+		break;
 
-    case b2Shape::e_edge:
-        {
-	        const b2EdgeShape* s = (b2EdgeShape*)m_shape;
-            b2Dump("    b2EdgeShape shape;\n");
-            b2Dump("    shape.m_radius = %.9g;\n", s->m_radius);
-            b2Dump("    shape.m_vertex0.Set(%.9g, %.9g);\n", s->m_vertex0.x, s->m_vertex0.y);
-            b2Dump("    shape.m_vertex1.Set(%.9g, %.9g);\n", s->m_vertex1.x, s->m_vertex1.y);
-            b2Dump("    shape.m_vertex2.Set(%.9g, %.9g);\n", s->m_vertex2.x, s->m_vertex2.y);
-            b2Dump("    shape.m_vertex3.Set(%.9g, %.9g);\n", s->m_vertex3.x, s->m_vertex3.y);
-            b2Dump("    shape.m_oneSided = bool(%d);\n", s->m_oneSided);
-        }
-        break;
+	case b2Shape::e_edge:
+		{
+			b2EdgeShape* s = (b2EdgeShape*)m_shape;
+			b2Dump("    b2EdgeShape shape;\n");
+			b2Dump("    shape.m_radius = %.9g;\n", s->m_radius);
+			b2Dump("    shape.m_vertex0.Set(%.9g, %.9g);\n", s->m_vertex0.x, s->m_vertex0.y);
+			b2Dump("    shape.m_vertex1.Set(%.9g, %.9g);\n", s->m_vertex1.x, s->m_vertex1.y);
+			b2Dump("    shape.m_vertex2.Set(%.9g, %.9g);\n", s->m_vertex2.x, s->m_vertex2.y);
+			b2Dump("    shape.m_vertex3.Set(%.9g, %.9g);\n", s->m_vertex3.x, s->m_vertex3.y);
+			b2Dump("    shape.m_oneSided = bool(%d);\n", s->m_oneSided);
+		}
+		break;
 
-    case b2Shape::e_polygon:
-        {
-	        const b2PolygonShape* s = (b2PolygonShape*)m_shape;
-            b2Dump("    b2PolygonShape shape;\n");
-            b2Dump("    b2Vec2 vs[%d];\n", b2_maxPolygonVertices);
-            for (std::int32_t i = 0; i < s->m_count; ++i)
-            {
-                b2Dump("    vs[%d].Set(%.9g, %.9g);\n", i, s->m_vertices[i].x, s->m_vertices[i].y);
-            }
-            b2Dump("    shape.Set(vs, %d);\n", s->m_count);
-        }
-        break;
+	case b2Shape::e_polygon:
+		{
+			b2PolygonShape* s = (b2PolygonShape*)m_shape;
+			b2Dump("    b2PolygonShape shape;\n");
+			b2Dump("    b2Vec2 vs[%d];\n", b2_maxPolygonVertices);
+			for (int32 i = 0; i < s->m_count; ++i)
+			{
+				b2Dump("    vs[%d].Set(%.9g, %.9g);\n", i, s->m_vertices[i].x, s->m_vertices[i].y);
+			}
+			b2Dump("    shape.Set(vs, %d);\n", s->m_count);
+		}
+		break;
 
-    case b2Shape::e_chain:
-        {
-	        const b2ChainShape* s = (b2ChainShape*)m_shape;
-            b2Dump("    b2ChainShape shape;\n");
-            b2Dump("    b2Vec2 vs[%d];\n", s->m_count);
-            for (std::int32_t i = 0; i < s->m_count; ++i)
-            {
-                b2Dump("    vs[%d].Set(%.9g, %.9g);\n", i, s->m_vertices[i].x, s->m_vertices[i].y);
-            }
-            b2Dump("    shape.CreateChain(vs, %d);\n", s->m_count);
-            b2Dump("    shape.m_prevVertex.Set(%.9g, %.9g);\n", s->m_prevVertex.x, s->m_prevVertex.y);
-            b2Dump("    shape.m_nextVertex.Set(%.9g, %.9g);\n", s->m_nextVertex.x, s->m_nextVertex.y);
-        }
-        break;
+	case b2Shape::e_chain:
+		{
+			b2ChainShape* s = (b2ChainShape*)m_shape;
+			b2Dump("    b2ChainShape shape;\n");
+			b2Dump("    b2Vec2 vs[%d];\n", s->m_count);
+			for (int32 i = 0; i < s->m_count; ++i)
+			{
+				b2Dump("    vs[%d].Set(%.9g, %.9g);\n", i, s->m_vertices[i].x, s->m_vertices[i].y);
+			}
+			b2Dump("    shape.CreateChain(vs, %d);\n", s->m_count);
+			b2Dump("    shape.m_prevVertex.Set(%.9g, %.9g);\n", s->m_prevVertex.x, s->m_prevVertex.y);
+			b2Dump("    shape.m_nextVertex.Set(%.9g, %.9g);\n", s->m_nextVertex.x, s->m_nextVertex.y);
+		}
+		break;
 
 	default:
 		return;

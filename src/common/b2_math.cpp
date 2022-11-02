@@ -44,27 +44,27 @@ b2Vec3 b2Mat33::Solve33(const b2Vec3& b) const
 /// than computing the inverse in one-shot cases.
 b2Vec2 b2Mat33::Solve22(const b2Vec2& b) const
 {
-	const float a11 = ex.x, a12 = ey.x, a21 = ex.y, a22 = ey.y;
-    float det = a11 * a22 - a12 * a21;
-    if (det != 0.0f)
-    {
-        det = 1.0f / det;
-    }
-    b2Vec2 x;
-    x.x = det * (a22 * b.x - a12 * b.y);
-    x.y = det * (a11 * b.y - a21 * b.x);
-    return x;
+	float a11 = ex.x, a12 = ey.x, a21 = ex.y, a22 = ey.y;
+	float det = a11 * a22 - a12 * a21;
+	if (det != 0.0f)
+	{
+		det = 1.0f / det;
+	}
+	b2Vec2 x;
+	x.x = det * (a22 * b.x - a12 * b.y);
+	x.y = det * (a11 * b.y - a21 * b.x);
+	return x;
 }
 
 ///
 void b2Mat33::GetInverse22(b2Mat33* M) const
 {
-	const float a = ex.x, b = ey.x, c = ex.y, d = ey.y;
-    float det = a * d - b * c;
-    if (det != 0.0f)
-    {
-        det = 1.0f / det;
-    }
+	float a = ex.x, b = ey.x, c = ex.y, d = ey.y;
+	float det = a * d - b * c;
+	if (det != 0.0f)
+	{
+		det = 1.0f / det;
+	}
 
 	M->ex.x =  det * d;	M->ey.x = -det * b; M->ex.z = 0.0f;
 	M->ex.y = -det * c;	M->ey.y =  det * a; M->ey.z = 0.0f;
@@ -80,9 +80,9 @@ void b2Mat33::GetSymInverse33(b2Mat33* M) const
 		det = 1.0f / det;
 	}
 
-    const float a11 = ex.x, a12 = ey.x, a13 = ez.x;
-    const float a22 = ey.y, a23 = ez.y;
-    const float a33 = ez.z;
+	float a11 = ex.x, a12 = ey.x, a13 = ez.x;
+	float a22 = ey.y, a23 = ez.y;
+	float a33 = ez.z;
 
 	M->ex.x = det * (a22 * a33 - a23 * a23);
 	M->ex.y = det * (a13 * a23 - a12 * a33);
