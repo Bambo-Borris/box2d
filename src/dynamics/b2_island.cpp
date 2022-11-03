@@ -350,8 +350,8 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
     {
         float minSleepTime = FLT_MAX;
 
-        const float linTolSqr = b2_linearSleepTolerance * b2_linearSleepTolerance;
-        const float angTolSqr = b2_angularSleepTolerance * b2_angularSleepTolerance;
+        constexpr float linTolSqr = b2_linearSleepTolerance * b2_linearSleepTolerance;
+        constexpr float angTolSqr = b2_angularSleepTolerance * b2_angularSleepTolerance;
 
         for (std::int32_t i = 0; i < m_bodyCount; ++i)
         {
@@ -413,8 +413,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::
     // Solve position constraints.
     for (std::int32_t i = 0; i < subStep.positionIterations; ++i)
     {
-        bool contactsOkay = contactSolver.SolveTOIPositionConstraints(toiIndexA, toiIndexB);
-        if (contactsOkay)
+	    if (contactSolver.SolveTOIPositionConstraints(toiIndexA, toiIndexB))
         {
             break;
         }

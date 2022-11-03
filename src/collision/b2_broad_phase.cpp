@@ -59,8 +59,7 @@ void b2BroadPhase::DestroyProxy(std::int32_t proxyId)
 
 void b2BroadPhase::MoveProxy(std::int32_t proxyId, const b2AABB& aabb, const b2Vec2& displacement)
 {
-    bool buffer = m_tree.MoveProxy(proxyId, aabb, displacement);
-    if (buffer)
+	if (m_tree.MoveProxy(proxyId, aabb, displacement))
     {
         BufferMove(proxyId);
     }

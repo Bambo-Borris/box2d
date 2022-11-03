@@ -84,8 +84,7 @@ b2Contact* b2Contact::Create(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture
     assert(0 <= type1 && type1 < b2Shape::e_typeCount);
     assert(0 <= type2 && type2 < b2Shape::e_typeCount);
 
-    b2ContactCreateFcn* createFcn = s_registers[type1][type2].createFcn;
-    if (createFcn)
+    if (b2ContactCreateFcn* createFcn = s_registers[type1][type2].createFcn)
     {
         if (s_registers[type1][type2].primary)
         {

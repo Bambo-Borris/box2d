@@ -635,7 +635,7 @@ bool b2ShapeCast(b2ShapeCastOutput * output, const b2ShapeCastInput * input)
 
     // Sigma is the target distance between polygons
     float sigma = b2Max(b2_polygonRadius, radius - b2_polygonRadius);
-    const float tolerance = 0.5f * b2_linearSlop;
+    constexpr float tolerance = 0.5f * b2_linearSlop;
 
     // Main iteration loop.
     const std::int32_t k_maxIters = 20;

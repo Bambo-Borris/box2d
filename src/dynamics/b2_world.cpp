@@ -771,10 +771,9 @@ void b2World::SolveTOI(const b2TimeStep& step)
 
         // Get contacts on bodyA and bodyB.
         b2Body* bodies[2] = {bA, bB};
-        for (std::int32_t i = 0; i < 2; ++i)
+        for(auto body : bodies)
         {
-            b2Body* body = bodies[i];
-            if (body->m_type == b2_dynamicBody)
+	        if (body->m_type == b2_dynamicBody)
             {
                 for (b2ContactEdge* ce = body->m_contactList; ce; ce = ce->next)
                 {
@@ -1008,9 +1007,8 @@ struct b2WorldRayCastWrapper
         b2Fixture* fixture = proxy->fixture;
         std::int32_t index = proxy->childIndex;
         b2RayCastOutput output;
-        bool hit = fixture->RayCast(&output, input, index);
 
-        if (hit)
+        if (fixture->RayCast(&output, input, index))
         {
             float fraction = output.fraction;
             b2Vec2 point = (1.0f - fraction) * input.p1 + fraction * input.p2;

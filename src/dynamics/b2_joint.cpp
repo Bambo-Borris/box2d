@@ -177,41 +177,14 @@ void b2Joint::Destroy(b2Joint* joint, b2BlockAllocator* allocator)
     switch (joint->m_type)
     {
     case e_distanceJoint:
-        allocator->Free(joint);
-        break;
-
     case e_mouseJoint:
-        allocator->Free(joint);
-        break;
-
     case e_prismaticJoint:
-        allocator->Free(joint);
-        break;
-
     case e_revoluteJoint:
-        allocator->Free(joint);
-        break;
-
     case e_pulleyJoint:
-        allocator->Free(joint);
-        break;
-
     case e_gearJoint:
-        allocator->Free(joint);
-        break;
-
     case e_wheelJoint:
-        allocator->Free(joint);
-        break;
-
     case e_weldJoint:
-        allocator->Free(joint);
-        break;
-
     case e_frictionJoint:
-        allocator->Free(joint);
-        break;
-
     case e_motorJoint:
         allocator->Free(joint);
         break;

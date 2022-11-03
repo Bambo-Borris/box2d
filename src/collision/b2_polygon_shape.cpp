@@ -88,7 +88,7 @@ static b2Vec2 ComputeCentroid(const b2Vec2* vs, std::int32_t count)
     // Use the first vertex to reduce round-off errors.
     b2Vec2 s = vs[0];
 
-    const float inv3 = 1.0f / 3.0f;
+    constexpr float inv3 = 1.0f / 3.0f;
 
     for (std::int32_t i = 0; i < count; ++i)
     {
@@ -390,7 +390,7 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float density) const
     // Use the first vertex to reduce round-off errors.
     b2Vec2 s = m_vertices[0];
 
-    const float k_inv3 = 1.0f / 3.0f;
+    constexpr float k_inv3 = 1.0f / 3.0f;
 
     for (std::int32_t i = 0; i < m_count; ++i)
     {

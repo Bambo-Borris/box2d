@@ -139,7 +139,7 @@ void b2CollidePolygons(b2Manifold* manifold,
     b2Transform xf1, xf2;
     std::int32_t edge1;             // reference edge
     std::uint8_t flip;
-    const float k_tol = 0.1f * b2_linearSlop;
+    constexpr float k_tol = 0.1f * b2_linearSlop;
 
     if (separationB > separationA + k_tol)
     {
@@ -196,10 +196,9 @@ void b2CollidePolygons(b2Manifold* manifold,
     // Clip incident edge against extruded edge1 side edges.
     std::array<b2ClipVertex, 2>  clipPoints1;
     std::array<b2ClipVertex, 2>  clipPoints2;
-    int np;
 
     // Clip to box side 1
-    np = b2ClipSegmentToLine(clipPoints1, incidentEdge, -tangent, sideOffset1, iv1);
+    int np = b2ClipSegmentToLine(clipPoints1, incidentEdge, -tangent, sideOffset1, iv1);
 
     if (np < 2)
         return;

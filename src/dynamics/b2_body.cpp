@@ -103,11 +103,6 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
     m_fixtureCount = 0;
 }
 
-b2Body::~b2Body()
-{
-    // shapes and joints are destroyed in b2World::Destroy
-}
-
 void b2Body::SetType(b2BodyType type)
 {
     assert(m_world->IsLocked() == false);
@@ -212,7 +207,7 @@ b2Fixture* b2Body::CreateFixture(const b2Shape* shape, float density)
 
 void b2Body::DestroyFixture(b2Fixture* fixture)
 {
-    if (fixture == NULL)
+    if (fixture == nullptr)
     {
         return;
     }

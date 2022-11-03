@@ -657,8 +657,7 @@ void b2DynamicTree::ValidateMetrics(std::int32_t index) const
 
     std::int32_t height1 = m_nodes[child1].height;
     std::int32_t height2 = m_nodes[child2].height;
-    std::int32_t height;
-    height = 1 + b2Max(height1, height2);
+    std::int32_t height  = 1 + b2Max(height1, height2);
     assert(node->height == height);
 
     b2AABB aabb;

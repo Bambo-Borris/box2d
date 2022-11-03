@@ -417,7 +417,7 @@ private:
     };
 
     b2Body(const b2BodyDef* bd, b2World* world);
-    ~b2Body();
+    ~b2Body() = default; // shapes and joints are destroyed in b2World::Destroy
 
     void SynchronizeFixtures();
     void SynchronizeTransform();

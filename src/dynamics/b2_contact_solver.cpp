@@ -236,7 +236,7 @@ void b2ContactSolver::InitializeVelocityConstraints()
             float k12 = mA + mB + iA * rn1A * rn2A + iB * rn1B * rn2B;
 
             // Ensure a reasonable condition number.
-            const float k_maxConditionNumber = 1000.0f;
+            constexpr float k_maxConditionNumber = 1000.0f;
             if (k11 * k11 < k_maxConditionNumber * (k11 * k22 - k12 * k12))
             {
                 // K is safe to invert.
@@ -432,7 +432,7 @@ void b2ContactSolver::SolveVelocityConstraints()
             // Compute b'
             b -= b2Mul(vc->K, a);
 
-            const float k_errorTol = 1e-3f;
+            constexpr float k_errorTol = 1e-3f;
             (void)k_errorTol;
 
             for (;;)

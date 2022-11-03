@@ -479,7 +479,7 @@ void b2RevoluteJoint::Draw(b2Draw* draw) const
     float aB = m_bodyB->GetAngle();
     float angle = aB - aA - m_referenceAngle;
 
-    const float L = 0.5f;
+    constexpr float L = 0.5f;
 
     b2Vec2 r = L * b2Vec2(cosf(angle), sinf(angle));
     draw->DrawSegment(pB, pB + r, c1);

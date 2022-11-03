@@ -316,8 +316,8 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
     }
 
     // Use hysteresis for jitter reduction.
-    const float k_relativeTol = 0.98f;
-    const float k_absoluteTol = 0.001f;
+    constexpr float k_relativeTol = 0.98f;
+    constexpr float k_absoluteTol = 0.001f;
 
     b2EPAxis primaryAxis;
     if (polygonAxis.separation - radius > k_relativeTol * (edgeAxis.separation - radius) + k_absoluteTol)
@@ -344,11 +344,10 @@ void b2CollideEdgeAndPolygon(b2Manifold* manifold,
         b2Vec2 normal2(edge2.y, -edge2.x);
         bool convex2 = b2Cross(edge1, edge2) >= 0.0f;
 
-        const float sinTol = 0.1f;
-        bool side1 = b2Dot(primaryAxis.normal, edge1) <= 0.0f;
+        constexpr float sinTol = 0.1f;
 
         // Check Gauss Map
-        if (side1)
+        if (b2Dot(primaryAxis.normal, edge1) <= 0.0f)
         {
             if (convex1)
             {
