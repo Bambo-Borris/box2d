@@ -75,7 +75,7 @@ public:
         return m_stack[m_count];
     }
 
-    std::int32_t GetCount()
+    std::int32_t GetCount() const
     {
         return m_count;
     }

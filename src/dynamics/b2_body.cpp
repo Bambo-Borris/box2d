@@ -141,10 +141,10 @@ void b2Body::SetType(b2BodyType type)
     m_torque = 0.0f;
 
     // Delete the attached contacts.
-    b2ContactEdge* ce = m_contactList;
+    const b2ContactEdge* ce = m_contactList;
     while (ce)
     {
-        b2ContactEdge* ce0 = ce;
+	    const b2ContactEdge* ce0 = ce;
         ce = ce->next;
         m_world->m_contactManager.Destroy(ce0->contact);
     }
@@ -152,9 +152,9 @@ void b2Body::SetType(b2BodyType type)
 
     // Touch the proxies so that new contacts will be created (when appropriate)
     b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
-    for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
+    for (const b2Fixture* f = m_fixtureList; f; f = f->m_next)
     {
-        std::int32_t proxyCount = f->m_proxyCount;
+	    const std::int32_t proxyCount = f->m_proxyCount;
         for (std::int32_t i = 0; i < proxyCount; ++i)
         {
             broadPhase->TouchProxy(f->m_proxies[i].proxyId);
@@ -247,14 +247,14 @@ void b2Body::DestroyFixture(b2Fixture* fixture)
     const float density = fixture->m_density;
 
     // Destroy any contacts associated with the fixture.
-    b2ContactEdge* edge = m_contactList;
+    const b2ContactEdge* edge = m_contactList;
     while (edge)
     {
         b2Contact* c = edge->contact;
         edge = edge->next;
 
-        b2Fixture* fixtureA = c->GetFixtureA();
-        b2Fixture* fixtureB = c->GetFixtureB();
+        const b2Fixture* fixtureA = c->GetFixtureA();
+        const b2Fixture* fixtureB = c->GetFixtureB();
 
         if (fixture == fixtureA || fixture == fixtureB)
         {
@@ -309,7 +309,7 @@ void b2Body::ResetMassData()
 
     // Accumulate mass over all fixtures.
     b2Vec2 localCenter = b2Vec2_zero;
-    for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
+    for (const b2Fixture* f = m_fixtureList; f; f = f->m_next)
     {
         if (f->m_density == 0.0f)
         {
@@ -345,7 +345,7 @@ void b2Body::ResetMassData()
     }
 
     // Move center of mass.
-    b2Vec2 oldCenter = m_sweep.c;
+    const b2Vec2 oldCenter = m_sweep.c;
     m_sweep.localCenter = localCenter;
     m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
 
@@ -386,7 +386,7 @@ void b2Body::SetMassData(const b2MassData* massData)
     }
 
     // Move center of mass.
-    b2Vec2 oldCenter = m_sweep.c;
+    const b2Vec2 oldCenter = m_sweep.c;
     m_sweep.localCenter =  massData->center;
     m_sweep.c0 = m_sweep.c = b2Mul(m_xf, m_sweep.localCenter);
 
@@ -403,7 +403,7 @@ bool b2Body::ShouldCollide(const b2Body* other) const
     }
 
     // Does a joint prevent collision?
-    for (b2JointEdge* jn = m_jointList; jn; jn = jn->next)
+    for (const b2JointEdge* jn = m_jointList; jn; jn = jn->next)
     {
         if (jn->other == other)
         {
@@ -435,7 +435,7 @@ void b2Body::SetTransform(const b2Vec2& position, float angle)
     m_sweep.a0 = angle;
 
     b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
-    for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
+    for (const b2Fixture* f = m_fixtureList; f; f = f->m_next)
     {
         f->Synchronize(broadPhase, m_xf, m_xf);
     }
@@ -444,7 +444,7 @@ void b2Body::SetTransform(const b2Vec2& position, float angle)
     m_world->m_newContacts = true;
 }
 
-void b2Body::SynchronizeFixtures()
+void b2Body::SynchronizeFixtures() const
 {
     b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
 
@@ -454,14 +454,14 @@ void b2Body::SynchronizeFixtures()
         xf1.q.Set(m_sweep.a0);
         xf1.p = m_sweep.c0 - b2Mul(xf1.q, m_sweep.localCenter);
 
-        for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
+        for (const b2Fixture* f = m_fixtureList; f; f = f->m_next)
         {
             f->Synchronize(broadPhase, xf1, m_xf);
         }
     }
     else
     {
-        for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
+        for (const b2Fixture* f = m_fixtureList; f; f = f->m_next)
         {
             f->Synchronize(broadPhase, m_xf, m_xf);
         }
@@ -503,10 +503,10 @@ void b2Body::SetEnabled(bool flag)
         }
 
         // Destroy the attached contacts.
-        b2ContactEdge* ce = m_contactList;
+        const b2ContactEdge* ce = m_contactList;
         while (ce)
         {
-            b2ContactEdge* ce0 = ce;
+	        const b2ContactEdge* ce0 = ce;
             ce = ce->next;
             m_world->m_contactManager.Destroy(ce0->contact);
         }
@@ -516,7 +516,7 @@ void b2Body::SetEnabled(bool flag)
 
 void b2Body::SetFixedRotation(bool flag)
 {
-    bool status = (m_flags & e_fixedRotationFlag) == e_fixedRotationFlag;
+	const bool status = (m_flags & e_fixedRotationFlag) == e_fixedRotationFlag;
     if (status == flag)
     {
         return;
@@ -536,9 +536,9 @@ void b2Body::SetFixedRotation(bool flag)
     ResetMassData();
 }
 
-void b2Body::Dump()
+void b2Body::Dump() const
 {
-    std::int32_t bodyIndex = m_islandIndex;
+	const std::int32_t bodyIndex = m_islandIndex;
 
     // %.9g is sufficient to save and load the same value using text
     // FLT_DECIMAL_DIG == 9
@@ -560,7 +560,7 @@ void b2Body::Dump()
     b2Dump("  bd.gravityScale = %.9g;\n", m_gravityScale);
     b2Dump("  bodies[%d] = m_world->CreateBody(&bd);\n", m_islandIndex);
     b2Dump("\n");
-    for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
+    for (const b2Fixture* f = m_fixtureList; f; f = f->m_next)
     {
         b2Dump("  {\n");
         f->Dump(bodyIndex);

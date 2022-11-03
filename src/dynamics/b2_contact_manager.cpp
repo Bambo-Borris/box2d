@@ -112,12 +112,12 @@ void b2ContactManager::Collide()
     b2Contact* c = m_contactList;
     while (c)
     {
-        b2Fixture* fixtureA = c->GetFixtureA();
-        b2Fixture* fixtureB = c->GetFixtureB();
-        std::int32_t indexA = c->GetChildIndexA();
-        std::int32_t indexB = c->GetChildIndexB();
-        b2Body* bodyA = fixtureA->GetBody();
-        b2Body* bodyB = fixtureB->GetBody();
+        b2Fixture*         fixtureA = c->GetFixtureA();
+        b2Fixture*         fixtureB = c->GetFixtureB();
+        const std::int32_t indexA   = c->GetChildIndexA();
+        const std::int32_t indexB   = c->GetChildIndexB();
+        const b2Body*      bodyA    = fixtureA->GetBody();
+        const b2Body*      bodyB    = fixtureB->GetBody();
 
         // Is this contact flagged for filtering?
         if (c->m_flags & b2Contact::e_filterFlag)
@@ -144,8 +144,8 @@ void b2ContactManager::Collide()
             c->m_flags &= ~b2Contact::e_filterFlag;
         }
 
-        bool activeA = bodyA->IsAwake() && bodyA->m_type != b2_staticBody;
-        bool activeB = bodyB->IsAwake() && bodyB->m_type != b2_staticBody;
+        const bool activeA = bodyA->IsAwake() && bodyA->m_type != b2_staticBody;
+        const bool activeB = bodyB->IsAwake() && bodyB->m_type != b2_staticBody;
 
         // At least one body must be awake and it must be dynamic or kinematic.
         if (activeA == false && activeB == false)
@@ -154,9 +154,9 @@ void b2ContactManager::Collide()
             continue;
         }
 
-        std::int32_t proxyIdA = fixtureA->m_proxies[indexA].proxyId;
-        std::int32_t proxyIdB = fixtureB->m_proxies[indexB].proxyId;
-        bool overlap = m_broadPhase.TestOverlap(proxyIdA, proxyIdB);
+        const std::int32_t proxyIdA = fixtureA->m_proxies[indexA].proxyId;
+        const std::int32_t proxyIdB = fixtureB->m_proxies[indexB].proxyId;
+        const bool         overlap  = m_broadPhase.TestOverlap(proxyIdA, proxyIdB);
 
         // Here we destroy contacts that cease to overlap in the broad-phase.
         if (overlap == false)
@@ -180,8 +180,8 @@ void b2ContactManager::FindNewContacts()
 
 void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
 {
-    b2FixtureProxy* proxyA = (b2FixtureProxy*)proxyUserDataA;
-    b2FixtureProxy* proxyB = (b2FixtureProxy*)proxyUserDataB;
+	const b2FixtureProxy* proxyA = (b2FixtureProxy*)proxyUserDataA;
+	const b2FixtureProxy* proxyB = (b2FixtureProxy*)proxyUserDataB;
 
     b2Fixture* fixtureA = proxyA->fixture;
     b2Fixture* fixtureB = proxyB->fixture;
@@ -201,15 +201,15 @@ void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
     // TODO_ERIN use a hash table to remove a potential bottleneck when both
     // bodies have a lot of contacts.
     // Does a contact already exist?
-    b2ContactEdge* edge = bodyB->GetContactList();
+	const b2ContactEdge* edge = bodyB->GetContactList();
     while (edge)
     {
         if (edge->other == bodyA)
         {
-            b2Fixture* fA = edge->contact->GetFixtureA();
-            b2Fixture* fB = edge->contact->GetFixtureB();
-            std::int32_t iA = edge->contact->GetChildIndexA();
-            std::int32_t iB = edge->contact->GetChildIndexB();
+	        const b2Fixture*   fA = edge->contact->GetFixtureA();
+	        const b2Fixture*   fB = edge->contact->GetFixtureB();
+	        const std::int32_t iA = edge->contact->GetChildIndexA();
+	        const std::int32_t iB = edge->contact->GetChildIndexB();
 
             if (fA == fixtureA && fB == fixtureB && iA == indexA && iB == indexB)
             {

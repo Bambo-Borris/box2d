@@ -129,7 +129,7 @@ inline std::int32_t b2DistanceProxy::GetVertexCount() const
     return m_count;
 }
 
-inline const b2Vec2& b2DistanceProxy::GetVertex(std::int32_t index) const
+inline const b2Vec2& b2DistanceProxy::GetVertex(const std::int32_t index) const
 {
     assert(0 <= index && index < m_count);
     return m_vertices[index];
@@ -141,7 +141,7 @@ inline std::int32_t b2DistanceProxy::GetSupport(const b2Vec2& d) const
     float bestValue = b2Dot(m_vertices[0], d);
     for (std::int32_t i = 1; i < m_count; ++i)
     {
-        float value = b2Dot(m_vertices[i], d);
+	    const float value = b2Dot(m_vertices[i], d);
         if (value > bestValue)
         {
             bestIndex = i;
@@ -158,7 +158,7 @@ inline const b2Vec2& b2DistanceProxy::GetSupportVertex(const b2Vec2& d) const
     float bestValue = b2Dot(m_vertices[0], d);
     for (std::int32_t i = 1; i < m_count; ++i)
     {
-        float value = b2Dot(m_vertices[i], d);
+	    const float value = b2Dot(m_vertices[i], d);
         if (value > bestValue)
         {
             bestIndex = i;

@@ -78,8 +78,8 @@ b2Contact* b2Contact::Create(b2Fixture* fixtureA, std::int32_t indexA, b2Fixture
         s_initialized = true;
     }
 
-    b2Shape::Type type1 = fixtureA->GetType();
-    b2Shape::Type type2 = fixtureB->GetType();
+    const b2Shape::Type type1 = fixtureA->GetType();
+    const b2Shape::Type type2 = fixtureB->GetType();
 
     assert(0 <= type1 && type1 < b2Shape::e_typeCount);
     assert(0 <= type2 && type2 < b2Shape::e_typeCount);
@@ -117,8 +117,8 @@ void b2Contact::Destroy(b2Contact* contact, b2BlockAllocator* allocator)
         fixtureB->GetBody()->SetAwake(true);
     }
 
-    b2Shape::Type typeA = fixtureA->GetType();
-    b2Shape::Type typeB = fixtureB->GetType();
+    const b2Shape::Type typeA = fixtureA->GetType();
+    const b2Shape::Type typeB = fixtureB->GetType();
 
     assert(0 <= typeA && typeA < b2Shape::e_typeCount);
     assert(0 <= typeB && typeB < b2Shape::e_typeCount);
@@ -165,17 +165,17 @@ b2Contact::b2Contact(b2Fixture* fA, std::int32_t indexA, b2Fixture* fB, std::int
 // Note: do not assume the fixture AABBs are overlapping or are valid.
 void b2Contact::Update(b2ContactListener* listener)
 {
-    b2Manifold oldManifold = m_manifold;
+	const b2Manifold oldManifold = m_manifold;
 
     // Re-enable this contact.
     m_flags |= e_enabledFlag;
 
-    bool touching = false;
-    bool wasTouching = (m_flags & e_touchingFlag) == e_touchingFlag;
+    bool       touching    = false;
+    const bool wasTouching = (m_flags & e_touchingFlag) == e_touchingFlag;
 
-    bool sensorA = m_fixtureA->IsSensor();
-    bool sensorB = m_fixtureB->IsSensor();
-    bool sensor = sensorA || sensorB;
+    const bool sensorA = m_fixtureA->IsSensor();
+    const bool sensorB = m_fixtureB->IsSensor();
+    const bool sensor  = sensorA || sensorB;
 
     b2Body* bodyA = m_fixtureA->GetBody();
     b2Body* bodyB = m_fixtureB->GetBody();
@@ -201,14 +201,14 @@ void b2Contact::Update(b2ContactListener* listener)
         // stored impulses to warm start the solver.
         for (std::int32_t i = 0; i < m_manifold.pointCount; ++i)
         {
-            b2ManifoldPoint* mp2 = m_manifold.points + i;
-            mp2->normalImpulse = 0.0f;
-            mp2->tangentImpulse = 0.0f;
-            b2ContactID id2 = mp2->id;
+            b2ManifoldPoint* mp2  = m_manifold.points + i;
+            mp2->normalImpulse    = 0.0f;
+            mp2->tangentImpulse   = 0.0f;
+            const b2ContactID id2 = mp2->id;
 
             for (std::int32_t j = 0; j < oldManifold.pointCount; ++j)
             {
-                b2ManifoldPoint* mp1 = oldManifold.points + j;
+	            const b2ManifoldPoint* mp1 = oldManifold.points + j;
 
                 if (mp1->id.key == id2.key)
                 {

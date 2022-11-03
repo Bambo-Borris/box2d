@@ -70,15 +70,15 @@ void b2WeldJoint::InitVelocityConstraints(const b2SolverData& data)
     m_invIA = m_bodyA->m_invI;
     m_invIB = m_bodyB->m_invI;
 
-    float aA = data.positions[m_indexA].a;
+    const float aA = data.positions[m_indexA].a;
     b2Vec2 vA = data.velocities[m_indexA].v;
     float wA = data.velocities[m_indexA].w;
 
-    float aB = data.positions[m_indexB].a;
+    const float aB = data.positions[m_indexB].a;
     b2Vec2 vB = data.velocities[m_indexB].v;
     float wB = data.velocities[m_indexB].w;
 
-    b2Rot qA(aA), qB(aB);
+    const b2Rot qA(aA), qB(aB);
 
     m_rA = b2Mul(qA, m_localAnchorA - m_localCenterA);
     m_rB = b2Mul(qB, m_localAnchorB - m_localCenterB);
@@ -92,8 +92,8 @@ void b2WeldJoint::InitVelocityConstraints(const b2SolverData& data)
     //     [  -r1y*iA*r1x-r2y*iB*r2x, mA+r1x^2*iA+mB+r2x^2*iB,           r1x*iA+r2x*iB]
     //     [          -r1y*iA-r2y*iB,           r1x*iA+r2x*iB,                   iA+iB]
 
-    float mA = m_invMassA, mB = m_invMassB;
-    float iA = m_invIA, iB = m_invIB;
+    const float mA = m_invMassA, mB = m_invMassB;
+    const float iA = m_invIA,    iB = m_invIB;
 
     b2Mat33 K;
     K.ex.x = mA + mB + m_rA.y * m_rA.y * iA + m_rB.y * m_rB.y * iB;
@@ -112,16 +112,16 @@ void b2WeldJoint::InitVelocityConstraints(const b2SolverData& data)
 
         float invM = iA + iB;
 
-        float C = aB - aA - m_referenceAngle;
+        const float C = aB - aA - m_referenceAngle;
 
         // Damping coefficient
-        float d = m_damping;
+        const float d = m_damping;
 
         // Spring stiffness
-        float k = m_stiffness;
+        const float k = m_stiffness;
 
         // magic formulas
-        float h = data.step.dt;
+        const float h = data.step.dt;
         m_gamma = h * (d + h * k);
         m_gamma = m_gamma != 0.0f ? 1.0f / m_gamma : 0.0f;
         m_bias = C * h * k * m_gamma;
@@ -147,7 +147,7 @@ void b2WeldJoint::InitVelocityConstraints(const b2SolverData& data)
         // Scale impulses to support a variable time step.
         m_impulse *= data.step.dtRatio;
 
-        b2Vec2 P(m_impulse.x, m_impulse.y);
+        const b2Vec2 P(m_impulse.x, m_impulse.y);
 
         vA -= mA * P;
         wA -= iA * (b2Cross(m_rA, P) + m_impulse.z);
@@ -173,26 +173,26 @@ void b2WeldJoint::SolveVelocityConstraints(const b2SolverData& data)
     b2Vec2 vB = data.velocities[m_indexB].v;
     float wB = data.velocities[m_indexB].w;
 
-    float mA = m_invMassA, mB = m_invMassB;
-    float iA = m_invIA, iB = m_invIB;
+    const float mA = m_invMassA, mB = m_invMassB;
+    const float iA = m_invIA,    iB = m_invIB;
 
     if (m_stiffness > 0.0f)
     {
-        float Cdot2 = wB - wA;
+	    const float Cdot2 = wB - wA;
 
-        float impulse2 = -m_mass.ez.z * (Cdot2 + m_bias + m_gamma * m_impulse.z);
+	    const float impulse2 = -m_mass.ez.z * (Cdot2 + m_bias + m_gamma * m_impulse.z);
         m_impulse.z += impulse2;
 
         wA -= iA * impulse2;
         wB += iB * impulse2;
 
-        b2Vec2 Cdot1 = vB + b2Cross(wB, m_rB) - vA - b2Cross(wA, m_rA);
+	    const b2Vec2 Cdot1 = vB + b2Cross(wB, m_rB) - vA - b2Cross(wA, m_rA);
 
-        b2Vec2 impulse1 = -b2Mul22(m_mass, Cdot1);
+	    const b2Vec2 impulse1 = -b2Mul22(m_mass, Cdot1);
         m_impulse.x += impulse1.x;
         m_impulse.y += impulse1.y;
 
-        b2Vec2 P = impulse1;
+	    const b2Vec2 P = impulse1;
 
         vA -= mA * P;
         wA -= iA * b2Cross(m_rA, P);
@@ -202,14 +202,14 @@ void b2WeldJoint::SolveVelocityConstraints(const b2SolverData& data)
     }
     else
     {
-        b2Vec2 Cdot1 = vB + b2Cross(wB, m_rB) - vA - b2Cross(wA, m_rA);
-        float Cdot2 = wB - wA;
-        b2Vec3 Cdot(Cdot1.x, Cdot1.y, Cdot2);
+	    const b2Vec2 Cdot1 = vB + b2Cross(wB, m_rB) - vA - b2Cross(wA, m_rA);
+	    const float  Cdot2 = wB - wA;
+	    const b2Vec3 Cdot(Cdot1.x, Cdot1.y, Cdot2);
 
-        b2Vec3 impulse = -b2Mul(m_mass, Cdot);
+	    const b2Vec3 impulse = -b2Mul(m_mass, Cdot);
         m_impulse += impulse;
 
-        b2Vec2 P(impulse.x, impulse.y);
+	    const b2Vec2 P(impulse.x, impulse.y);
 
         vA -= mA * P;
         wA -= iA * (b2Cross(m_rA, P) + impulse.z);
@@ -231,13 +231,13 @@ bool b2WeldJoint::SolvePositionConstraints(const b2SolverData& data)
     b2Vec2 cB = data.positions[m_indexB].c;
     float aB = data.positions[m_indexB].a;
 
-    b2Rot qA(aA), qB(aB);
+    const b2Rot qA(aA), qB(aB);
 
-    float mA = m_invMassA, mB = m_invMassB;
-    float iA = m_invIA, iB = m_invIB;
+    const float mA = m_invMassA, mB = m_invMassB;
+    const float iA = m_invIA,    iB = m_invIB;
 
-    b2Vec2 rA = b2Mul(qA, m_localAnchorA - m_localCenterA);
-    b2Vec2 rB = b2Mul(qB, m_localAnchorB - m_localCenterB);
+    const b2Vec2 rA = b2Mul(qA, m_localAnchorA - m_localCenterA);
+    const b2Vec2 rB = b2Mul(qB, m_localAnchorB - m_localCenterB);
 
     float positionError, angularError;
 
@@ -254,12 +254,12 @@ bool b2WeldJoint::SolvePositionConstraints(const b2SolverData& data)
 
     if (m_stiffness > 0.0f)
     {
-        b2Vec2 C1 =  cB + rB - cA - rA;
+	    const b2Vec2 C1 =  cB + rB - cA - rA;
 
         positionError = C1.Length();
         angularError = 0.0f;
 
-        b2Vec2 P = -K.Solve22(C1);
+	    const b2Vec2 P = -K.Solve22(C1);
 
         cA -= mA * P;
         aA -= iA * b2Cross(rA, P);
@@ -269,13 +269,13 @@ bool b2WeldJoint::SolvePositionConstraints(const b2SolverData& data)
     }
     else
     {
-        b2Vec2 C1 =  cB + rB - cA - rA;
-        float C2 = aB - aA - m_referenceAngle;
+	    const b2Vec2 C1 =  cB + rB - cA - rA;
+	    const float  C2 = aB - aA - m_referenceAngle;
 
         positionError = C1.Length();
         angularError = b2Abs(C2);
 
-        b2Vec3 C(C1.x, C1.y, C2);
+	    const b2Vec3 C(C1.x, C1.y, C2);
 
         b2Vec3 impulse;
         if (K.ez.z > 0.0f)
@@ -284,11 +284,11 @@ bool b2WeldJoint::SolvePositionConstraints(const b2SolverData& data)
         }
         else
         {
-            b2Vec2 impulse2 = -K.Solve22(C1);
+	        const b2Vec2 impulse2 = -K.Solve22(C1);
             impulse.Set(impulse2.x, impulse2.y, 0.0f);
         }
 
-        b2Vec2 P(impulse.x, impulse.y);
+	    const b2Vec2 P(impulse.x, impulse.y);
 
         cA -= mA * P;
         aA -= iA * (b2Cross(rA, P) + impulse.z);
@@ -317,7 +317,7 @@ b2Vec2 b2WeldJoint::GetAnchorB() const
 
 b2Vec2 b2WeldJoint::GetReactionForce(float inv_dt) const
 {
-    b2Vec2 P(m_impulse.x, m_impulse.y);
+	const b2Vec2 P(m_impulse.x, m_impulse.y);
     return inv_dt * P;
 }
 
@@ -328,8 +328,8 @@ float b2WeldJoint::GetReactionTorque(float inv_dt) const
 
 void b2WeldJoint::Dump()
 {
-    std::int32_t indexA = m_bodyA->m_islandIndex;
-    std::int32_t indexB = m_bodyB->m_islandIndex;
+	const std::int32_t indexA = m_bodyA->m_islandIndex;
+	const std::int32_t indexB = m_bodyB->m_islandIndex;
 
     b2Dump("  b2WeldJointDef jd;\n");
     b2Dump("  jd.bodyA = bodies[%d];\n", indexA);

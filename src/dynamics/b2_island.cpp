@@ -185,7 +185,7 @@ b2Island::~b2Island()
     m_allocator->Free(m_bodies);
 }
 
-void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep)
+void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep) const
 {
     b2Timer timer;
 
@@ -386,7 +386,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
     }
 }
 
-void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::int32_t toiIndexB)
+void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::int32_t toiIndexB) const
 {
     assert(toiIndexA < m_bodyCount);
     assert(toiIndexB < m_bodyCount);
@@ -394,7 +394,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::
     // Initialize the body state.
     for (std::int32_t i = 0; i < m_bodyCount; ++i)
     {
-        b2Body* b = m_bodies[i];
+	    const b2Body* b = m_bodies[i];
         m_positions[i].c = b->m_sweep.c;
         m_positions[i].a = b->m_sweep.a;
         m_velocities[i].v = b->m_linearVelocity;
@@ -408,12 +408,12 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::
     contactSolverDef.step = subStep;
     contactSolverDef.positions = m_positions;
     contactSolverDef.velocities = m_velocities;
-    b2ContactSolver contactSolver(&contactSolverDef);
+    const b2ContactSolver contactSolver(&contactSolverDef);
 
     // Solve position constraints.
     for (std::int32_t i = 0; i < subStep.positionIterations; ++i)
     {
-        bool contactsOkay = contactSolver.SolveTOIPositionConstraints(toiIndexA, toiIndexB);
+	    const bool contactsOkay = contactSolver.SolveTOIPositionConstraints(toiIndexA, toiIndexB);
         if (contactsOkay)
         {
             break;
@@ -472,7 +472,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::
     // Don't store the TOI contact forces for warm starting
     // because they can be quite large.
 
-    float h = subStep.dt;
+    const float h = subStep.dt;
 
     // Integrate positions
     for (std::int32_t i = 0; i < m_bodyCount; ++i)
@@ -486,14 +486,14 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::
         b2Vec2 translation = h * v;
         if (b2Dot(translation, translation) > b2_maxTranslationSquared)
         {
-            float ratio = b2_maxTranslation / translation.Length();
+	        const float ratio = b2_maxTranslation / translation.Length();
             v *= ratio;
         }
 
-        float rotation = h * w;
+        const float rotation = h * w;
         if (rotation * rotation > b2_maxRotationSquared)
         {
-            float ratio = b2_maxRotation / b2Abs(rotation);
+	        const float ratio = b2_maxRotation / b2Abs(rotation);
             w *= ratio;
         }
 
@@ -518,7 +518,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::
     Report(contactSolver.m_velocityConstraints);
 }
 
-void b2Island::Report(const b2ContactVelocityConstraint* constraints)
+void b2Island::Report(const b2ContactVelocityConstraint* constraints) const
 {
     if (m_listener == nullptr)
     {

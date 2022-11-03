@@ -122,7 +122,7 @@ void* b2BlockAllocator::HandleAllocate(std::size_t size)
         return b2Alloc(size);
     }
 
-    std::int32_t index = b2_sizeMap.values[size];
+    const std::int32_t index = b2_sizeMap.values[size];
     assert(0 <= index && index < b2_blockSizeCount);
 
     if (m_freeLists[index])
@@ -148,9 +148,9 @@ void* b2BlockAllocator::HandleAllocate(std::size_t size)
 #if defined(_DEBUG)
         memset(chunk->blocks, 0xcd, b2_chunkSize);
 #endif
-        std::int32_t blockSize = b2_blockSizes[index];
-        chunk->blockSize = blockSize;
-        std::int32_t blockCount = b2_chunkSize / blockSize;
+        const std::int32_t blockSize  = b2_blockSizes[index];
+        chunk->blockSize              = blockSize;
+        const std::int32_t blockCount = b2_chunkSize / blockSize;
         assert(blockCount * blockSize <= b2_chunkSize);
         for (std::int32_t i = 0; i < blockCount - 1; ++i)
         {
