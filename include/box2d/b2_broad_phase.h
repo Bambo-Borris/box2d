@@ -194,7 +194,7 @@ void b2BroadPhase::UpdatePairs(T* callback)
     // Send pairs to caller
     for (std::int32_t i = 0; i < m_pairCount; ++i)
     {
-	    const b2Pair* primaryPair = m_pairBuffer + i;
+        const b2Pair* primaryPair = m_pairBuffer + i;
         void* userDataA = m_tree.GetUserData(primaryPair->proxyIdA);
         void* userDataB = m_tree.GetUserData(primaryPair->proxyIdB);
 
@@ -204,7 +204,7 @@ void b2BroadPhase::UpdatePairs(T* callback)
     // Clear move flags
     for (std::int32_t i = 0; i < m_moveCount; ++i)
     {
-	    const std::int32_t proxyId = m_moveBuffer[i];
+        const std::int32_t proxyId = m_moveBuffer[i];
         if (proxyId == e_nullProxy)
         {
             continue;

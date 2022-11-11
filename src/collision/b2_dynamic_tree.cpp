@@ -106,10 +106,10 @@ void b2DynamicTree::FreeNode(std::int32_t nodeId)
 // the node pool.
 std::int32_t b2DynamicTree::CreateProxy(const b2AABB& aabb, void* userData)
 {
-	const std::int32_t proxyId = AllocateNode();
+    const std::int32_t proxyId = AllocateNode();
 
     // Fatten the aabb.
-	const b2Vec2 r(b2_aabbExtension, b2_aabbExtension);
+    const b2Vec2 r(b2_aabbExtension, b2_aabbExtension);
     m_nodes[proxyId].aabb.lowerBound = aabb.lowerBound - r;
     m_nodes[proxyId].aabb.upperBound = aabb.upperBound + r;
     m_nodes[proxyId].userData = userData;
@@ -210,20 +210,20 @@ void b2DynamicTree::InsertLeaf(std::int32_t leaf)
     std::int32_t index = m_root;
     while (m_nodes[index].IsLeaf() == false)
     {
-	    const std::int32_t child1 = m_nodes[index].child1;
-	    const std::int32_t child2 = m_nodes[index].child2;
+        const std::int32_t child1 = m_nodes[index].child1;
+        const std::int32_t child2 = m_nodes[index].child2;
 
-	    const float area = m_nodes[index].aabb.GetPerimeter();
+        const float area = m_nodes[index].aabb.GetPerimeter();
 
         b2AABB combinedAABB;
         combinedAABB.Combine(m_nodes[index].aabb, leafAABB);
-	    const float combinedArea = combinedAABB.GetPerimeter();
+        const float combinedArea = combinedAABB.GetPerimeter();
 
         // Cost of creating a new parent for this node and the new leaf
-	    const float cost = 2.0f * combinedArea;
+        const float cost = 2.0f * combinedArea;
 
         // Minimum cost of pushing the leaf further down the tree
-	    const float inheritanceCost = 2.0f * (combinedArea - area);
+        const float inheritanceCost = 2.0f * (combinedArea - area);
 
         // Cost of descending into child1
         float cost1;
@@ -418,8 +418,8 @@ std::int32_t b2DynamicTree::Balance(std::int32_t iA)
     // Rotate C up
     if (balance > 1)
     {
-	    const std::int32_t iF = C->child1;
-	    const std::int32_t iG = C->child2;
+        const std::int32_t iF = C->child1;
+        const std::int32_t iG = C->child2;
         b2TreeNode*        F  = m_nodes + iF;
         b2TreeNode*        G  = m_nodes + iG;
         assert(0 <= iF && iF < m_nodeCapacity);
@@ -478,8 +478,8 @@ std::int32_t b2DynamicTree::Balance(std::int32_t iA)
     // Rotate B up
     if (balance < -1)
     {
-	    const std::int32_t iD = B->child1;
-	    const std::int32_t iE = B->child2;
+        const std::int32_t iD = B->child1;
+        const std::int32_t iE = B->child2;
         b2TreeNode*        D  = m_nodes + iD;
         b2TreeNode*        E  = m_nodes + iE;
         assert(0 <= iD && iD < m_nodeCapacity);
@@ -593,7 +593,7 @@ std::int32_t b2DynamicTree::ComputeHeight(std::int32_t nodeId) const
 
 std::int32_t b2DynamicTree::ComputeHeight() const
 {
-	const std::int32_t height = ComputeHeight(m_root);
+    const std::int32_t height = ComputeHeight(m_root);
     return height;
 }
 

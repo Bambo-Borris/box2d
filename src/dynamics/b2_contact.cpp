@@ -165,7 +165,7 @@ b2Contact::b2Contact(b2Fixture* fA, std::int32_t indexA, b2Fixture* fB, std::int
 // Note: do not assume the fixture AABBs are overlapping or are valid.
 void b2Contact::Update(b2ContactListener* listener)
 {
-	const b2Manifold oldManifold = m_manifold;
+    const b2Manifold oldManifold = m_manifold;
 
     // Re-enable this contact.
     m_flags |= e_enabledFlag;
@@ -208,7 +208,7 @@ void b2Contact::Update(b2ContactListener* listener)
 
             for (std::int32_t j = 0; j < oldManifold.pointCount; ++j)
             {
-	            const b2ManifoldPoint* mp1 = oldManifold.points + j;
+                const b2ManifoldPoint* mp1 = oldManifold.points + j;
 
                 if (mp1->id.key == id2.key)
                 {

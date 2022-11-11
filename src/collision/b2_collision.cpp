@@ -101,7 +101,7 @@ void b2GetPointStates(std::array<b2PointState, b2_maxManifoldPoints>&  state1, s
     // Detect persists and removes.
     for (std::int32_t i = 0; i < manifold1->pointCount; ++i)
     {
-	    const b2ContactID id = manifold1->points[i].id;
+        const b2ContactID id = manifold1->points[i].id;
 
         state1[i] = b2_removeState;
 
@@ -118,7 +118,7 @@ void b2GetPointStates(std::array<b2PointState, b2_maxManifoldPoints>&  state1, s
     // Detect persists and adds.
     for (std::int32_t i = 0; i < manifold2->pointCount; ++i)
     {
-	    const b2ContactID id = manifold2->points[i].id;
+        const b2ContactID id = manifold2->points[i].id;
 
         state2[i] = b2_addState;
 
@@ -157,7 +157,7 @@ bool b2AABB::RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const
         }
         else
         {
-	        const float inv_d = 1.0f / d(i);
+            const float inv_d = 1.0f / d(i);
             float t1 = (lowerBound(i) - p(i)) * inv_d;
             float t2 = (upperBound(i) - p(i)) * inv_d;
 

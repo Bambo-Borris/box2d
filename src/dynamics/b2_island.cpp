@@ -394,7 +394,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::
     // Initialize the body state.
     for (std::int32_t i = 0; i < m_bodyCount; ++i)
     {
-	    const b2Body* b = m_bodies[i];
+        const b2Body* b = m_bodies[i];
         m_positions[i].c = b->m_sweep.c;
         m_positions[i].a = b->m_sweep.a;
         m_velocities[i].v = b->m_linearVelocity;
@@ -413,7 +413,7 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::
     // Solve position constraints.
     for (std::int32_t i = 0; i < subStep.positionIterations; ++i)
     {
-	    const bool contactsOkay = contactSolver.SolveTOIPositionConstraints(toiIndexA, toiIndexB);
+        const bool contactsOkay = contactSolver.SolveTOIPositionConstraints(toiIndexA, toiIndexB);
         if (contactsOkay)
         {
             break;
@@ -486,14 +486,14 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::
         b2Vec2 translation = h * v;
         if (b2Dot(translation, translation) > b2_maxTranslationSquared)
         {
-	        const float ratio = b2_maxTranslation / translation.Length();
+            const float ratio = b2_maxTranslation / translation.Length();
             v *= ratio;
         }
 
         const float rotation = h * w;
         if (rotation * rotation > b2_maxRotationSquared)
         {
-	        const float ratio = b2_maxRotation / b2Abs(rotation);
+            const float ratio = b2_maxRotation / b2Abs(rotation);
             w *= ratio;
         }
 

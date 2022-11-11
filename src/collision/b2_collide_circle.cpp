@@ -73,7 +73,7 @@ void b2CollidePolygonAndCircle(
 
     for (std::int32_t i = 0; i < vertexCount; ++i)
     {
-	    const float s = b2Dot(normals[i], cLocal - vertices[i]);
+        const float s = b2Dot(normals[i], cLocal - vertices[i]);
 
         if (s > radius)
         {
@@ -141,8 +141,8 @@ void b2CollidePolygonAndCircle(
     }
     else
     {
-	    const b2Vec2 faceCenter = 0.5f * (v1 + v2);
-	    const float  s          = b2Dot(cLocal - faceCenter, normals[vertIndex1]);
+        const b2Vec2 faceCenter = 0.5f * (v1 + v2);
+        const float  s          = b2Dot(cLocal - faceCenter, normals[vertIndex1]);
         if (s > radius)
         {
             return;

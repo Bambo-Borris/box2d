@@ -275,7 +275,7 @@ b2Vec2 b2PulleyJoint::GetAnchorB() const
 
 b2Vec2 b2PulleyJoint::GetReactionForce(float inv_dt) const
 {
-	const b2Vec2 P = m_impulse * m_uB;
+    const b2Vec2 P = m_impulse * m_uB;
     return inv_dt * P;
 }
 
@@ -312,24 +312,24 @@ float b2PulleyJoint::GetRatio() const
 
 float b2PulleyJoint::GetCurrentLengthA() const
 {
-	const b2Vec2 p = m_bodyA->GetWorldPoint(m_localAnchorA);
-	const b2Vec2 s = m_groundAnchorA;
-	const b2Vec2 d = p - s;
+    const b2Vec2 p = m_bodyA->GetWorldPoint(m_localAnchorA);
+    const b2Vec2 s = m_groundAnchorA;
+    const b2Vec2 d = p - s;
     return d.Length();
 }
 
 float b2PulleyJoint::GetCurrentLengthB() const
 {
-	const b2Vec2 p = m_bodyB->GetWorldPoint(m_localAnchorB);
-	const b2Vec2 s = m_groundAnchorB;
-	const b2Vec2 d = p - s;
+    const b2Vec2 p = m_bodyB->GetWorldPoint(m_localAnchorB);
+    const b2Vec2 s = m_groundAnchorB;
+    const b2Vec2 d = p - s;
     return d.Length();
 }
 
 void b2PulleyJoint::Dump()
 {
-	const std::int32_t indexA = m_bodyA->m_islandIndex;
-	const std::int32_t indexB = m_bodyB->m_islandIndex;
+    const std::int32_t indexA = m_bodyA->m_islandIndex;
+    const std::int32_t indexB = m_bodyB->m_islandIndex;
 
     b2Dump("  b2PulleyJointDef jd;\n");
     b2Dump("  jd.bodyA = bodies[%d];\n", indexA);

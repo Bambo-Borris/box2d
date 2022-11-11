@@ -40,8 +40,8 @@ std::int32_t b2CircleShape::GetChildCount() const
 
 bool b2CircleShape::TestPoint(const b2Transform& transform, const b2Vec2& p) const
 {
-	const b2Vec2 center = transform.p + b2Mul(transform.q, m_p);
-	const b2Vec2 d      = p - center;
+    const b2Vec2 center = transform.p + b2Mul(transform.q, m_p);
+    const b2Vec2 d      = p - center;
     return b2Dot(d, d) <= m_radius * m_radius;
 }
 

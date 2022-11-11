@@ -203,7 +203,7 @@ inline void b2DynamicTree::Query(T* callback, const b2AABB& aabb) const
         {
             if (node->IsLeaf())
             {
-	            const bool proceed = callback->QueryCallback(nodeId);
+                const bool proceed = callback->QueryCallback(nodeId);
                 if (proceed == false)
                 {
                     return;
@@ -221,15 +221,15 @@ inline void b2DynamicTree::Query(T* callback, const b2AABB& aabb) const
 template <typename T>
 inline void b2DynamicTree::RayCast(T* callback, const b2RayCastInput& input) const
 {
-	const b2Vec2 p1 = input.p1;
-	const b2Vec2 p2 = input.p2;
+    const b2Vec2 p1 = input.p1;
+    const b2Vec2 p2 = input.p2;
     b2Vec2       r  = p2 - p1;
     assert(r.LengthSquared() > 0.0f);
     r.Normalize();
 
     // v is perpendicular to the segment.
-	const b2Vec2 v     = b2Cross(1.0f, r);
-	const b2Vec2 abs_v = b2Abs(v);
+    const b2Vec2 v     = b2Cross(1.0f, r);
+    const b2Vec2 abs_v = b2Abs(v);
 
     // Separating axis for segment (Gino, p80).
     // |dot(v, p1 - c)| > dot(|v|, h)
@@ -239,7 +239,7 @@ inline void b2DynamicTree::RayCast(T* callback, const b2RayCastInput& input) con
     // Build a bounding box for the segment.
     b2AABB segmentAABB;
     {
-	    const b2Vec2 t = p1 + maxFraction * (p2 - p1);
+        const b2Vec2 t = p1 + maxFraction * (p2 - p1);
         segmentAABB.lowerBound = b2Min(p1, t);
         segmentAABB.upperBound = b2Max(p1, t);
     }

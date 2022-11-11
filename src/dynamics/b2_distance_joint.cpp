@@ -200,18 +200,18 @@ void b2DistanceJoint::SolveVelocityConstraints(const b2SolverData& data)
 
         // lower
         {
-	        const float C    = m_currentLength - m_minLength;
-	        const float bias = b2Max(0.0f, C) * data.step.inv_dt;
+            const float C    = m_currentLength - m_minLength;
+            const float bias = b2Max(0.0f, C) * data.step.inv_dt;
 
-	        const b2Vec2 vpA  = vA + b2Cross(wA, m_rA);
-	        const b2Vec2 vpB  = vB + b2Cross(wB, m_rB);
-	        const float  Cdot = b2Dot(m_u, vpB - vpA);
+            const b2Vec2 vpA  = vA + b2Cross(wA, m_rA);
+            const b2Vec2 vpB  = vB + b2Cross(wB, m_rB);
+            const float  Cdot = b2Dot(m_u, vpB - vpA);
 
             float       impulse    = -m_mass * (Cdot + bias);
-	        const float oldImpulse = m_lowerImpulse;
+            const float oldImpulse = m_lowerImpulse;
             m_lowerImpulse         = b2Max(0.0f, m_lowerImpulse + impulse);
             impulse                = m_lowerImpulse - oldImpulse;
-	        const b2Vec2 P         = impulse * m_u;
+            const b2Vec2 P         = impulse * m_u;
 
             vA -= m_invMassA * P;
             wA -= m_invIA * b2Cross(m_rA, P);
@@ -221,18 +221,18 @@ void b2DistanceJoint::SolveVelocityConstraints(const b2SolverData& data)
 
         // upper
         {
-	        const float C    = m_maxLength - m_currentLength;
-	        const float bias = b2Max(0.0f, C) * data.step.inv_dt;
+            const float C    = m_maxLength - m_currentLength;
+            const float bias = b2Max(0.0f, C) * data.step.inv_dt;
 
-	        const b2Vec2 vpA  = vA + b2Cross(wA, m_rA);
-	        const b2Vec2 vpB  = vB + b2Cross(wB, m_rB);
-	        const float  Cdot = b2Dot(m_u, vpA - vpB);
+            const b2Vec2 vpA  = vA + b2Cross(wA, m_rA);
+            const b2Vec2 vpB  = vB + b2Cross(wB, m_rB);
+            const float  Cdot = b2Dot(m_u, vpA - vpB);
 
             float       impulse    = -m_mass * (Cdot + bias);
-	        const float oldImpulse = m_upperImpulse;
+            const float oldImpulse = m_upperImpulse;
             m_upperImpulse         = b2Max(0.0f, m_upperImpulse + impulse);
             impulse                = m_upperImpulse - oldImpulse;
-	        const b2Vec2 P         = -impulse * m_u;
+            const b2Vec2 P         = -impulse * m_u;
 
             vA -= m_invMassA * P;
             wA -= m_invIA * b2Cross(m_rA, P);
@@ -325,7 +325,7 @@ b2Vec2 b2DistanceJoint::GetAnchorB() const
 
 b2Vec2 b2DistanceJoint::GetReactionForce(float inv_dt) const
 {
-	const b2Vec2 F = inv_dt * (m_impulse + m_lowerImpulse - m_upperImpulse) * m_u;
+    const b2Vec2 F = inv_dt * (m_impulse + m_lowerImpulse - m_upperImpulse) * m_u;
     return F;
 }
 
@@ -358,17 +358,17 @@ float b2DistanceJoint::SetMaxLength(float maxLength)
 
 float b2DistanceJoint::GetCurrentLength() const
 {
-	const b2Vec2 pA     = m_bodyA->GetWorldPoint(m_localAnchorA);
-	const b2Vec2 pB     = m_bodyB->GetWorldPoint(m_localAnchorB);
-	const b2Vec2 d      = pB - pA;
-	const float  length = d.Length();
+    const b2Vec2 pA     = m_bodyA->GetWorldPoint(m_localAnchorA);
+    const b2Vec2 pB     = m_bodyB->GetWorldPoint(m_localAnchorB);
+    const b2Vec2 d      = pB - pA;
+    const float  length = d.Length();
     return length;
 }
 
 void b2DistanceJoint::Dump()
 {
-	const std::int32_t indexA = m_bodyA->m_islandIndex;
-	const std::int32_t indexB = m_bodyB->m_islandIndex;
+    const std::int32_t indexA = m_bodyA->m_islandIndex;
+    const std::int32_t indexB = m_bodyB->m_islandIndex;
 
     b2Dump("  b2DistanceJointDef jd;\n");
     b2Dump("  jd.bodyA = bodies[%d];\n", indexA);
@@ -408,13 +408,13 @@ void b2DistanceJoint::Draw(b2Draw* draw) const
     {
         if (m_minLength > b2_linearSlop)
         {
-	        const b2Vec2 pMin = pA + m_minLength * axis;
+            const b2Vec2 pMin = pA + m_minLength * axis;
             draw->DrawPoint(pMin, 4.0f, c2);
         }
 
         if (m_maxLength < FLT_MAX)
         {
-	        const b2Vec2 pMax = pA + m_maxLength * axis;
+            const b2Vec2 pMax = pA + m_maxLength * axis;
             draw->DrawPoint(pMax, 4.0f, c3);
         }
     }

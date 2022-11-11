@@ -111,7 +111,7 @@ b2ContactSolver::b2ContactSolver(b2ContactSolverDef* def)
 
         for (std::int32_t j = 0; j < pointCount; ++j)
         {
-	        const b2ManifoldPoint* cp = manifold->points + j;
+            const b2ManifoldPoint* cp = manifold->points + j;
             b2VelocityConstraintPoint* vcp = vc->points + j;
 
             if (m_step.warmStarting)
@@ -223,17 +223,17 @@ void b2ContactSolver::InitializeVelocityConstraints() const
         // If we have two points, then prepare the block solver.
         if (vc->pointCount == 2 && g_blockSolve)
         {
-	        const b2VelocityConstraintPoint* vcp1 = vc->points + 0;
-	        const b2VelocityConstraintPoint* vcp2 = vc->points + 1;
+            const b2VelocityConstraintPoint* vcp1 = vc->points + 0;
+            const b2VelocityConstraintPoint* vcp2 = vc->points + 1;
 
-	        const float rn1A = b2Cross(vcp1->rA, vc->normal);
-	        const float rn1B = b2Cross(vcp1->rB, vc->normal);
-	        const float rn2A = b2Cross(vcp2->rA, vc->normal);
-	        const float rn2B = b2Cross(vcp2->rB, vc->normal);
+            const float rn1A = b2Cross(vcp1->rA, vc->normal);
+            const float rn1B = b2Cross(vcp1->rB, vc->normal);
+            const float rn2A = b2Cross(vcp2->rA, vc->normal);
+            const float rn2B = b2Cross(vcp2->rB, vc->normal);
 
-	        const float k11 = mA + mB + iA * rn1A * rn1A + iB * rn1B * rn1B;
-	        const float k22 = mA + mB + iA * rn2A * rn2A + iB * rn2B * rn2B;
-	        const float k12 = mA + mB + iA * rn1A * rn2A + iB * rn1B * rn2B;
+            const float k11 = mA + mB + iA * rn1A * rn1A + iB * rn1B * rn1B;
+            const float k22 = mA + mB + iA * rn2A * rn2A + iB * rn2B * rn2B;
+            const float k12 = mA + mB + iA * rn1A * rn2A + iB * rn1B * rn2B;
 
             // Ensure a reasonable condition number.
             const float k_maxConditionNumber = 1000.0f;
@@ -259,7 +259,7 @@ void b2ContactSolver::WarmStart() const
     // Warm start.
     for (std::int32_t i = 0; i < m_count; ++i)
     {
-	    const b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
+        const b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
 
         const std::int32_t indexA     = vc->indexA;
         const std::int32_t indexB     = vc->indexB;
@@ -279,7 +279,7 @@ void b2ContactSolver::WarmStart() const
 
         for (std::int32_t j = 0; j < pointCount; ++j)
         {
-	        const b2VelocityConstraintPoint* vcp = vc->points + j;
+            const b2VelocityConstraintPoint* vcp = vc->points + j;
             b2Vec2 P = vcp->normalImpulse * normal + vcp->tangentImpulse * tangent;
             wA -= iA * b2Cross(vcp->rA, P);
             vA -= mA * P;
@@ -610,7 +610,7 @@ void b2ContactSolver::StoreImpulses() const
 {
     for (std::int32_t i = 0; i < m_count; ++i)
     {
-	    const b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
+        const b2ContactVelocityConstraint* vc = m_velocityConstraints + i;
         b2Manifold* manifold = m_contacts[vc->contactIndex]->GetManifold();
 
         for (std::int32_t j = 0; j < vc->pointCount; ++j)
@@ -631,8 +631,8 @@ struct b2PositionSolverManifold
         {
         case b2Manifold::e_circles:
             {
-	            const b2Vec2 pointA = b2Mul(xfA, pc->localPoint);
-	            const b2Vec2 pointB = b2Mul(xfB, pc->localPoints[0]);
+                const b2Vec2 pointA = b2Mul(xfA, pc->localPoint);
+                const b2Vec2 pointB = b2Mul(xfB, pc->localPoints[0]);
                 normal              = pointB - pointA;
                 normal.Normalize();
                 point = 0.5f * (pointA + pointB);
@@ -679,7 +679,7 @@ bool b2ContactSolver::SolvePositionConstraints() const
 
     for (std::int32_t i = 0; i < m_count; ++i)
     {
-	    const b2ContactPositionConstraint* pc = m_positionConstraints + i;
+        const b2ContactPositionConstraint* pc = m_positionConstraints + i;
 
         const std::int32_t indexA       = pc->indexA;
         const std::int32_t indexB       = pc->indexB;
@@ -758,7 +758,7 @@ bool b2ContactSolver::SolveTOIPositionConstraints(std::int32_t toiIndexA, std::i
 
     for (std::int32_t i = 0; i < m_count; ++i)
     {
-	    const b2ContactPositionConstraint* pc = m_positionConstraints + i;
+        const b2ContactPositionConstraint* pc = m_positionConstraints + i;
 
         const std::int32_t indexA       = pc->indexA;
         const std::int32_t indexB       = pc->indexB;

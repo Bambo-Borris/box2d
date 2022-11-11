@@ -131,8 +131,8 @@ struct b2Simplex
         // old metric then flush the simplex.
         if (m_count > 1)
         {
-	        const float metric1 = cache->metric;
-	        const float metric2 = GetMetric();
+            const float metric1 = cache->metric;
+            const float metric2 = GetMetric();
             if (metric2 < 0.5f * metric1 || 2.0f * metric1 < metric2 || metric2 < FLT_EPSILON)
             {
                 // Reset the simplex.
@@ -177,8 +177,8 @@ struct b2Simplex
 
         case 2:
             {
-	            const b2Vec2 e12 = m_v2.w - m_v1.w;
-	            const float  sgn = b2Cross(e12, -m_v1.w);
+                const b2Vec2 e12 = m_v2.w - m_v1.w;
+                const float  sgn = b2Cross(e12, -m_v1.w);
                 if (sgn > 0.0f)
                 {
                     // Origin is left of e12.
@@ -305,12 +305,12 @@ struct b2Simplex
 // a2 = d12_2 / d12
 void b2Simplex::Solve2()
 {
-	const b2Vec2 w1  = m_v1.w;
-	const b2Vec2 w2  = m_v2.w;
-	const b2Vec2 e12 = w2 - w1;
+    const b2Vec2 w1  = m_v1.w;
+    const b2Vec2 w2  = m_v2.w;
+    const b2Vec2 e12 = w2 - w1;
 
     // w1 region
-	const float d12_2 = -b2Dot(w1, e12);
+    const float d12_2 = -b2Dot(w1, e12);
     if (d12_2 <= 0.0f)
     {
         // a2 <= 0, so we clamp it to 0
@@ -320,7 +320,7 @@ void b2Simplex::Solve2()
     }
 
     // w2 region
-	const float d12_1 = b2Dot(w2, e12);
+    const float d12_1 = b2Dot(w2, e12);
     if (d12_1 <= 0.0f)
     {
         // a1 <= 0, so we clamp it to 0
@@ -331,7 +331,7 @@ void b2Simplex::Solve2()
     }
 
     // Must be in e12 region.
-	const float inv_d12 = 1.0f / (d12_1 + d12_2);
+    const float inv_d12 = 1.0f / (d12_1 + d12_2);
     m_v1.a = d12_1 * inv_d12;
     m_v2.a = d12_2 * inv_d12;
     m_count = 2;
@@ -344,46 +344,46 @@ void b2Simplex::Solve2()
 // - inside the triangle
 void b2Simplex::Solve3()
 {
-	const b2Vec2 w1 = m_v1.w;
-	const b2Vec2 w2 = m_v2.w;
-	const b2Vec2 w3 = m_v3.w;
+    const b2Vec2 w1 = m_v1.w;
+    const b2Vec2 w2 = m_v2.w;
+    const b2Vec2 w3 = m_v3.w;
 
     // Edge12
     // [1      1     ][a1] = [1]
     // [w1.e12 w2.e12][a2] = [0]
     // a3 = 0
-	const b2Vec2 e12   = w2 - w1;
-	const float  w1e12 = b2Dot(w1, e12);
-	const float  w2e12 = b2Dot(w2, e12);
-	const float  d12_1 = w2e12;
-	const float  d12_2 = -w1e12;
+    const b2Vec2 e12   = w2 - w1;
+    const float  w1e12 = b2Dot(w1, e12);
+    const float  w2e12 = b2Dot(w2, e12);
+    const float  d12_1 = w2e12;
+    const float  d12_2 = -w1e12;
 
     // Edge13
     // [1      1     ][a1] = [1]
     // [w1.e13 w3.e13][a3] = [0]
     // a2 = 0
-	const b2Vec2 e13   = w3 - w1;
-	const float  w1e13 = b2Dot(w1, e13);
-	const float  w3e13 = b2Dot(w3, e13);
-	const float  d13_1 = w3e13;
-	const float  d13_2 = -w1e13;
+    const b2Vec2 e13   = w3 - w1;
+    const float  w1e13 = b2Dot(w1, e13);
+    const float  w3e13 = b2Dot(w3, e13);
+    const float  d13_1 = w3e13;
+    const float  d13_2 = -w1e13;
 
     // Edge23
     // [1      1     ][a2] = [1]
     // [w2.e23 w3.e23][a3] = [0]
     // a1 = 0
-	const b2Vec2 e23   = w3 - w2;
-	const float  w2e23 = b2Dot(w2, e23);
-	const float  w3e23 = b2Dot(w3, e23);
-	const float  d23_1 = w3e23;
-	const float  d23_2 = -w2e23;
+    const b2Vec2 e23   = w3 - w2;
+    const float  w2e23 = b2Dot(w2, e23);
+    const float  w3e23 = b2Dot(w3, e23);
+    const float  d23_1 = w3e23;
+    const float  d23_2 = -w2e23;
 
     // Triangle123
-	const float n123 = b2Cross(e12, e13);
+    const float n123 = b2Cross(e12, e13);
 
-	const float d123_1 = n123 * b2Cross(w2, w3);
-	const float d123_2 = n123 * b2Cross(w3, w1);
-	const float d123_3 = n123 * b2Cross(w1, w2);
+    const float d123_1 = n123 * b2Cross(w2, w3);
+    const float d123_2 = n123 * b2Cross(w3, w1);
+    const float d123_3 = n123 * b2Cross(w1, w2);
 
     // w1 region
     if (d12_2 <= 0.0f && d13_2 <= 0.0f)
@@ -396,7 +396,7 @@ void b2Simplex::Solve3()
     // e12
     if (d12_1 > 0.0f && d12_2 > 0.0f && d123_3 <= 0.0f)
     {
-	    const float inv_d12 = 1.0f / (d12_1 + d12_2);
+        const float inv_d12 = 1.0f / (d12_1 + d12_2);
         m_v1.a = d12_1 * inv_d12;
         m_v2.a = d12_2 * inv_d12;
         m_count = 2;
@@ -406,7 +406,7 @@ void b2Simplex::Solve3()
     // e13
     if (d13_1 > 0.0f && d13_2 > 0.0f && d123_2 <= 0.0f)
     {
-	    const float inv_d13 = 1.0f / (d13_1 + d13_2);
+        const float inv_d13 = 1.0f / (d13_1 + d13_2);
         m_v1.a = d13_1 * inv_d13;
         m_v3.a = d13_2 * inv_d13;
         m_count = 2;
@@ -435,7 +435,7 @@ void b2Simplex::Solve3()
     // e23
     if (d23_1 > 0.0f && d23_2 > 0.0f && d123_1 <= 0.0f)
     {
-	    const float inv_d23 = 1.0f / (d23_1 + d23_2);
+        const float inv_d23 = 1.0f / (d23_1 + d23_2);
         m_v2.a = d23_1 * inv_d23;
         m_v3.a = d23_2 * inv_d23;
         m_count = 2;
@@ -444,7 +444,7 @@ void b2Simplex::Solve3()
     }
 
     // Must be in triangle123
-	const float inv_d123 = 1.0f / (d123_1 + d123_2 + d123_3);
+    const float inv_d123 = 1.0f / (d123_1 + d123_2 + d123_3);
     m_v1.a = d123_1 * inv_d123;
     m_v2.a = d123_2 * inv_d123;
     m_v3.a = d123_3 * inv_d123;

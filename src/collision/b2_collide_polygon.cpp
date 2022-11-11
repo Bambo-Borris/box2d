@@ -28,12 +28,12 @@ static float b2FindMaxSeparation(std::int32_t* edgeIndex,
                                  const b2PolygonShape* poly1, const b2Transform& xf1,
                                  const b2PolygonShape* poly2, const b2Transform& xf2)
 {
-	const std::int32_t count1 = poly1->m_count;
-	const std::int32_t count2 = poly2->m_count;
+    const std::int32_t count1 = poly1->m_count;
+    const std::int32_t count2 = poly2->m_count;
     const b2Vec2*      n1s    = poly1->m_normals.data();
     const b2Vec2*      v1s    = poly1->m_vertices.data();
     const b2Vec2*      v2s    = poly2->m_vertices.data();
-	const b2Transform  xf     = b2MulT(xf2, xf1);
+    const b2Transform  xf     = b2MulT(xf2, xf1);
 
     std::int32_t bestIndex = 0;
     float maxSeparation = -FLT_MAX;
@@ -47,7 +47,7 @@ static float b2FindMaxSeparation(std::int32_t* edgeIndex,
         float si = FLT_MAX;
         for (std::int32_t j = 0; j < count2; ++j)
         {
-	        const float sij = b2Dot(n, v2s[j] - v1);
+            const float sij = b2Dot(n, v2s[j] - v1);
             if (sij < si)
             {
                 si = sij;
@@ -85,7 +85,7 @@ static void b2FindIncidentEdge(std::array<b2ClipVertex, 2>& c,
     float minDot = FLT_MAX;
     for (std::int32_t i = 0; i < count2; ++i)
     {
-	    const float dot = b2Dot(normal1, normals2[i]);
+        const float dot = b2Dot(normal1, normals2[i]);
         if (dot < minDot)
         {
             minDot = dot;
@@ -219,7 +219,7 @@ void b2CollidePolygons(b2Manifold* manifold,
     std::int32_t pointCount = 0;
     for (std::int32_t i = 0; i < b2_maxManifoldPoints; ++i)
     {
-	    const float separation = b2Dot(normal, clipPoints2[i].v) - frontOffset;
+        const float separation = b2Dot(normal, clipPoints2[i].v) - frontOffset;
 
         if (separation <= totalRadius)
         {

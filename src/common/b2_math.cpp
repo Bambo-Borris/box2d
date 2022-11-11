@@ -44,7 +44,7 @@ b2Vec3 b2Mat33::Solve33(const b2Vec3& b) const
 /// than computing the inverse in one-shot cases.
 b2Vec2 b2Mat33::Solve22(const b2Vec2& b) const
 {
-	const float a11 = ex.x, a12 = ey.x, a21 = ex.y, a22 = ey.y;
+    const float a11 = ex.x, a12 = ey.x, a21 = ex.y, a22 = ey.y;
     float det = a11 * a22 - a12 * a21;
     if (det != 0.0f)
     {
@@ -59,7 +59,7 @@ b2Vec2 b2Mat33::Solve22(const b2Vec2& b) const
 ///
 void b2Mat33::GetInverse22(b2Mat33* M) const
 {
-	const float a = ex.x, b = ey.x, c = ex.y, d = ey.y;
+    const float a = ex.x, b = ey.x, c = ex.y, d = ey.y;
     float det = a * d - b * c;
     if (det != 0.0f)
     {

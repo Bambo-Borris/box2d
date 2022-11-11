@@ -180,8 +180,8 @@ void b2ContactManager::FindNewContacts()
 
 void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
 {
-	const b2FixtureProxy* proxyA = (b2FixtureProxy*)proxyUserDataA;
-	const b2FixtureProxy* proxyB = (b2FixtureProxy*)proxyUserDataB;
+    const b2FixtureProxy* proxyA = (b2FixtureProxy*)proxyUserDataA;
+    const b2FixtureProxy* proxyB = (b2FixtureProxy*)proxyUserDataB;
 
     b2Fixture* fixtureA = proxyA->fixture;
     b2Fixture* fixtureB = proxyB->fixture;
@@ -201,15 +201,15 @@ void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
     // TODO_ERIN use a hash table to remove a potential bottleneck when both
     // bodies have a lot of contacts.
     // Does a contact already exist?
-	const b2ContactEdge* edge = bodyB->GetContactList();
+    const b2ContactEdge* edge = bodyB->GetContactList();
     while (edge)
     {
         if (edge->other == bodyA)
         {
-	        const b2Fixture*   fA = edge->contact->GetFixtureA();
-	        const b2Fixture*   fB = edge->contact->GetFixtureB();
-	        const std::int32_t iA = edge->contact->GetChildIndexA();
-	        const std::int32_t iB = edge->contact->GetChildIndexB();
+            const b2Fixture*   fA = edge->contact->GetFixtureA();
+            const b2Fixture*   fB = edge->contact->GetFixtureB();
+            const std::int32_t iA = edge->contact->GetChildIndexA();
+            const std::int32_t iB = edge->contact->GetChildIndexB();
 
             if (fA == fixtureA && fB == fixtureB && iA == indexA && iB == indexB)
             {

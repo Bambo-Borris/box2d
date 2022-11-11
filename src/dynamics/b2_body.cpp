@@ -144,7 +144,7 @@ void b2Body::SetType(b2BodyType type)
     const b2ContactEdge* ce = m_contactList;
     while (ce)
     {
-	    const b2ContactEdge* ce0 = ce;
+        const b2ContactEdge* ce0 = ce;
         ce = ce->next;
         m_world->m_contactManager.Destroy(ce0->contact);
     }
@@ -154,7 +154,7 @@ void b2Body::SetType(b2BodyType type)
     b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
     for (const b2Fixture* f = m_fixtureList; f; f = f->m_next)
     {
-	    const std::int32_t proxyCount = f->m_proxyCount;
+        const std::int32_t proxyCount = f->m_proxyCount;
         for (std::int32_t i = 0; i < proxyCount; ++i)
         {
             broadPhase->TouchProxy(f->m_proxies[i].proxyId);
@@ -506,7 +506,7 @@ void b2Body::SetEnabled(bool flag)
         const b2ContactEdge* ce = m_contactList;
         while (ce)
         {
-	        const b2ContactEdge* ce0 = ce;
+            const b2ContactEdge* ce0 = ce;
             ce = ce->next;
             m_world->m_contactManager.Destroy(ce0->contact);
         }
@@ -516,7 +516,7 @@ void b2Body::SetEnabled(bool flag)
 
 void b2Body::SetFixedRotation(bool flag)
 {
-	const bool status = (m_flags & e_fixedRotationFlag) == e_fixedRotationFlag;
+    const bool status = (m_flags & e_fixedRotationFlag) == e_fixedRotationFlag;
     if (status == flag)
     {
         return;
@@ -538,7 +538,7 @@ void b2Body::SetFixedRotation(bool flag)
 
 void b2Body::Dump() const
 {
-	const std::int32_t bodyIndex = m_islandIndex;
+    const std::int32_t bodyIndex = m_islandIndex;
 
     // %.9g is sufficient to save and load the same value using text
     // FLT_DECIMAL_DIG == 9

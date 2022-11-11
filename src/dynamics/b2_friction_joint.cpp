@@ -146,11 +146,11 @@ void b2FrictionJoint::SolveVelocityConstraints(const b2SolverData& data)
 
     // Solve angular friction
     {
-	    const float Cdot = wB - wA;
+        const float Cdot = wB - wA;
         float impulse = -m_angularMass * Cdot;
 
-	    const float oldImpulse = m_angularImpulse;
-	    const float maxImpulse = h * m_maxTorque;
+        const float oldImpulse = m_angularImpulse;
+        const float maxImpulse = h * m_maxTorque;
         m_angularImpulse       = b2Clamp(m_angularImpulse + impulse, -maxImpulse, maxImpulse);
         impulse                = m_angularImpulse - oldImpulse;
 
@@ -160,13 +160,13 @@ void b2FrictionJoint::SolveVelocityConstraints(const b2SolverData& data)
 
     // Solve linear friction
     {
-	    const b2Vec2 Cdot = vB + b2Cross(wB, m_rB) - vA - b2Cross(wA, m_rA);
+        const b2Vec2 Cdot = vB + b2Cross(wB, m_rB) - vA - b2Cross(wA, m_rA);
 
         b2Vec2       impulse    = -b2Mul(m_linearMass, Cdot);
-	    const b2Vec2 oldImpulse = m_linearImpulse;
+        const b2Vec2 oldImpulse = m_linearImpulse;
         m_linearImpulse += impulse;
 
-	    const float maxImpulse = h * m_maxForce;
+        const float maxImpulse = h * m_maxForce;
 
         if (m_linearImpulse.LengthSquared() > maxImpulse * maxImpulse)
         {
@@ -240,8 +240,8 @@ float b2FrictionJoint::GetMaxTorque() const
 
 void b2FrictionJoint::Dump()
 {
-	const std::int32_t indexA = m_bodyA->m_islandIndex;
-	const std::int32_t indexB = m_bodyB->m_islandIndex;
+    const std::int32_t indexA = m_bodyA->m_islandIndex;
+    const std::int32_t indexB = m_bodyB->m_islandIndex;
 
     b2Dump("  b2FrictionJointDef jd;\n");
     b2Dump("  jd.bodyA = bodies[%d];\n", indexA);

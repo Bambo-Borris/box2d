@@ -166,7 +166,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
     float x0 = ps[0].x;
     for (std::int32_t i = 1; i < n; ++i)
     {
-	    const float x = ps[i].x;
+        const float x = ps[i].x;
         if (x > x0 || (x == x0 && ps[i].y < ps[i0].y))
         {
             i0 = i;
@@ -235,8 +235,8 @@ void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
     // Compute normals. Ensure the edges have non-zero length.
     for (std::int32_t i = 0; i < m; ++i)
     {
-	    const std::int32_t i1   = i;
-	    const std::int32_t i2   = i + 1 < m ? i + 1 : 0;
+        const std::int32_t i1   = i;
+        const std::int32_t i2   = i + 1 < m ? i + 1 : 0;
         b2Vec2             edge = m_vertices[i2] - m_vertices[i1];
         assert(edge.LengthSquared() > FLT_EPSILON * FLT_EPSILON);
         m_normals[i] = b2Cross(edge, 1.0f);
@@ -249,11 +249,11 @@ void b2PolygonShape::Set(const b2Vec2* vertices, std::int32_t count)
 
 bool b2PolygonShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 {
-	const b2Vec2 pLocal = b2MulT(xf.q, p - xf.p);
+    const b2Vec2 pLocal = b2MulT(xf.q, p - xf.p);
 
     for (std::int32_t i = 0; i < m_count; ++i)
     {
-	    const float dot = b2Dot(m_normals[i], pLocal - m_vertices[i]);
+        const float dot = b2Dot(m_normals[i], pLocal - m_vertices[i]);
         if (dot > 0.0f)
         {
             return false;
@@ -434,8 +434,8 @@ bool b2PolygonShape::Validate() const
 {
     for (std::int32_t i = 0; i < m_count; ++i)
     {
-	    const std::int32_t i1 = i;
-	    const std::int32_t i2 = i < m_count - 1 ? i1 + 1 : 0;
+        const std::int32_t i1 = i;
+        const std::int32_t i2 = i < m_count - 1 ? i1 + 1 : 0;
         b2Vec2             p  = m_vertices[i1];
         b2Vec2             e  = m_vertices[i2] - p;
 

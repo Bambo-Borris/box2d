@@ -246,7 +246,7 @@ void b2Fixture::Dump(std::int32_t bodyIndex) const
     {
     case b2Shape::e_circle:
         {
-	        const b2CircleShape* s = (b2CircleShape*)m_shape;
+            const b2CircleShape* s = (b2CircleShape*)m_shape;
             b2Dump("    b2CircleShape shape;\n");
             b2Dump("    shape.m_radius = %.9g;\n", s->m_radius);
             b2Dump("    shape.m_p.Set(%.9g, %.9g);\n", s->m_p.x, s->m_p.y);
@@ -255,7 +255,7 @@ void b2Fixture::Dump(std::int32_t bodyIndex) const
 
     case b2Shape::e_edge:
         {
-	        const b2EdgeShape* s = (b2EdgeShape*)m_shape;
+            const b2EdgeShape* s = (b2EdgeShape*)m_shape;
             b2Dump("    b2EdgeShape shape;\n");
             b2Dump("    shape.m_radius = %.9g;\n", s->m_radius);
             b2Dump("    shape.m_vertex0.Set(%.9g, %.9g);\n", s->m_vertex0.x, s->m_vertex0.y);
@@ -268,7 +268,7 @@ void b2Fixture::Dump(std::int32_t bodyIndex) const
 
     case b2Shape::e_polygon:
         {
-	        const b2PolygonShape* s = (b2PolygonShape*)m_shape;
+            const b2PolygonShape* s = (b2PolygonShape*)m_shape;
             b2Dump("    b2PolygonShape shape;\n");
             b2Dump("    b2Vec2 vs[%d];\n", b2_maxPolygonVertices);
             for (std::int32_t i = 0; i < s->m_count; ++i)
@@ -281,7 +281,7 @@ void b2Fixture::Dump(std::int32_t bodyIndex) const
 
     case b2Shape::e_chain:
         {
-	        const b2ChainShape* s = (b2ChainShape*)m_shape;
+            const b2ChainShape* s = (b2ChainShape*)m_shape;
             b2Dump("    b2ChainShape shape;\n");
             b2Dump("    b2Vec2 vs[%d];\n", s->m_count);
             for (std::int32_t i = 0; i < s->m_count; ++i)

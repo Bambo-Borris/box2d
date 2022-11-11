@@ -236,16 +236,16 @@ void b2PrismaticJoint::SolveVelocityConstraints(const b2SolverData& data)
     // Solve linear motor constraint
     if (m_enableMotor)
     {
-	    const float Cdot       = b2Dot(m_axis, vB - vA) + m_a2 * wB - m_a1 * wA;
+        const float Cdot       = b2Dot(m_axis, vB - vA) + m_a2 * wB - m_a1 * wA;
         float       impulse    = m_axialMass * (m_motorSpeed - Cdot);
-	    const float oldImpulse = m_motorImpulse;
-	    const float maxImpulse = data.step.dt * m_maxMotorForce;
+        const float oldImpulse = m_motorImpulse;
+        const float maxImpulse = data.step.dt * m_maxMotorForce;
         m_motorImpulse         = b2Clamp(m_motorImpulse + impulse, -maxImpulse, maxImpulse);
         impulse                = m_motorImpulse - oldImpulse;
 
-	    const b2Vec2 P  = impulse * m_axis;
-	    const float  LA = impulse * m_a1;
-	    const float  LB = impulse * m_a2;
+        const b2Vec2 P  = impulse * m_axis;
+        const float  LA = impulse * m_a1;
+        const float  LB = impulse * m_a2;
 
         vA -= mA * P;
         wA -= iA * LA;
@@ -257,16 +257,16 @@ void b2PrismaticJoint::SolveVelocityConstraints(const b2SolverData& data)
     {
         // Lower limit
         {
-	        const float C          = m_translation - m_lowerTranslation;
-	        const float Cdot       = b2Dot(m_axis, vB - vA) + m_a2 * wB - m_a1 * wA;
+            const float C          = m_translation - m_lowerTranslation;
+            const float Cdot       = b2Dot(m_axis, vB - vA) + m_a2 * wB - m_a1 * wA;
             float       impulse    = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
-	        const float oldImpulse = m_lowerImpulse;
+            const float oldImpulse = m_lowerImpulse;
             m_lowerImpulse         = b2Max(m_lowerImpulse + impulse, 0.0f);
             impulse                = m_lowerImpulse - oldImpulse;
 
-	        const b2Vec2 P  = impulse * m_axis;
-	        const float  LA = impulse * m_a1;
-	        const float  LB = impulse * m_a2;
+            const b2Vec2 P  = impulse * m_axis;
+            const float  LA = impulse * m_a1;
+            const float  LB = impulse * m_a2;
 
             vA -= mA * P;
             wA -= iA * LA;
@@ -278,16 +278,16 @@ void b2PrismaticJoint::SolveVelocityConstraints(const b2SolverData& data)
         // Note: signs are flipped to keep C positive when the constraint is satisfied.
         // This also keeps the impulse positive when the limit is active.
         {
-	        const float C          = m_upperTranslation - m_translation;
-	        const float Cdot       = b2Dot(m_axis, vA - vB) + m_a1 * wA - m_a2 * wB;
+            const float C          = m_upperTranslation - m_translation;
+            const float Cdot       = b2Dot(m_axis, vA - vB) + m_a1 * wA - m_a2 * wB;
             float       impulse    = -m_axialMass * (Cdot + b2Max(C, 0.0f) * data.step.inv_dt);
-	        const float oldImpulse = m_upperImpulse;
+            const float oldImpulse = m_upperImpulse;
             m_upperImpulse         = b2Max(m_upperImpulse + impulse, 0.0f);
             impulse                = m_upperImpulse - oldImpulse;
 
-	        const b2Vec2 P  = impulse * m_axis;
-	        const float  LA = impulse * m_a1;
-	        const float  LB = impulse * m_a2;
+            const b2Vec2 P  = impulse * m_axis;
+            const float  LA = impulse * m_a1;
+            const float  LB = impulse * m_a2;
 
             vA += mA * P;
             wA += iA * LA;
@@ -472,33 +472,33 @@ float b2PrismaticJoint::GetReactionTorque(float inv_dt) const
 
 float b2PrismaticJoint::GetJointTranslation() const
 {
-	const b2Vec2 pA   = m_bodyA->GetWorldPoint(m_localAnchorA);
-	const b2Vec2 pB   = m_bodyB->GetWorldPoint(m_localAnchorB);
-	const b2Vec2 d    = pB - pA;
-	const b2Vec2 axis = m_bodyA->GetWorldVector(m_localXAxisA);
+    const b2Vec2 pA   = m_bodyA->GetWorldPoint(m_localAnchorA);
+    const b2Vec2 pB   = m_bodyB->GetWorldPoint(m_localAnchorB);
+    const b2Vec2 d    = pB - pA;
+    const b2Vec2 axis = m_bodyA->GetWorldVector(m_localXAxisA);
 
-	const float translation = b2Dot(d, axis);
+    const float translation = b2Dot(d, axis);
     return translation;
 }
 
 float b2PrismaticJoint::GetJointSpeed() const
 {
-	const b2Body* bA = m_bodyA;
-	const b2Body* bB = m_bodyB;
+    const b2Body* bA = m_bodyA;
+    const b2Body* bB = m_bodyB;
 
-	const b2Vec2 rA   = b2Mul(bA->m_xf.q, m_localAnchorA - bA->m_sweep.localCenter);
-	const b2Vec2 rB   = b2Mul(bB->m_xf.q, m_localAnchorB - bB->m_sweep.localCenter);
-	const b2Vec2 p1   = bA->m_sweep.c + rA;
-	const b2Vec2 p2   = bB->m_sweep.c + rB;
-	const b2Vec2 d    = p2 - p1;
-	const b2Vec2 axis = b2Mul(bA->m_xf.q, m_localXAxisA);
+    const b2Vec2 rA   = b2Mul(bA->m_xf.q, m_localAnchorA - bA->m_sweep.localCenter);
+    const b2Vec2 rB   = b2Mul(bB->m_xf.q, m_localAnchorB - bB->m_sweep.localCenter);
+    const b2Vec2 p1   = bA->m_sweep.c + rA;
+    const b2Vec2 p2   = bB->m_sweep.c + rB;
+    const b2Vec2 d    = p2 - p1;
+    const b2Vec2 axis = b2Mul(bA->m_xf.q, m_localXAxisA);
 
-	const b2Vec2 vA = bA->m_linearVelocity;
-	const b2Vec2 vB = bB->m_linearVelocity;
-	const float  wA = bA->m_angularVelocity;
-	const float  wB = bB->m_angularVelocity;
+    const b2Vec2 vA = bA->m_linearVelocity;
+    const b2Vec2 vB = bB->m_linearVelocity;
+    const float  wA = bA->m_angularVelocity;
+    const float  wB = bB->m_angularVelocity;
 
-	const float speed = b2Dot(d, b2Cross(wA, axis)) + b2Dot(axis, vB + b2Cross(wB, rB) - vA - b2Cross(wA, rA));
+    const float speed = b2Dot(d, b2Cross(wA, axis)) + b2Dot(axis, vB + b2Cross(wB, rB) - vA - b2Cross(wA, rA));
     return speed;
 }
 
@@ -626,9 +626,9 @@ void b2PrismaticJoint::Draw(b2Draw* draw) const
 
     if (m_enableLimit)
     {
-	    const b2Vec2 lower = pA + m_lowerTranslation * axis;
-	    const b2Vec2 upper = pA + m_upperTranslation * axis;
-	    const b2Vec2 perp  = b2Mul(xfA.q, m_localYAxisA);
+        const b2Vec2 lower = pA + m_lowerTranslation * axis;
+        const b2Vec2 upper = pA + m_upperTranslation * axis;
+        const b2Vec2 perp  = b2Mul(xfA.q, m_localYAxisA);
         draw->DrawSegment(lower, upper, c1);
         draw->DrawSegment(lower - 0.5f * perp, lower + 0.5f * perp, c2);
         draw->DrawSegment(upper - 0.5f * perp, upper + 0.5f * perp, c3);

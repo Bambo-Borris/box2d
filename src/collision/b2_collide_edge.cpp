@@ -63,9 +63,9 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
     // Region A
     if (v <= 0.0f)
     {
-	    const b2Vec2 P  = A;
-	    const b2Vec2 d  = Q - P;
-	    const float  dd = b2Dot(d, d);
+        const b2Vec2 P  = A;
+        const b2Vec2 d  = Q - P;
+        const float  dd = b2Dot(d, d);
         if (dd > radius * radius)
         {
             return;
@@ -74,10 +74,10 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
         // Is there an edge connected to A?
         if (edgeA->m_oneSided)
         {
-	        const b2Vec2 A1 = edgeA->m_vertex0;
-	        const b2Vec2 B1 = A;
-	        const b2Vec2 e1 = B1 - A1;
-	        const float  u1 = b2Dot(e1, B1 - Q);
+            const b2Vec2 A1 = edgeA->m_vertex0;
+            const b2Vec2 B1 = A;
+            const b2Vec2 e1 = B1 - A1;
+            const float  u1 = b2Dot(e1, B1 - Q);
 
             // Is the circle in Region AB of the previous edge?
             if (u1 > 0.0f)
@@ -101,9 +101,9 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
     // Region B
     if (u <= 0.0f)
     {
-	    const b2Vec2 P  = B;
-	    const b2Vec2 d  = Q - P;
-	    const float  dd = b2Dot(d, d);
+        const b2Vec2 P  = B;
+        const b2Vec2 d  = Q - P;
+        const float  dd = b2Dot(d, d);
         if (dd > radius * radius)
         {
             return;
@@ -112,10 +112,10 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
         // Is there an edge connected to B?
         if (edgeA->m_oneSided)
         {
-	        const b2Vec2 B2 = edgeA->m_vertex3;
-	        const b2Vec2 A2 = B;
-	        const b2Vec2 e2 = B2 - A2;
-	        const float  v2 = b2Dot(e2, Q - A2);
+            const b2Vec2 B2 = edgeA->m_vertex3;
+            const b2Vec2 A2 = B;
+            const b2Vec2 e2 = B2 - A2;
+            const float  v2 = b2Dot(e2, Q - A2);
 
             // Is the circle in Region AB of the next edge?
             if (v2 > 0.0f)
@@ -220,7 +220,7 @@ static b2EPAxis b2ComputeEdgeSeparation(const b2TempPolygon& polygonB, const b2V
         // Find deepest polygon vertex along axis j
         for (std::int32_t i = 0; i < polygonB.count; ++i)
         {
-	        const float si = b2Dot(axes[j], polygonB.vertices[i] - v1);
+            const float si = b2Dot(axes[j], polygonB.vertices[i] - v1);
             if (si < sj)
             {
                 sj = si;

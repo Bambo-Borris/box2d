@@ -792,9 +792,9 @@ void b2Rope::SolveBend_PBD_Triangle() const
 
 void b2Rope::Draw(b2Draw* draw) const
 {
-	const b2Color c(0.4f, 0.5f, 0.7f);
-	const b2Color pg(0.1f, 0.8f, 0.1f);
-	const b2Color pd(0.7f, 0.2f, 0.4f);
+    const b2Color c(0.4f, 0.5f, 0.7f);
+    const b2Color pg(0.1f, 0.8f, 0.1f);
+    const b2Color pd(0.7f, 0.2f, 0.4f);
 
     for (std::int32_t i = 0; i < m_count - 1; ++i)
     {

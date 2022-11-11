@@ -77,7 +77,7 @@ b2World::~b2World()
     const b2Body* b = m_bodyList;
     while (b)
     {
-	    const b2Body* bNext = b->m_next;
+        const b2Body* bNext = b->m_next;
 
         b2Fixture* f = b->m_fixtureList;
         while (f)
@@ -149,7 +149,7 @@ void b2World::DestroyBody(b2Body* b)
     b2JointEdge* je = b->m_jointList;
     while (je)
     {
-	    const b2JointEdge* je0 = je;
+        const b2JointEdge* je0 = je;
         je = je->next;
 
         if (m_destructionListener)
@@ -167,7 +167,7 @@ void b2World::DestroyBody(b2Body* b)
     const b2ContactEdge* ce = b->m_contactList;
     while (ce)
     {
-	    const b2ContactEdge* ce0 = ce;
+        const b2ContactEdge* ce0 = ce;
         ce = ce->next;
         m_contactManager.Destroy(ce0->contact);
     }
@@ -258,7 +258,7 @@ b2Joint* b2World::CreateJoint(const b2JointDef* def)
     // If the joint prevents collisions, then flag any contacts for filtering.
     if (def->collideConnected == false)
     {
-	    const b2ContactEdge* edge = bodyB->GetContactList();
+        const b2ContactEdge* edge = bodyB->GetContactList();
         while (edge)
         {
             if (edge->other == bodyA)
@@ -357,7 +357,7 @@ void b2World::DestroyJoint(b2Joint* j)
     // If the joint prevents collisions, then flag any contacts for filtering.
     if (collideConnected == false)
     {
-	    const b2ContactEdge* edge = bodyB->GetContactList();
+        const b2ContactEdge* edge = bodyB->GetContactList();
         while (edge)
         {
             if (edge->other == bodyA)
@@ -556,7 +556,7 @@ void b2World::Solve(const b2TimeStep& step)
     m_stackAllocator.Free(stack);
 
     {
-	    const b2Timer timer;
+        const b2Timer timer;
         // Synchronize fixtures, check for out of range bodies.
         for (b2Body* b = m_bodyList; b; b = b->GetNext())
         {
@@ -904,7 +904,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 
 void b2World::Step(float dt, std::int32_t velocityIterations, std::int32_t positionIterations)
 {
-	const b2Timer stepTimer;
+    const b2Timer stepTimer;
 
     // If new fixtures were added, we need to find the new contacts.
     if (m_newContacts)
@@ -934,7 +934,7 @@ void b2World::Step(float dt, std::int32_t velocityIterations, std::int32_t posit
 
     // Update contacts. This is where some contacts are destroyed.
     {
-	    const b2Timer timer;
+        const b2Timer timer;
         m_contactManager.Collide();
         m_profile.collide = timer.GetMilliseconds();
     }
@@ -942,7 +942,7 @@ void b2World::Step(float dt, std::int32_t velocityIterations, std::int32_t posit
     // Integrate velocities, solve velocity constraints, and integrate positions.
     if (m_stepComplete && step.dt > 0.0f)
     {
-	    const b2Timer timer;
+        const b2Timer timer;
         Solve(step);
         m_profile.solve = timer.GetMilliseconds();
     }
@@ -950,7 +950,7 @@ void b2World::Step(float dt, std::int32_t velocityIterations, std::int32_t posit
     // Handle TOI events.
     if (m_continuousPhysics && step.dt > 0.0f)
     {
-	    const b2Timer timer;
+        const b2Timer timer;
         SolveTOI(step);
         m_profile.solveTOI = timer.GetMilliseconds();
     }
@@ -983,7 +983,7 @@ struct b2WorldQueryWrapper
 {
     bool QueryCallback(std::int32_t proxyId) const
     {
-	    const b2FixtureProxy* proxy = (b2FixtureProxy*)broadPhase->GetUserData(proxyId);
+        const b2FixtureProxy* proxy = (b2FixtureProxy*)broadPhase->GetUserData(proxyId);
         return callback->ReportFixture(proxy->fixture);
     }
 
@@ -1012,8 +1012,8 @@ struct b2WorldRayCastWrapper
 
         if (hit)
         {
-	        const float  fraction = output.fraction;
-	        const b2Vec2 point    = (1.0f - fraction) * input.p1 + fraction * input.p2;
+            const float  fraction = output.fraction;
+            const b2Vec2 point    = (1.0f - fraction) * input.p1 + fraction * input.p2;
             return callback->ReportFixture(fixture, point, output.normal, fraction);
         }
 
@@ -1042,11 +1042,11 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
     {
     case b2Shape::e_circle:
         {
-	        const b2CircleShape* circle = (b2CircleShape*)fixture->GetShape();
+            const b2CircleShape* circle = (b2CircleShape*)fixture->GetShape();
 
-	        const b2Vec2 center = b2Mul(xf, circle->m_p);
-	        const float  radius = circle->m_radius;
-	        const b2Vec2 axis   = b2Mul(xf.q, b2Vec2(1.0f, 0.0f));
+            const b2Vec2 center = b2Mul(xf, circle->m_p);
+            const float  radius = circle->m_radius;
+            const b2Vec2 axis   = b2Mul(xf.q, b2Vec2(1.0f, 0.0f));
 
             m_debugDraw->DrawSolidCircle(center, radius, axis, color);
         }
@@ -1054,9 +1054,9 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 
     case b2Shape::e_edge:
         {
-	        const b2EdgeShape* edge = (b2EdgeShape*)fixture->GetShape();
-	        const b2Vec2       v1   = b2Mul(xf, edge->m_vertex1);
-	        const b2Vec2       v2   = b2Mul(xf, edge->m_vertex2);
+            const b2EdgeShape* edge = (b2EdgeShape*)fixture->GetShape();
+            const b2Vec2       v1   = b2Mul(xf, edge->m_vertex1);
+            const b2Vec2       v2   = b2Mul(xf, edge->m_vertex2);
             m_debugDraw->DrawSegment(v1, v2, color);
 
             if (edge->m_oneSided == false)
@@ -1069,8 +1069,8 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 
     case b2Shape::e_chain:
         {
-	        const b2ChainShape* chain    = (b2ChainShape*)fixture->GetShape();
-	        const std::int32_t  count    = chain->m_count;
+            const b2ChainShape* chain    = (b2ChainShape*)fixture->GetShape();
+            const std::int32_t  count    = chain->m_count;
             const b2Vec2*       vertices = chain->m_vertices;
 
             b2Vec2 v1 = b2Mul(xf, vertices[0]);
@@ -1085,8 +1085,8 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 
     case b2Shape::e_polygon:
         {
-	        const b2PolygonShape* poly        = (b2PolygonShape*)fixture->GetShape();
-	        const std::int32_t    vertexCount = poly->m_count;
+            const b2PolygonShape* poly        = (b2PolygonShape*)fixture->GetShape();
+            const std::int32_t    vertexCount = poly->m_count;
             assert(vertexCount <= b2_maxPolygonVertices);
             b2Vec2 vertices[b2_maxPolygonVertices];
 
@@ -1159,11 +1159,11 @@ void b2World::DebugDraw() const
 
     if (flags & b2Draw::e_pairBit)
     {
-	    const b2Color color(0.3f, 0.9f, 0.9f);
+        const b2Color color(0.3f, 0.9f, 0.9f);
         for (b2Contact* c = m_contactManager.m_contactList; c; c = c->GetNext())
         {
-	        const b2Fixture*   fixtureA = c->GetFixtureA();
-	        const b2Fixture*   fixtureB = c->GetFixtureB();
+            const b2Fixture*   fixtureA = c->GetFixtureA();
+            const b2Fixture*   fixtureB = c->GetFixtureB();
             const std::int32_t indexA   = c->GetChildIndexA();
             const std::int32_t indexB   = c->GetChildIndexB();
             b2Vec2             cA       = fixtureA->GetAABB(indexA).GetCenter();
@@ -1175,8 +1175,8 @@ void b2World::DebugDraw() const
 
     if (flags & b2Draw::e_aabbBit)
     {
-	    const b2Color       color(0.9f, 0.3f, 0.9f);
-	    const b2BroadPhase* bp = &m_contactManager.m_broadPhase;
+        const b2Color       color(0.9f, 0.3f, 0.9f);
+        const b2BroadPhase* bp = &m_contactManager.m_broadPhase;
 
         for (b2Body* b = m_bodyList; b; b = b->GetNext())
         {
@@ -1189,7 +1189,7 @@ void b2World::DebugDraw() const
             {
                 for (std::int32_t i = 0; i < f->m_proxyCount; ++i)
                 {
-	                const b2FixtureProxy* proxy = f->m_proxies + i;
+                    const b2FixtureProxy* proxy = f->m_proxies + i;
                     const b2AABB    aabb  = bp->GetFatAABB(proxy->proxyId);
                     b2Vec2          vs[4];
                     vs[0].Set(aabb.lowerBound.x, aabb.lowerBound.y);

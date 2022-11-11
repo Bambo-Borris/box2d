@@ -136,53 +136,53 @@ struct b2SeparationFunction
         {
         case e_points:
             {
-	            const b2Vec2 axisA = b2MulT(xfA.q,  m_axis);
-	            const b2Vec2 axisB = b2MulT(xfB.q, -m_axis);
+                const b2Vec2 axisA = b2MulT(xfA.q,  m_axis);
+                const b2Vec2 axisB = b2MulT(xfB.q, -m_axis);
 
                 *indexA = m_proxyA->GetSupport(axisA);
                 *indexB = m_proxyB->GetSupport(axisB);
 
-	            const b2Vec2 localPointA = m_proxyA->GetVertex(*indexA);
-	            const b2Vec2 localPointB = m_proxyB->GetVertex(*indexB);
+                const b2Vec2 localPointA = m_proxyA->GetVertex(*indexA);
+                const b2Vec2 localPointB = m_proxyB->GetVertex(*indexB);
 
-	            const b2Vec2 pointA = b2Mul(xfA, localPointA);
-	            const b2Vec2 pointB = b2Mul(xfB, localPointB);
+                const b2Vec2 pointA = b2Mul(xfA, localPointA);
+                const b2Vec2 pointB = b2Mul(xfB, localPointB);
 
-	            const float separation = b2Dot(pointB - pointA, m_axis);
+                const float separation = b2Dot(pointB - pointA, m_axis);
                 return separation;
             }
 
         case e_faceA:
             {
-	            const b2Vec2 normal = b2Mul(xfA.q, m_axis);
-	            const b2Vec2 pointA = b2Mul(xfA, m_localPoint);
+                const b2Vec2 normal = b2Mul(xfA.q, m_axis);
+                const b2Vec2 pointA = b2Mul(xfA, m_localPoint);
 
-	            const b2Vec2 axisB = b2MulT(xfB.q, -normal);
+                const b2Vec2 axisB = b2MulT(xfB.q, -normal);
 
                 *indexA = -1;
                 *indexB = m_proxyB->GetSupport(axisB);
 
-	            const b2Vec2 localPointB = m_proxyB->GetVertex(*indexB);
-	            const b2Vec2 pointB      = b2Mul(xfB, localPointB);
+                const b2Vec2 localPointB = m_proxyB->GetVertex(*indexB);
+                const b2Vec2 pointB      = b2Mul(xfB, localPointB);
 
-	            const float separation = b2Dot(pointB - pointA, normal);
+                const float separation = b2Dot(pointB - pointA, normal);
                 return separation;
             }
 
         case e_faceB:
             {
-	            const b2Vec2 normal = b2Mul(xfB.q, m_axis);
-	            const b2Vec2 pointB = b2Mul(xfB, m_localPoint);
+                const b2Vec2 normal = b2Mul(xfB.q, m_axis);
+                const b2Vec2 pointB = b2Mul(xfB, m_localPoint);
 
-	            const b2Vec2 axisA = b2MulT(xfA.q, -normal);
+                const b2Vec2 axisA = b2MulT(xfA.q, -normal);
 
                 *indexB = -1;
                 *indexA = m_proxyA->GetSupport(axisA);
 
-	            const b2Vec2 localPointA = m_proxyA->GetVertex(*indexA);
-	            const b2Vec2 pointA      = b2Mul(xfA, localPointA);
+                const b2Vec2 localPointA = m_proxyA->GetVertex(*indexA);
+                const b2Vec2 pointA      = b2Mul(xfA, localPointA);
 
-	            const float separation = b2Dot(pointA - pointB, normal);
+                const float separation = b2Dot(pointA - pointB, normal);
                 return separation;
             }
 
@@ -205,37 +205,37 @@ struct b2SeparationFunction
         {
         case e_points:
             {
-	            const b2Vec2 localPointA = m_proxyA->GetVertex(indexA);
-	            const b2Vec2 localPointB = m_proxyB->GetVertex(indexB);
+                const b2Vec2 localPointA = m_proxyA->GetVertex(indexA);
+                const b2Vec2 localPointB = m_proxyB->GetVertex(indexB);
 
-	            const b2Vec2 pointA     = b2Mul(xfA, localPointA);
-	            const b2Vec2 pointB     = b2Mul(xfB, localPointB);
-	            const float  separation = b2Dot(pointB - pointA, m_axis);
+                const b2Vec2 pointA     = b2Mul(xfA, localPointA);
+                const b2Vec2 pointB     = b2Mul(xfB, localPointB);
+                const float  separation = b2Dot(pointB - pointA, m_axis);
 
                 return separation;
             }
 
         case e_faceA:
             {
-	            const b2Vec2 normal = b2Mul(xfA.q, m_axis);
-	            const b2Vec2 pointA = b2Mul(xfA, m_localPoint);
+                const b2Vec2 normal = b2Mul(xfA.q, m_axis);
+                const b2Vec2 pointA = b2Mul(xfA, m_localPoint);
 
-	            const b2Vec2 localPointB = m_proxyB->GetVertex(indexB);
-	            const b2Vec2 pointB      = b2Mul(xfB, localPointB);
+                const b2Vec2 localPointB = m_proxyB->GetVertex(indexB);
+                const b2Vec2 pointB      = b2Mul(xfB, localPointB);
 
-	            const float separation = b2Dot(pointB - pointA, normal);
+                const float separation = b2Dot(pointB - pointA, normal);
                 return separation;
             }
 
         case e_faceB:
             {
-	            const b2Vec2 normal = b2Mul(xfB.q, m_axis);
-	            const b2Vec2 pointB = b2Mul(xfB, m_localPoint);
+                const b2Vec2 normal = b2Mul(xfB.q, m_axis);
+                const b2Vec2 pointB = b2Mul(xfB, m_localPoint);
 
-	            const b2Vec2 localPointA = m_proxyA->GetVertex(indexA);
-	            const b2Vec2 pointA      = b2Mul(xfA, localPointA);
+                const b2Vec2 localPointA = m_proxyA->GetVertex(indexA);
+                const b2Vec2 pointA      = b2Mul(xfA, localPointA);
 
-	            const float separation = b2Dot(pointA - pointB, normal);
+                const float separation = b2Dot(pointA - pointB, normal);
                 return separation;
             }
 
