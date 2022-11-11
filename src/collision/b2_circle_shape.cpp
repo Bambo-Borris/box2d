@@ -40,8 +40,8 @@ std::int32_t b2CircleShape::GetChildCount() const
 
 bool b2CircleShape::TestPoint(const b2Transform& transform, const b2Vec2& p) const
 {
-    b2Vec2 center = transform.p + b2Mul(transform.q, m_p);
-    b2Vec2 d = p - center;
+    const b2Vec2 center = transform.p + b2Mul(transform.q, m_p);
+    const b2Vec2 d      = p - center;
     return b2Dot(d, d) <= m_radius * m_radius;
 }
 
@@ -54,15 +54,15 @@ bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input
 {
     (void)childIndex;
 
-    b2Vec2 position = transform.p + b2Mul(transform.q, m_p);
-    b2Vec2 s = input.p1 - position;
-    float b = b2Dot(s, s) - m_radius * m_radius;
+    const b2Vec2 position = transform.p + b2Mul(transform.q, m_p);
+    const b2Vec2 s        = input.p1 - position;
+    const float  b        = b2Dot(s, s) - m_radius * m_radius;
 
     // Solve quadratic equation.
-    b2Vec2 r = input.p2 - input.p1;
-    float c =  b2Dot(s, r);
-    float rr = b2Dot(r, r);
-    float sigma = c * c - rr * b;
+    const b2Vec2 r     = input.p2 - input.p1;
+    const float  c     =  b2Dot(s, r);
+    const float  rr    = b2Dot(r, r);
+    const float  sigma = c * c - rr * b;
 
     // Check for negative discriminant and short segment.
     if (sigma < 0.0f || rr < FLT_EPSILON)
@@ -86,16 +86,16 @@ bool b2CircleShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input
     return false;
 }
 
-void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2Transform& transform, std::int32_t childIndex) const
+void b2CircleShape::ComputeAABB(b2AABB* aabb, const b2Transform& transform, const std::int32_t childIndex) const
 {
     (void)childIndex;
 
-    b2Vec2 p = transform.p + b2Mul(transform.q, m_p);
+    const b2Vec2 p = transform.p + b2Mul(transform.q, m_p);
     aabb->lowerBound.Set(p.x - m_radius, p.y - m_radius);
     aabb->upperBound.Set(p.x + m_radius, p.y + m_radius);
 }
 
-void b2CircleShape::ComputeMass(b2MassData* massData, float density) const
+void b2CircleShape::ComputeMass(b2MassData* massData, const float density) const
 {
     massData->mass = density * b2_pi * m_radius * m_radius;
     massData->center = m_p;

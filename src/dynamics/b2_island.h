@@ -48,9 +48,9 @@ public:
         m_jointCount = 0;
     }
 
-    void Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep);
+    void Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep) const;
 
-    void SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::int32_t toiIndexB);
+    void SolveTOI(const b2TimeStep& subStep, std::int32_t toiIndexA, std::int32_t toiIndexB) const;
 
     void Add(b2Body* body)
     {
@@ -72,7 +72,7 @@ public:
         m_joints[m_jointCount++] = joint;
     }
 
-    void Report(const b2ContactVelocityConstraint* constraints);
+    void Report(const b2ContactVelocityConstraint* constraints) const;
 
     b2StackAllocator* m_allocator;
     b2ContactListener* m_listener;

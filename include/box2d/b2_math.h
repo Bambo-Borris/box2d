@@ -97,12 +97,12 @@ struct B2_API b2Vec2
     /// Convert this vector into a unit vector. Returns the length.
     float Normalize()
     {
-        float length = Length();
+        const float length = Length();
         if (length < FLT_EPSILON)
         {
             return 0.0f;
         }
-        float invLength = 1.0f / length;
+        const float invLength = 1.0f / length;
         x *= invLength;
         y *= invLength;
 
@@ -206,7 +206,7 @@ struct B2_API b2Mat22
 
     b2Mat22 GetInverse() const
     {
-        float a = ex.x, b = ey.x, c = ex.y, d = ey.y;
+        const float a = ex.x, b = ey.x, c = ex.y, d = ey.y;
         b2Mat22 B;
         float det = a * d - b * c;
         if (det != 0.0f)
@@ -222,7 +222,7 @@ struct B2_API b2Mat22
     /// than computing the inverse in one-shot cases.
     b2Vec2 Solve(const b2Vec2& b) const
     {
-        float a11 = ex.x, a12 = ey.x, a21 = ex.y, a22 = ey.y;
+        const float a11 = ex.x, a12 = ey.x, a21 = ex.y, a22 = ey.y;
         float det = a11 * a22 - a12 * a21;
         if (det != 0.0f)
         {
@@ -458,13 +458,13 @@ inline bool operator != (const b2Vec2& a, const b2Vec2& b)
 
 inline float b2Distance(const b2Vec2& a, const b2Vec2& b)
 {
-    b2Vec2 c = a - b;
+    const b2Vec2 c = a - b;
     return c.Length();
 }
 
 inline float b2DistanceSquared(const b2Vec2& a, const b2Vec2& b)
 {
-    b2Vec2 c = a - b;
+    const b2Vec2 c = a - b;
     return b2Dot(c, c);
 }
 
@@ -511,8 +511,8 @@ inline b2Mat22 b2Mul(const b2Mat22& A, const b2Mat22& B)
 // A^T * B
 inline b2Mat22 b2MulT(const b2Mat22& A, const b2Mat22& B)
 {
-    b2Vec2 c1(b2Dot(A.ex, B.ex), b2Dot(A.ey, B.ex));
-    b2Vec2 c2(b2Dot(A.ex, B.ey), b2Dot(A.ey, B.ey));
+    const b2Vec2 c1(b2Dot(A.ex, B.ex), b2Dot(A.ey, B.ex));
+    const b2Vec2 c2(b2Dot(A.ex, B.ey), b2Dot(A.ey, B.ey));
     return b2Mat22(c1, c2);
 }
 
@@ -568,18 +568,18 @@ inline b2Vec2 b2MulT(const b2Rot& q, const b2Vec2& v)
 
 inline b2Vec2 b2Mul(const b2Transform& T, const b2Vec2& v)
 {
-    float x = (T.q.c * v.x - T.q.s * v.y) + T.p.x;
-    float y = (T.q.s * v.x + T.q.c * v.y) + T.p.y;
+    const float x = (T.q.c * v.x - T.q.s * v.y) + T.p.x;
+    const float y = (T.q.s * v.x + T.q.c * v.y) + T.p.y;
 
     return b2Vec2(x, y);
 }
 
 inline b2Vec2 b2MulT(const b2Transform& T, const b2Vec2& v)
 {
-    float px = v.x - T.p.x;
-    float py = v.y - T.p.y;
-    float x = (T.q.c * px + T.q.s * py);
-    float y = (-T.q.s * px + T.q.c * py);
+    const float px = v.x - T.p.x;
+    const float py = v.y - T.p.y;
+    const float x  = (T.q.c * px + T.q.s * py);
+    const float y  = (-T.q.s * px + T.q.c * py);
 
     return b2Vec2(x, y);
 }
@@ -677,15 +677,15 @@ inline std::uint32_t b2NextPowerOfTwo(std::uint32_t x)
 
 inline bool b2IsPowerOfTwo(std::uint32_t x)
 {
-    bool result = x > 0 && (x & (x - 1)) == 0;
+    const bool result = x > 0 && (x & (x - 1)) == 0;
     return result;
 }
 
 // https://fgiesen.wordpress.com/2012/08/15/linear-interpolation-past-present-and-future/
 inline void b2Sweep::GetTransform(b2Transform* xf, float beta) const
 {
-    xf->p = (1.0f - beta) * c0 + beta * c;
-    float angle = (1.0f - beta) * a0 + beta * a;
+    xf->p             = (1.0f - beta) * c0 + beta * c;
+    const float angle = (1.0f - beta) * a0 + beta * a;
     xf->q.Set(angle);
 
     // Shift to origin
@@ -695,7 +695,7 @@ inline void b2Sweep::GetTransform(b2Transform* xf, float beta) const
 inline void b2Sweep::Advance(float alpha)
 {
     assert(alpha0 < 1.0f);
-    float beta = (alpha - alpha0) / (1.0f - alpha0);
+    const float beta = (alpha - alpha0) / (1.0f - alpha0);
     c0 += beta * (c - c0);
     a0 += beta * (a - a0);
     alpha0 = alpha;
@@ -704,8 +704,8 @@ inline void b2Sweep::Advance(float alpha)
 /// Normalize an angle in radians to be between -pi and pi
 inline void b2Sweep::Normalize()
 {
-    float twoPi = 2.0f * b2_pi;
-    float d =  twoPi * floorf(a0 / twoPi);
+    const float twoPi = 2.0f * b2_pi;
+    const float d     =  twoPi * floorf(a0 / twoPi);
     a0 -= d;
     a -= d;
 }

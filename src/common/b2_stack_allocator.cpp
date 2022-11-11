@@ -65,7 +65,7 @@ void* b2StackAllocator::HandleAllocate(std::size_t size)
 void b2StackAllocator::HandleFree(void* p)
 {
     assert(m_entryCount > 0);
-    b2StackEntry* entry = m_entries.data() + m_entryCount - 1;
+    const b2StackEntry* entry = m_entries.data() + m_entryCount - 1;
     assert(p == entry->data);
     if (entry->usedMalloc)
     {

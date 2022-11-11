@@ -35,26 +35,26 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
     manifold->pointCount = 0;
 
     // Compute circle in frame of edge
-    b2Vec2 Q = b2MulT(xfA, b2Mul(xfB, circleB->m_p));
+    const b2Vec2 Q = b2MulT(xfA, b2Mul(xfB, circleB->m_p));
 
-    b2Vec2 A = edgeA->m_vertex1, B = edgeA->m_vertex2;
-    b2Vec2 e = B - A;
+    const b2Vec2       A = edgeA->m_vertex1, B = edgeA->m_vertex2;
+    const b2Vec2 e = B - A;
 
     // Normal points to the right for a CCW winding
-    b2Vec2 n(e.y, -e.x);
-    float offset = b2Dot(n, Q - A);
+    b2Vec2      n(e.y, -e.x);
+    const float offset = b2Dot(n, Q - A);
 
-    bool oneSided = edgeA->m_oneSided;
+    const bool oneSided = edgeA->m_oneSided;
     if (oneSided && offset < 0.0f)
     {
         return;
     }
 
     // Barycentric coordinates
-    float u = b2Dot(e, B - Q);
-    float v = b2Dot(e, Q - A);
+    const float u = b2Dot(e, B - Q);
+    const float v = b2Dot(e, Q - A);
 
-    float radius = edgeA->m_radius + circleB->m_radius;
+    const float radius = edgeA->m_radius + circleB->m_radius;
 
     b2ContactFeature cf;
     cf.indexB = 0;
@@ -63,9 +63,9 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
     // Region A
     if (v <= 0.0f)
     {
-        b2Vec2 P = A;
-        b2Vec2 d = Q - P;
-        float dd = b2Dot(d, d);
+        const b2Vec2 P  = A;
+        const b2Vec2 d  = Q - P;
+        const float  dd = b2Dot(d, d);
         if (dd > radius * radius)
         {
             return;
@@ -74,10 +74,10 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
         // Is there an edge connected to A?
         if (edgeA->m_oneSided)
         {
-            b2Vec2 A1 = edgeA->m_vertex0;
-            b2Vec2 B1 = A;
-            b2Vec2 e1 = B1 - A1;
-            float u1 = b2Dot(e1, B1 - Q);
+            const b2Vec2 A1 = edgeA->m_vertex0;
+            const b2Vec2 B1 = A;
+            const b2Vec2 e1 = B1 - A1;
+            const float  u1 = b2Dot(e1, B1 - Q);
 
             // Is the circle in Region AB of the previous edge?
             if (u1 > 0.0f)
@@ -101,9 +101,9 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
     // Region B
     if (u <= 0.0f)
     {
-        b2Vec2 P = B;
-        b2Vec2 d = Q - P;
-        float dd = b2Dot(d, d);
+        const b2Vec2 P  = B;
+        const b2Vec2 d  = Q - P;
+        const float  dd = b2Dot(d, d);
         if (dd > radius * radius)
         {
             return;
@@ -112,10 +112,10 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
         // Is there an edge connected to B?
         if (edgeA->m_oneSided)
         {
-            b2Vec2 B2 = edgeA->m_vertex3;
-            b2Vec2 A2 = B;
-            b2Vec2 e2 = B2 - A2;
-            float v2 = b2Dot(e2, Q - A2);
+            const b2Vec2 B2 = edgeA->m_vertex3;
+            const b2Vec2 A2 = B;
+            const b2Vec2 e2 = B2 - A2;
+            const float  v2 = b2Dot(e2, Q - A2);
 
             // Is the circle in Region AB of the next edge?
             if (v2 > 0.0f)
@@ -137,11 +137,11 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
     }
 
     // Region AB
-    float den = b2Dot(e, e);
+    const float den = b2Dot(e, e);
     assert(den > 0.0f);
-    b2Vec2 P = (1.0f / den) * (u * A + v * B);
-    b2Vec2 d = Q - P;
-    float dd = b2Dot(d, d);
+    const b2Vec2 P  = (1.0f / den) * (u * A + v * B);
+    const b2Vec2 d  = Q - P;
+    const float  dd = b2Dot(d, d);
     if (dd > radius * radius)
     {
         return;
@@ -210,7 +210,7 @@ static b2EPAxis b2ComputeEdgeSeparation(const b2TempPolygon& polygonB, const b2V
     axis.separation = -FLT_MAX;
     axis.normal.SetZero();
 
-    b2Vec2 axes[2] = { normal1, -normal1 };
+    const b2Vec2 axes[2] = { normal1, -normal1 };
 
     // Find axis with least overlap (min-max problem)
     for (std::int32_t j = 0; j < 2; ++j)
@@ -220,7 +220,7 @@ static b2EPAxis b2ComputeEdgeSeparation(const b2TempPolygon& polygonB, const b2V
         // Find deepest polygon vertex along axis j
         for (std::int32_t i = 0; i < polygonB.count; ++i)
         {
-            float si = b2Dot(axes[j], polygonB.vertices[i] - v1);
+            const float si = b2Dot(axes[j], polygonB.vertices[i] - v1);
             if (si < sj)
             {
                 sj = si;
@@ -250,9 +250,9 @@ static b2EPAxis b2ComputePolygonSeparation(const b2TempPolygon& polygonB, const 
     {
         b2Vec2 n = -polygonB.normals[i];
 
-        float s1 = b2Dot(n, polygonB.vertices[i] - v1);
-        float s2 = b2Dot(n, polygonB.vertices[i] - v2);
-        float s = b2Min(s1, s2);
+        const float s1 = b2Dot(n, polygonB.vertices[i] - v1);
+        const float s2 = b2Dot(n, polygonB.vertices[i] - v2);
+        const float s  = b2Min(s1, s2);
 
         if (s > axis.separation)
         {

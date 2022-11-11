@@ -112,7 +112,7 @@ public:
     void SetTuning(const b2RopeTuning& tuning);
 
     ///
-    void Step(float timeStep, std::int32_t iterations, const b2Vec2& position);
+    void Step(float timeStep, std::int32_t iterations, const b2Vec2& position) const;
 
     ///
     void Reset(const b2Vec2& position);
@@ -122,14 +122,14 @@ public:
 
 private:
 
-    void SolveStretch_PBD();
-    void SolveStretch_XPBD(float dt);
-    void SolveBend_PBD_Angle();
-    void SolveBend_XPBD_Angle(float dt);
-    void SolveBend_PBD_Distance();
-    void SolveBend_PBD_Height();
-    void SolveBend_PBD_Triangle();
-    void ApplyBendForces(float dt);
+    void SolveStretch_PBD() const;
+    void SolveStretch_XPBD(float dt) const;
+    void SolveBend_PBD_Angle() const;
+    void SolveBend_XPBD_Angle(float dt) const;
+    void SolveBend_PBD_Distance() const;
+    void SolveBend_PBD_Height() const;
+    void SolveBend_PBD_Triangle() const;
+    void ApplyBendForces(float dt) const;
 
     b2Vec2 m_position;
 

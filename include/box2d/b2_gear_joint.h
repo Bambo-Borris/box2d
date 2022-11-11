@@ -67,10 +67,10 @@ public:
     float GetReactionTorque(float inv_dt) const override;
 
     /// Get the first joint.
-    b2Joint* GetJoint1() { return m_joint1; }
+    b2Joint* GetJoint1() const { return m_joint1; }
 
     /// Get the second joint.
-    b2Joint* GetJoint2() { return m_joint2; }
+    b2Joint* GetJoint2() const { return m_joint2; }
 
     /// Set/Get the gear ratio.
     void SetRatio(float ratio);

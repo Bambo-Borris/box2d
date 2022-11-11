@@ -105,14 +105,14 @@ public:
     /// Shift the world origin. Useful for large worlds.
     /// The shift formula is: position -= newOrigin
     /// @param newOrigin the new origin with respect to the old origin
-    void ShiftOrigin(const b2Vec2& newOrigin);
+    void ShiftOrigin(const b2Vec2& newOrigin) const;
 
 private:
 
     friend class b2DynamicTree;
 
     void BufferMove(std::int32_t proxyId);
-    void UnBufferMove(std::int32_t proxyId);
+    void UnBufferMove(std::int32_t proxyId) const;
 
     bool QueryCallback(std::int32_t proxyId);
 
@@ -194,7 +194,7 @@ void b2BroadPhase::UpdatePairs(T* callback)
     // Send pairs to caller
     for (std::int32_t i = 0; i < m_pairCount; ++i)
     {
-        b2Pair* primaryPair = m_pairBuffer + i;
+        const b2Pair* primaryPair = m_pairBuffer + i;
         void* userDataA = m_tree.GetUserData(primaryPair->proxyIdA);
         void* userDataB = m_tree.GetUserData(primaryPair->proxyIdB);
 
@@ -204,7 +204,7 @@ void b2BroadPhase::UpdatePairs(T* callback)
     // Clear move flags
     for (std::int32_t i = 0; i < m_moveCount; ++i)
     {
-        std::int32_t proxyId = m_moveBuffer[i];
+        const std::int32_t proxyId = m_moveBuffer[i];
         if (proxyId == e_nullProxy)
         {
             continue;
@@ -229,7 +229,7 @@ inline void b2BroadPhase::RayCast(T* callback, const b2RayCastInput& input) cons
     m_tree.RayCast(callback, input);
 }
 
-inline void b2BroadPhase::ShiftOrigin(const b2Vec2& newOrigin)
+inline void b2BroadPhase::ShiftOrigin(const b2Vec2& newOrigin) const
 {
     m_tree.ShiftOrigin(newOrigin);
 }

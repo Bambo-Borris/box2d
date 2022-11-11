@@ -37,25 +37,25 @@ void b2WorldManifold::Initialize(const b2Manifold* manifold,
     case b2Manifold::e_circles:
         {
             normal.Set(1.0f, 0.0f);
-            b2Vec2 pointA = b2Mul(xfA, manifold->localPoint);
-            b2Vec2 pointB = b2Mul(xfB, manifold->points[0].localPoint);
+            const b2Vec2 pointA = b2Mul(xfA, manifold->localPoint);
+            const b2Vec2 pointB = b2Mul(xfB, manifold->points[0].localPoint);
             if (b2DistanceSquared(pointA, pointB) > FLT_EPSILON * FLT_EPSILON)
             {
                 normal = pointB - pointA;
                 normal.Normalize();
             }
 
-            b2Vec2 cA = pointA + radiusA * normal;
-            b2Vec2 cB = pointB - radiusB * normal;
-            points[0] = 0.5f * (cA + cB);
-            separations[0] = b2Dot(cB - cA, normal);
+            const b2Vec2 cA = pointA + radiusA * normal;
+            const b2Vec2 cB = pointB - radiusB * normal;
+            points[0]       = 0.5f * (cA + cB);
+            separations[0]  = b2Dot(cB - cA, normal);
         }
         break;
 
     case b2Manifold::e_faceA:
         {
-            normal = b2Mul(xfA.q, manifold->localNormal);
-            b2Vec2 planePoint = b2Mul(xfA, manifold->localPoint);
+            normal                  = b2Mul(xfA.q, manifold->localNormal);
+            const b2Vec2 planePoint = b2Mul(xfA, manifold->localPoint);
 
             for (std::int32_t i = 0; i < manifold->pointCount; ++i)
             {
@@ -70,8 +70,8 @@ void b2WorldManifold::Initialize(const b2Manifold* manifold,
 
     case b2Manifold::e_faceB:
         {
-            normal = b2Mul(xfB.q, manifold->localNormal);
-            b2Vec2 planePoint = b2Mul(xfB, manifold->localPoint);
+            normal                  = b2Mul(xfB.q, manifold->localNormal);
+            const b2Vec2 planePoint = b2Mul(xfB, manifold->localPoint);
 
             for (std::int32_t i = 0; i < manifold->pointCount; ++i)
             {
@@ -101,7 +101,7 @@ void b2GetPointStates(std::array<b2PointState, b2_maxManifoldPoints>&  state1, s
     // Detect persists and removes.
     for (std::int32_t i = 0; i < manifold1->pointCount; ++i)
     {
-        b2ContactID id = manifold1->points[i].id;
+        const b2ContactID id = manifold1->points[i].id;
 
         state1[i] = b2_removeState;
 
@@ -118,7 +118,7 @@ void b2GetPointStates(std::array<b2PointState, b2_maxManifoldPoints>&  state1, s
     // Detect persists and adds.
     for (std::int32_t i = 0; i < manifold2->pointCount; ++i)
     {
-        b2ContactID id = manifold2->points[i].id;
+        const b2ContactID id = manifold2->points[i].id;
 
         state2[i] = b2_addState;
 
@@ -157,7 +157,7 @@ bool b2AABB::RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const
         }
         else
         {
-            float inv_d = 1.0f / d(i);
+            const float inv_d = 1.0f / d(i);
             float t1 = (lowerBound(i) - p(i)) * inv_d;
             float t2 = (upperBound(i) - p(i)) * inv_d;
 
@@ -209,8 +209,8 @@ std::int32_t b2ClipSegmentToLine(std::array<b2ClipVertex, 2>& vOut, const std::a
     std::int32_t count = 0;
 
     // Calculate the distance of end points to the line
-    float distance0 = b2Dot(normal, vIn[0].v) - offset;
-    float distance1 = b2Dot(normal, vIn[1].v) - offset;
+    const float distance0 = b2Dot(normal, vIn[0].v) - offset;
+    const float distance1 = b2Dot(normal, vIn[1].v) - offset;
 
     // If the points are behind the plane
     if (distance0 <= 0.0f) vOut[count++] = vIn[0];
@@ -220,7 +220,7 @@ std::int32_t b2ClipSegmentToLine(std::array<b2ClipVertex, 2>& vOut, const std::a
     if (distance0 * distance1 < 0.0f)
     {
         // Find intersection point of edge and plane
-        float interp = distance0 / (distance0 - distance1);
+        const float interp = distance0 / (distance0 - distance1);
         vOut[count].v = vIn[0].v + interp * (vIn[1].v - vIn[0].v);
 
         // VertexA is hitting edgeB.

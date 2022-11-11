@@ -58,7 +58,7 @@ void b2Fixture::Create(b2BlockAllocator* allocator, b2Body* body, const b2Fixtur
     m_shape = def->shape->Clone(allocator);
 
     // Reserve proxy space
-    std::int32_t childCount = m_shape->GetChildCount();
+    const std::int32_t childCount = m_shape->GetChildCount();
     m_proxies = allocator->Allocate<b2FixtureProxy>(childCount);
     for (std::int32_t i = 0; i < childCount; ++i)
     {
@@ -76,7 +76,7 @@ void b2Fixture::Destroy(b2BlockAllocator* allocator)
     assert(m_proxyCount == 0);
 
     // Free the proxy array.
-    std::int32_t childCount = m_shape->GetChildCount();
+    const std::int32_t childCount = m_shape->GetChildCount();
     allocator->Free(m_proxies, childCount);
     m_proxies = nullptr;
 
@@ -153,7 +153,7 @@ void b2Fixture::DestroyProxies(b2BroadPhase* broadPhase)
     m_proxyCount = 0;
 }
 
-void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transform1, const b2Transform& transform2)
+void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transform1, const b2Transform& transform2) const
 {
     if (m_proxyCount == 0)
     {
@@ -184,7 +184,7 @@ void b2Fixture::SetFilterData(const b2Filter& filter)
     Refilter();
 }
 
-void b2Fixture::Refilter()
+void b2Fixture::Refilter() const
 {
     if (m_body == nullptr)
     {
@@ -192,12 +192,12 @@ void b2Fixture::Refilter()
     }
 
     // Flag associated contacts for filtering.
-    b2ContactEdge* edge = m_body->GetContactList();
+    const b2ContactEdge* edge = m_body->GetContactList();
     while (edge)
     {
-        b2Contact* contact = edge->contact;
-        b2Fixture* fixtureA = contact->GetFixtureA();
-        b2Fixture* fixtureB = contact->GetFixtureB();
+        b2Contact*       contact  = edge->contact;
+        const b2Fixture* fixtureA = contact->GetFixtureA();
+        const b2Fixture* fixtureB = contact->GetFixtureB();
         if (fixtureA == this || fixtureB == this)
         {
             contact->FlagForFiltering();
@@ -230,7 +230,7 @@ void b2Fixture::SetSensor(bool sensor)
     }
 }
 
-void b2Fixture::Dump(std::int32_t bodyIndex)
+void b2Fixture::Dump(std::int32_t bodyIndex) const
 {
     b2Dump("    b2FixtureDef fd;\n");
     b2Dump("    fd.friction = %.9g;\n", m_friction);
@@ -246,7 +246,7 @@ void b2Fixture::Dump(std::int32_t bodyIndex)
     {
     case b2Shape::e_circle:
         {
-            b2CircleShape* s = (b2CircleShape*)m_shape;
+            const b2CircleShape* s = (b2CircleShape*)m_shape;
             b2Dump("    b2CircleShape shape;\n");
             b2Dump("    shape.m_radius = %.9g;\n", s->m_radius);
             b2Dump("    shape.m_p.Set(%.9g, %.9g);\n", s->m_p.x, s->m_p.y);
@@ -255,7 +255,7 @@ void b2Fixture::Dump(std::int32_t bodyIndex)
 
     case b2Shape::e_edge:
         {
-            b2EdgeShape* s = (b2EdgeShape*)m_shape;
+            const b2EdgeShape* s = (b2EdgeShape*)m_shape;
             b2Dump("    b2EdgeShape shape;\n");
             b2Dump("    shape.m_radius = %.9g;\n", s->m_radius);
             b2Dump("    shape.m_vertex0.Set(%.9g, %.9g);\n", s->m_vertex0.x, s->m_vertex0.y);
@@ -268,7 +268,7 @@ void b2Fixture::Dump(std::int32_t bodyIndex)
 
     case b2Shape::e_polygon:
         {
-            b2PolygonShape* s = (b2PolygonShape*)m_shape;
+            const b2PolygonShape* s = (b2PolygonShape*)m_shape;
             b2Dump("    b2PolygonShape shape;\n");
             b2Dump("    b2Vec2 vs[%d];\n", b2_maxPolygonVertices);
             for (std::int32_t i = 0; i < s->m_count; ++i)
@@ -281,7 +281,7 @@ void b2Fixture::Dump(std::int32_t bodyIndex)
 
     case b2Shape::e_chain:
         {
-            b2ChainShape* s = (b2ChainShape*)m_shape;
+            const b2ChainShape* s = (b2ChainShape*)m_shape;
             b2Dump("    b2ChainShape shape;\n");
             b2Dump("    b2Vec2 vs[%d];\n", s->m_count);
             for (std::int32_t i = 0; i < s->m_count; ++i)
